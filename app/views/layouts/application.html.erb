@@ -1,15 +1,30 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Demoproject</title>
+    <title>Demo Project <%= yield(:title) %></title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
-
   <body>
+    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
+      <h5 class="my-0 mr-md-auto font-weight-normal">Project Management App</h5>
+
+      <nav class="my-2 my-md-0 mr-md-3 navbar-expand-lg">
+        <% if user_signed_in? %>
+          <%= link_to "Edit Profile", edit_user_registration_path, class: "p-2 text-dark" %>
+          <%= link_to "Logout", destroy_user_session_path, method: :delete, class: "p-2 text-dark" %>
+        <% else %>
+          <%= link_to "Login", new_user_session_path, class: "p-2 text-dark" %>
+          <%= link_to "Sign up", new_user_registration_path, class: "p-2 text-dark" %>
+        <% end %>
+      </nav>
+    </div>
+
+    <p class="notice"><%= notice %>
+    <p class="alert"><%= alert %>
+
     <%= yield %>
   </body>
 </html>

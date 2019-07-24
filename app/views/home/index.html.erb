@@ -1,0 +1,7 @@
+<h1>
+  <% if user_signed_in? %>
+    Hello, <% current_user.name %>
+  <% else %>
+    Login to Enter the System
+  <% end %>
+</h1>
