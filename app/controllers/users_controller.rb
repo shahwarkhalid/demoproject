@@ -2,6 +2,7 @@
 
 class UsersController < ApplicationController
   before_action :set_user, only: %i[edit_user update_user enable_disable_user]
+  before_action :authenticate_admin
   def index; end
 
   def all_users
@@ -50,5 +51,11 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:name, :age, :address)
+  end
+
+  def authenticate_admin
+    if !current_user.role.present? || !current_user.role == 'admin'
+      render :index
+    end
   end
 end
