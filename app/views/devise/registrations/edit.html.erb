@@ -1,5 +1,5 @@
 <div class="top-right">
-  <%= link_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete, class: 'btn btn-warning' %>
+  <%= link_to "Cancel my account", change_user_status_url(current_user), data: { confirm: "Are you sure?" }, class: 'btn btn-warning' %>
   <%= link_to "Back", root_url, class: 'btn btn-danger' %>
 </div>
 <div class="container">

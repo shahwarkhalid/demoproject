@@ -2,7 +2,6 @@
 
 class UsersController < ApplicationController
   before_action :set_user, only: %i[edit_user update_user enable_disable_user]
-
   def index; end
 
   def all_users
@@ -34,8 +33,12 @@ class UsersController < ApplicationController
                      true
                    end
     @user.save(validate: false)
-    respond_to do |format|
-      format.html { redirect_to allusers_url, notice: 'User status successfully updated.' }
+    if current_user.id == @user.id
+      sign_out_and_redirect(current_user)
+    else
+      respond_to do |format|
+        format.html { redirect_to allusers_url, notice: 'User status successfully updated.' }
+      end
     end
   end
 

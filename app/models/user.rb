@@ -7,4 +7,8 @@ class User < ApplicationRecord
   validates_presence_of :age, on: :update
   validates_presence_of :address, on: :update
   validates_numericality_of :age, greater_than: 0, only_integer: true, on: :update
+
+  def active_for_authentication?
+    super && status?
+  end
 end
