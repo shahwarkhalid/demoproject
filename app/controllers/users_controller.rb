@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
-  before_action :set_user, only: %i[edit_user update_user]
+  before_action :set_user, only: %i[edit_user update_user enable_disable_user]
 
   def index; end
 
@@ -24,6 +24,18 @@ class UsersController < ApplicationController
         format.html { render :edit_user }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
+    end
+  end
+
+  def enable_disable_user
+    @user.status = if @user.status?
+                     false
+                   else
+                     true
+                   end
+    @user.save(validate: false)
+    respond_to do |format|
+      format.html { redirect_to allusers_url, notice: 'User status successfully updated.' }
     end
   end
 

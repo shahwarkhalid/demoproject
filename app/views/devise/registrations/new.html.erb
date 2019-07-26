@@ -26,7 +26,9 @@
       <%= f.label :password_confirmation %><br />
       <%= f.password_field :password_confirmation, autocomplete: "new-password", class: 'form-control' %>
     </div>
-
+    <div hidden="true">
+      <%= f.number_field :status, value: 1 %>
+    </div>
     <div class="form-group">
       <%= f.submit "Sign up", class: 'btn btn-success' %>
     </div>

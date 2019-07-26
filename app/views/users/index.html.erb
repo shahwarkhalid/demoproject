@@ -1,3 +1,5 @@
 <div class="container">
-  <%= link_to 'Users', allusers_path, class: 'btn btn-info' %>
+  <% if current_user.role =='admin'%>
+    <%= link_to 'Users', allusers_path, class: 'btn btn-info' %>
+  <% end %>
 </div>
