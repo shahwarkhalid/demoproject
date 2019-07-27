@@ -50,12 +50,10 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:name, :age, :address)
+    params.require(:user).permit(:name, :age, :address, :role)
   end
 
   def authenticate_admin
-    if !current_user.role.present? || !current_user.role == 'admin'
-      render :index
-    end
+    render :index if !current_user.role.present? || !current_user.role == 'admin'
   end
 end
