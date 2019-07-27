@@ -1,34 +1,6 @@
 <div class="container">
-  <h1>Users</h1>
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>Role</th>
-        <th>Name</th>
-        <th>Email</th>
-        <th>Age</th>
-        <th>Address</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @users.each do |user| %>
-        <tr>
-          <td><%= user.role %></td>
-          <td><%= user.name %></td>
-          <td><%= user.email %></td>
-          <td><%= user.age %></td>
-          <td><%= user.address %></td>
-          <td><%= link_to 'Edit', edit_user_url(user.id), class: 'btn btn-info' %>
-            <% if user.status? %>
-              <%= link_to 'Disable', change_user_status_url(user.id), class: 'btn btn-danger' %>
-            <% else %>
-              <%= link_to 'Enable', change_user_status_url(user.id), class: 'btn btn-success' %>
-            <% end %>
-          </td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-  <br>
+  <%= render 'search', local: @roles %>
+</div>
+<div class="container" id="userlist">
+  <%= render 'userlist', local: @users %>
 </div>

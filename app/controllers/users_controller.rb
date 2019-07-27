@@ -7,6 +7,11 @@ class UsersController < ApplicationController
 
   def all_users
     @users = User.where.not(id: current_user.id)
+    @roles = Role.all
+    respond_to do |format|
+      format.html { render :all_users }
+      format.js
+    end
   end
 
   def new
@@ -40,6 +45,23 @@ class UsersController < ApplicationController
       respond_to do |format|
         format.html { redirect_to allusers_url, notice: 'User status successfully updated.' }
       end
+    end
+  end
+
+  def search
+    @role = params[:role]
+    @name = params[:name]
+    @users = if @role == 'all' && @name == 'Search User'
+               User.all.where.not(id: current_user.id)
+             elsif @role == 'all'
+               User.all.where.not(id: current_user.id).where('name like ?', '%' + @name + '%')
+             elsif @name == 'Search User'
+               User.where(role: @role).where.not(id: current_user.id)
+             else
+               User.where(role: @role).where.not(id: current_user.id).where('name LIKE ?', '%' + @name + '%')
+             end
+    respond_to do |format|
+      format.js
     end
   end
 
