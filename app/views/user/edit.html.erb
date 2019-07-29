@@ -9,16 +9,16 @@
       </div>
     <% end %>
     <div class="form-group">
-      <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
+      <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><div class='clearfix'></div>
       <%= f.password_field :password, autocomplete: "new-password", class: 'form-control' %>
       <% if @minimum_password_length %>
-        <br />
+        <div class='clearfix'></div>
         <em><%= @minimum_password_length %> characters minimum</em>
       <% end %>
     </div>
 
     <div class="form-group">
-      <%= f.label :password_confirmation %><br />
+      <%= f.label :password_confirmation %><div class='clearfix'></div>
       <%= f.password_field :password_confirmation, autocomplete: "new-password", class: 'form-control' %>
     </div>
 
