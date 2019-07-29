@@ -9,29 +9,30 @@
   </head>
   <body>
 
-      <nav class="navbar navbar-dark bg-info">
-        <h5 class="my-0 mr-md-auto font-weight-normal">Project Management App</h5>
-        <% if user_signed_in? %>
-        <% if current_user.role == 'admin' %>
-          <%= link_to "Create User", new_admin_user_url, class: "btn btn-info" %>
-        <% end %>
-          <div class="dropdown">
-            <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown"><%= current_user.email %>
-            <span class="caret"></span></button>
-            <ul class="dropdown-menu">
-              <li><%= link_to "Edit Profile", edit_user_registration_path, class: "p-2 text-dark" %></li>
-              <li><%= link_to "Change Password", edit_user_path(current_user), class: "p-2 text-dark" %></li>
-              <li><%= link_to "Logout", destroy_user_session_path, method: :delete, class: "p-2 text-dark" %></li>
-            </ul>
-          </div>
-        <% else %>
-          <%= link_to "Login", new_user_session_path, class: "p-2 text-dark" %>
-          <%= link_to "Sign up", new_user_registration_path, class: "p-2 text-dark" %>
-        <% end %>
-      </nav>
+    <nav class="navbar navbar-dark bg-info">
+      <h5 class="my-0 mr-md-auto font-weight-normal">Project Management App</h5>
+      <% if user_signed_in? %>
+      <% if current_user.role == 'admin' %>
+        <%= link_to "Create User", new_admin_user_url, class: "btn btn-info" %>
+      <% end %>
+        <div class="dropdown">
+          <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown"><%= current_user.email %>
+          <span class="caret"></span></button>
+          <ul class="dropdown-menu">
+            <li><%= link_to "Edit Profile", edit_user_registration_path, class: "p-2 text-dark" %></li>
+            <li><%= link_to "Change Password", edit_user_path(current_user), class: "p-2 text-dark" %></li>
+            <li><%= link_to "Logout", destroy_user_session_path, method: :delete, class: "p-2 text-dark" %></li>
+          </ul>
+        </div>
+      <% else %>
+        <%= link_to "Login", new_user_session_path, class: "p-2 text-dark" %>
+        <%= link_to "Sign up", new_user_registration_path, class: "p-2 text-dark" %>
+      <% end %>
+    </nav>
     <p class="notice"><%= notice %>
     <p class="alert"><%= alert %>
-
+  <div class="container">
     <%= yield %>
+  </div>
   </body>
 </html>

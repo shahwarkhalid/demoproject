@@ -1,6 +1,9 @@
 <div class="container">
-  <%= render 'search', local: @roles %>
-</div>
-<div class="container" id="userlist">
-  <%= render 'userlist', local: @users %>
+  <div class="container">
+    <%= render 'search', local: @roles %>
+  </div>
+  <div class="container" id="userlist">
+    <%= render 'userlist', local: @users %>
+    <%= paginate @users %>
+  </div>
 </div>

@@ -5,7 +5,7 @@ class Admin::UsersController < ApplicationController
   before_action :authenticate_admin
 
   def index
-    @users = User.where.not(id: current_user.id)
+    @users = User.where.not(id: current_user.id).order(:id).page(params[:page])
     @roles = Role.all
     respond_to do |format|
       format.html { render :index }
@@ -63,13 +63,13 @@ class Admin::UsersController < ApplicationController
     @role = params[:role]
     @name = params[:name]
     @users = if @role == 'all' && @name == 'Search User'
-               User.all.where.not(id: current_user.id)
+               User.all.where.not(id: current_user.id).order(:id).page(params[:page])
              elsif @role == 'all'
-               User.all.where.not(id: current_user.id).where('name like ?', '%' + @name + '%')
+               User.all.where.not(id: current_user.id).where('name like ?', '%' + @name + '%').order(:id).page(params[:page])
              elsif @name == 'Search User'
-               User.where(role: @role).where.not(id: current_user.id)
+               User.where(role: @role).where.not(id: current_user.id).order(:id).page(params[:page])
              else
-               User.where(role: @role).where.not(id: current_user.id).where('name LIKE ?', '%' + @name + '%')
+               User.where(role: @role).where.not(id: current_user.id).where('name LIKE ?', '%' + @name + '%').order(:id).page(params[:page])
              end
     respond_to do |format|
       format.js

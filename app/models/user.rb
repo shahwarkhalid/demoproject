@@ -11,4 +11,5 @@ class User < ApplicationRecord
   def active_for_authentication?
     super && status?
   end
+  paginates_per 5
 end
