@@ -1,15 +1,14 @@
 # frozen_string_literal: true
 
-class UsersController < ApplicationController
-  before_action :set_user, only: %i[edit_user update_user enable_disable_user]
+class Admin::UsersController < ApplicationController
+  before_action :set_user, only: %i[edit update enable_disable_user]
   before_action :authenticate_admin
-  def index; end
 
-  def all_users
+  def index
     @users = User.where.not(id: current_user.id)
     @roles = Role.all
     respond_to do |format|
-      format.html { render :all_users }
+      format.html { render :index }
       format.js
     end
   end
@@ -18,15 +17,27 @@ class UsersController < ApplicationController
     @user = User.new
   end
 
-  def edit_user; end
+  def create
+    @user = User.new(create_params)
+    respond_to do |format|
+      if @user.save
+        UserMailer.with(user: @user).welcome_email.deliver_now
+        format.html { redirect_to admin_users_url, notice: 'User was successfully created.' }
+      else
+        format.html { render :new }
+        format.json { render json: @user.errors, status: :unprocessable_entity }
+      end
+    end
+  end
 
-  def update_user
+  def edit; end
+
+  def update
     respond_to do |format|
       if @user.update(user_params)
-        format.html { redirect_to allusers_url, notice: 'User was successfully updated.' }
-        format.json { render :show, status: :ok, location: allusers_url }
+        format.html { redirect_to admin_users_url, notice: 'User was successfully updated.' }
       else
-        format.html { render :edit_user }
+        format.html { render :edit }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
@@ -43,7 +54,7 @@ class UsersController < ApplicationController
       sign_out_and_redirect(current_user)
     else
       respond_to do |format|
-        format.html { redirect_to allusers_url, notice: 'User status successfully updated.' }
+        format.html { redirect_to admin_users_url, notice: 'User status successfully updated.' }
       end
     end
   end
@@ -73,6 +84,10 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:name, :age, :address, :role)
+  end
+
+  def create_params
+    params.require(:user).permit(:name, :age, :address, :role, :email, :password)
   end
 
   def authenticate_admin

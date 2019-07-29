@@ -1,7 +1,5 @@
-<h1>
-  <% if user_signed_in? %>
-    Hello, <%= current_user.name %>
-  <% else %>
-    Login to Enter the System
+<div class="container">
+  <% if current_user.role =='admin'%>
+    <%= link_to 'Users', admin_users_path, class: 'btn btn-info' %>
   <% end %>
-</h1>
+</div>

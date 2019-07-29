@@ -18,11 +18,11 @@
         <td><%= user.email %></td>
         <td><%= user.age %></td>
         <td><%= user.address %></td>
-        <td><%= link_to 'Edit', edit_user_url(user.id), class: 'btn btn-info' %>
+        <td><%= link_to 'Edit', edit_admin_user_url(user.id), class: 'btn btn-info' %>
           <% if user.status? %>
-            <%= link_to 'Disable', change_user_status_url(user.id), class: 'btn btn-danger' %>
+            <%= link_to 'Disable', admin_change_user_status_url(user.id), class: 'btn btn-danger' %>
           <% else %>
-            <%= link_to 'Enable', change_user_status_url(user.id), class: 'btn btn-success' %>
+            <%= link_to 'Enable', admin_change_user_status_url(user.id), class: 'btn btn-success' %>
           <% end %>
         </td>
       </tr>

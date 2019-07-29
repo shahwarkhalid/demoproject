@@ -1,6 +1,10 @@
 <div class="top-right">
-  <%= link_to "Cancel my account", change_user_status_url(current_user), data: { confirm: "Are you sure?" }, class: 'btn btn-warning' %>
-  <%= link_to "Back", root_url, class: 'btn btn-danger' %>
+  <%= link_to "Cancel my account", admin_change_user_status_url(current_user), data: { confirm: "Are you sure?" }, class: 'btn btn-warning' %>
+  <% if current_user.role == 'admin' %>
+    <%= link_to "Back", admin_users_url, class: 'btn btn-danger' %>
+  <% else %>
+    <%= link_to "Back", root_url, class: 'btn btn-danger' %>
+  <% end %>
 </div>
 <div class="container">
   <h2>Edit <%= resource_name.to_s.humanize %></h2>
@@ -22,24 +26,6 @@
     <div class="form-group">
       <%= f.label :email %><br />
       <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control' %>
-    </div>
-
-    <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-      <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
-    <% end %>
-
-    <div class="form-group">
-      <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
-      <%= f.password_field :password, autocomplete: "new-password", class: 'form-control' %>
-      <% if @minimum_password_length %>
-        <br />
-        <em><%= @minimum_password_length %> characters minimum</em>
-      <% end %>
-    </div>
-
-    <div class="form-group">
-      <%= f.label :password_confirmation %><br />
-      <%= f.password_field :password_confirmation, autocomplete: "new-password", class: 'form-control' %>
     </div>
 
     <div class="form-group">
