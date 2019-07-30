@@ -4,12 +4,10 @@ Rails.application.routes.draw do
   namespace :manager do
     resources :clients
   end
-  namespace :admin do
-    resources :clients
-  end
   root 'home#index'
   devise_for :users, controllers: { registrations: :registrations }
   namespace :admin do
+    resources :clients
     resources :users, only: %i[index new create edit update]
     get 'update_status/:id', to: 'users#enable_disable_user', as: :change_user_status
     post 'user/search', to: 'users#search'

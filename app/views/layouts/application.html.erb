@@ -13,7 +13,8 @@
       <%= link_to "Project Management App", root_url, class: "btn btn-info my-0 mr-md-auto font-weight-normal" %>
       <% if user_signed_in? %>
       <% if current_user.role == 'admin' %>
-        <i class="fa fa-user-plus" aria-hidden="true"></i><%= link_to "Create User", new_admin_user_url, class: "btn btn-info" %>
+        <i class="fa fa-user-plus" aria-hidden="true"></i><%= link_to "New User", new_admin_user_url, class: "btn btn-info" %>
+        <i class="fa fa-user-plus" aria-hidden="true"></i><%= link_to "New Client", new_admin_user_url, class: "btn btn-info" %>
       <% end %>
         <div class="dropdown">
           <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown"><%= current_user.email %>
