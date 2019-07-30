@@ -1,6 +1,7 @@
-<h1>Editing Manager Client</h1>
+<div class="container">
+  <h1 align="center">Editing Manager Client</h1>
 
-<%= render 'form', manager_client: @manager_client %>
+  <%= render 'form', manager_client: @manager_client %>
 
-<%= link_to 'Show', @manager_client %> |
-<%= link_to 'Back', manager_clients_path %>
+  <%= link_to 'Back', manager_clients_path, class: 'btn btn-danger' %>
+</div>

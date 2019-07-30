@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class Manager::ClientsController < ApplicationController
-  before_action :set_manager_client, only: [:show, :edit, :update, :destroy]
+  before_action :set_manager_client, only: %i[show edit update destroy]
 
   # GET /manager/clients
   # GET /manager/clients.json
@@ -9,8 +11,7 @@ class Manager::ClientsController < ApplicationController
 
   # GET /manager/clients/1
   # GET /manager/clients/1.json
-  def show
-  end
+  def show; end
 
   # GET /manager/clients/new
   def new
@@ -18,8 +19,7 @@ class Manager::ClientsController < ApplicationController
   end
 
   # GET /manager/clients/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /manager/clients
   # POST /manager/clients.json
@@ -62,13 +62,14 @@ class Manager::ClientsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_manager_client
-      @manager_client = Manager::Client.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def manager_client_params
-      params.require(:manager_client).permit(:first_name, :last_name, :phone_no, :email)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_manager_client
+    @manager_client = Manager::Client.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def manager_client_params
+    params.require(:manager_client).permit(:first_name, :last_name, :phone_no, :email)
+  end
 end

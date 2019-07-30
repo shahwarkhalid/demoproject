@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class HomeController < ApplicationController
-  def index;
+  def index
     if current_user.role == 'admin'
       redirect_to admin_users_url
     elsif current_user.role == 'user'

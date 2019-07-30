@@ -1,24 +1,22 @@
-<p id="notice"><%= notice %></p>
+<div class="container">
+  <p>
+    <strong>First name:</strong>
+    <%= @admin_client.first_name %>
+  </p>
 
-<p>
-  <strong>First name:</strong>
-  <%= @admin_client.first_name %>
-</p>
+  <p>
+    <strong>Last name:</strong>
+    <%= @admin_client.last_name %>
+  </p>
 
-<p>
-  <strong>Last name:</strong>
-  <%= @admin_client.last_name %>
-</p>
+  <p>
+    <strong>Phone no:</strong>
+    <%= @admin_client.phone_no %>
+  </p>
 
-<p>
-  <strong>Phone no:</strong>
-  <%= @admin_client.phone_no %>
-</p>
-
-<p>
-  <strong>Email:</strong>
-  <%= @admin_client.email %>
-</p>
-
-<%= link_to 'Edit', edit_admin_client_path(@admin_client) %> |
-<%= link_to 'Back', admin_clients_path %>
+  <p>
+    <strong>Email:</strong>
+    <%= @admin_client.email %>
+  </p>
+  <%= link_to 'Back', admin_clients_path, class: 'btn btn-success' %>
+</div>
