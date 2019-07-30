@@ -2,6 +2,7 @@
 
 Rails.application.routes.draw do
   resources :manager, only: [:index]
+  resources :admin, only: [:index]
   namespace :manager do
     resources :clients
   end
