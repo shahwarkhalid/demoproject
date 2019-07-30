@@ -1,9 +1,9 @@
 <div class="container">
-  <h2>Log in</h2>
+  <h2 align="center">Log in</h2>
   <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
     <div class="form-group">
       <%= f.label :email %><div class='clearfix'></div>
-      <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control' %>
+      <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control fa fa-key' %>
     </div>
     <div class="form-group">
       <%= f.label :password %><div class='clearfix'></div>
@@ -12,7 +12,7 @@
     <% if devise_mapping.rememberable? %>
       <div class="form-check-inline">
         <%= f.check_box :remember_me, class: 'form-check-input' %>
-        <%= f.label :remember_me, class: 'form-check-label' %>
+       <%= f.label :remember_me, class: 'form-check-label' %>
       </div>
     <% end %>
     <div class="form-group">

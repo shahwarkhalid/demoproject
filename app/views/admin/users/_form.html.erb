@@ -29,7 +29,7 @@
     <%= f.text_field :address, class: 'form-control' %>
   </div>
   <div class="form-group">
-    <%= f.select :role, options_from_collection_for_select(Role.all, :name, :name, :selected => @user.role), {}, { :class => 'chosen-select'} %>
+    <%= f.select :role, options_from_collection_for_select(Role.all, :name, :name, :selected => @user.role), {}, {id: 'choose-role', :class => 'chosen-select'} %>
   </div>
   <div hidden="true">
     <%= f.number_field :status, value: 1 %>
