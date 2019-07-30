@@ -64,9 +64,9 @@ class Manager::ClientsController < ManagerController
   def search
     @name = params[:name]
     @manager_clients = if @name == 'Search Client'
-               Manager::Client.all
-             else
-               Manager::Client.where('first_name LIKE ?', '%' + @name + '%')
+                         Manager::Client.all
+                       else
+                         Manager::Client.where('first_name LIKE ?', '%' + @name + '%')
              end
     respond_to do |format|
       format.js

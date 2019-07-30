@@ -25,11 +25,11 @@ class ApplicationController < ActionController::Base
   def user_authorization
     flash[:alert] = 'You are not authorized to access this.'
     if current_user.role == 'admin'
-     redirect_to(request.referrer || admin_index_path)
+      redirect_to(request.referrer || admin_index_path)
     elsif current_user.role == 'manager'
-     redirect_to(request.referrer || manager_index_path)
+      redirect_to(request.referrer || manager_index_path)
     elsif current_user.role == 'user'
-     redirect_to(request.referrer || user_index_path)
+      redirect_to(request.referrer || user_index_path)
     end
   end
 end
