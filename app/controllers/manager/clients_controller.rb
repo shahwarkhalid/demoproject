@@ -61,6 +61,18 @@ class Manager::ClientsController < ApplicationController
     end
   end
 
+  def search
+    @name = params[:name]
+    @manager_clients = if @name == 'Search Client'
+               Manager::Client.all
+             else
+               Manager::Client.where('first_name LIKE ?', '%' + @name + '%')
+             end
+    respond_to do |format|
+      format.js
+    end
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   resources :admin, only: [:index]
   namespace :manager do
     resources :clients
+    post 'client/search', to: 'clients#search'
   end
   root 'home#index'
   devise_for :users, controllers: { registrations: :registrations }

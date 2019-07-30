@@ -1,10 +1,11 @@
 # frozen_string_literal: true
 
-class Admin::UsersController < ApplicationController
+class Admin::UsersController < AdminController
   before_action :set_user, only: %i[edit update enable_disable_user]
   before_action :authenticate_admin
 
   def index
+    authorize User
     @users = User.where.not(id: current_user.id).order(:id).page(params[:page])
     @roles = Role.all
     respond_to do |format|

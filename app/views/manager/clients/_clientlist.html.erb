@@ -1,0 +1,31 @@
+<div style="position:fixed;">
+  <i class="fa fa-user-plus" aria-hidden="true"></i><%= link_to "New Client", new_manager_client_url, class: "btn btn-info" %>
+</div>
+<div style="margin-top:50px">
+  <h1 align="center">Manager Clients</h1>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>First name</th>
+        <th>Last name</th>
+        <th>Phone no</th>
+        <th>Email</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @manager_clients.each do |manager_client| %>
+        <tr>
+          <td><%= manager_client.first_name %></td>
+          <td><%= manager_client.last_name %></td>
+          <td><%= manager_client.phone_no %></td>
+          <td><%= manager_client.email %></td>
+          <td><%= link_to 'Show', manager_client, class: 'btn btn-success' %>
+              <%= link_to 'Edit', edit_manager_client_path(manager_client), class: 'btn btn-warning' %>
+              <%= link_to 'Destroy', manager_client, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
