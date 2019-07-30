@@ -1,5 +1,4 @@
 <div class="container">
-  <p id="notice"><%= notice %></p>
 
   <p>
     <strong>First name:</strong>
@@ -20,5 +19,5 @@
     <strong>Email:</strong>
     <%= @manager_client.email %>
   </p>
-  <%= link_to 'Back', manager_clients_path %>
+  <%= link_to 'Back', manager_clients_path, class: 'btn btn-warning' %>
 </div>

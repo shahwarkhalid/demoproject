@@ -13,6 +13,8 @@ class ApplicationController < ActionController::Base
   def after_sign_in_path_for(_resource)
     if current_user.role == 'admin'
       admin_users_url
+    elsif current_user.role == 'manager'
+      manager_index_url
     elsif current_user.role == 'user'
       user_index_url
     end
