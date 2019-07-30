@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  resources :clients
   root 'home#index'
   devise_for :users, controllers: { registrations: :registrations }
   namespace :admin do
