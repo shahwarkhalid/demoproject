@@ -5,7 +5,6 @@ class Admin::UsersController < AdminController
   before_action :authenticate_admin
 
   def index
-    authorize User
     @users = User.where.not(id: current_user.id).order(:id).page(params[:page])
     @roles = Role.all
     respond_to do |format|

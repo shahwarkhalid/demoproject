@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Manager::ClientsController < ApplicationController
+class Manager::ClientsController < ManagerController
   before_action :set_manager_client, only: %i[show edit update destroy]
 
   # GET /manager/clients
