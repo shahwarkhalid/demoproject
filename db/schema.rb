@@ -39,6 +39,7 @@ ActiveRecord::Schema.define(version: 2019_07_31_144013) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "created_by"
+    t.bigint "manager_id"
   end
 
   create_table "roles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
