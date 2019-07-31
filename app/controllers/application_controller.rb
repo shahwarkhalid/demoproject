@@ -3,9 +3,11 @@
 class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :authenticate_user!
-  rescue_from Pundit::NotAuthorizedError, with: :user_authorization
   include Pundit
   protect_from_forgery
+
+  rescue_from Pundit::NotAuthorizedError, with: :user_authorization
+  rescue_from ActiveRecord::RecordNotFound, with: :page_not_found
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up, keys: %i[name status])
@@ -31,5 +33,13 @@ class ApplicationController < ActionController::Base
     elsif current_user.role == 'user'
       redirect_to(request.referrer || user_index_path)
     end
+  end
+
+  def show_errors
+    flash[:alert] = 'Record not found'
+    redirect_to root_url
+  end
+  def page_not_found
+    render :not_found
   end
 end

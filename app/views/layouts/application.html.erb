@@ -8,17 +8,17 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
   <body>
-
     <nav class="navbar navbar-dark bg-info">
       <%= link_to "Project Management App", root_url, class: "btn btn-info my-0 mr-md-auto font-weight-normal" %>
+
       <% if user_signed_in? %>
         <div class="dropdown">
           <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown"><%= current_user.email %>
           <span class="caret"></span></button>
           <ul class="dropdown-menu">
-            <li><i class="fa fa-pencil-square-o" aria-hidden="true"></i><%= link_to "Edit Profile", edit_user_registration_path, class: "p-2 text-dark" %></li>
-            <li><i class="fa fa-key" aria-hidden="true"></i><%= link_to "Change Password", edit_user_path(current_user), class: "p-2 text-dark" %></li>
-            <li><i class="fa fa-sign-out" aria-hidden="true"></i><%= link_to "Logout", destroy_user_session_path, method: :delete, class: "p-2 text-dark" %></li>
+            <li><%= link_to fa_icon('pencil-square-o', text: "Edit Profile") , edit_user_registration_path, class: "p-2 text-dark" %></li>
+            <li><%= link_to fa_icon('key', text: "Change Password") , edit_user_path(current_user), class: "p-2 text-dark" %></li>
+            <li><%= link_to fa_icon('sign-out', text: "Logout"), destroy_user_session_path, method: :delete, class: "p-2 text-dark" %></li>
           </ul>
         </div>
       <% else %>
@@ -26,10 +26,14 @@
         <%= link_to "Sign up", new_user_registration_path, class: "p-2 text-dark" %>
       <% end %>
     </nav>
-    <p class="notice"><%= notice %>
-    <p class="alert"><%= alert %>
-  <div class="container">
-    <%= yield %>
-  </div>
+    <div style="float: left;">
+      <% flash.each do |key, msg| %>
+        <%= content_tag :div, msg, class: 'alert alert-danger' %>
+      <% end %>
+    </div>
+    <div class="clearfix mb-4"></div>
+    <div class="container">
+      <%= yield %>
+    </div>
   </body>
 </html>

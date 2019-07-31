@@ -2,11 +2,13 @@
 
 class Admin::UsersController < AdminController
   before_action :set_user, only: %i[edit update enable_disable_user]
-  before_action :authenticate_admin
 
   def index
     @users = User.where.not(id: current_user.id).order(:id).page(params[:page])
     @roles = Role.all
+
+    authorize User, :check_admin?, policy_class: UsersPolicy
+
     respond_to do |format|
       format.html { render :index }
       format.js
@@ -19,6 +21,9 @@ class Admin::UsersController < AdminController
 
   def create
     @user = User.new(create_params)
+
+    authorize @user, :check_admin?, policy_class: UsersPolicy
+
     respond_to do |format|
       if @user.save
         UserMailer.with(user: @user).welcome_email.deliver_now
@@ -30,9 +35,12 @@ class Admin::UsersController < AdminController
     end
   end
 
-  def edit; end
+  def edit
+    authorize @user, :check_admin?, policy_class: UsersPolicy
+  end
 
   def update
+    authorize @user, :check_admin?, policy_class: UsersPolicy
     respond_to do |format|
       if @user.update(user_params)
         format.html { redirect_to admin_users_url, notice: 'User was successfully updated.' }
@@ -44,12 +52,10 @@ class Admin::UsersController < AdminController
   end
 
   def enable_disable_user
-    @user.status = if @user.status?
-                     false
-                   else
-                     true
-                   end
+    authorize @user, :check_admin?, policy_class: UsersPolicy
+    @user.toggle!(:status)
     @user.save(validate: false)
+
     if current_user.id == @user.id
       sign_out_and_redirect(current_user)
     else
@@ -60,17 +66,8 @@ class Admin::UsersController < AdminController
   end
 
   def search
-    @role = params[:role]
-    @name = params[:name]
-    @users = if @role == 'all' && @name == 'Search User'
-               User.all.where.not(id: current_user.id).order(:id).page(params[:page])
-             elsif @role == 'all'
-               User.all.where.not(id: current_user.id).where('name like ?', '%' + @name + '%').order(:id).page(params[:page])
-             elsif @name == 'Search User'
-               User.where(role: @role).where.not(id: current_user.id).order(:id).page(params[:page])
-             else
-               User.where(role: @role).where.not(id: current_user.id).where('name LIKE ?', '%' + @name + '%').order(:id).page(params[:page])
-             end
+    authorize User, :check_admin?, policy_class: UsersPolicy
+    @users = User.search_users(params[:name], params[:role], current_user).order(:created_at).page(params[:page])
     respond_to do |format|
       format.js
     end
@@ -79,7 +76,10 @@ class Admin::UsersController < AdminController
   private
 
   def set_user
-    @user = User.find(params[:id])
+    @user = User.find_by_id(params[:id])
+    unless @user
+      render :file => 'public/404.html', :status => :not_found, :layout => false
+    end
   end
 
   def user_params
@@ -88,9 +88,5 @@ class Admin::UsersController < AdminController
 
   def create_params
     params.require(:user).permit(:name, :age, :address, :role, :email, :password)
-  end
-
-  def authenticate_admin
-    render :index if !current_user.role.present? || !current_user.role == 'admin'
   end
 end

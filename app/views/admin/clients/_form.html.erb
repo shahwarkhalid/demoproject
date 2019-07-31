@@ -1,5 +1,5 @@
 <div class="container">
-  <%= form_with(model: admin_client, local: true) do |form| %>
+  <%= form_with(model: admin_client, url: admin_clients_path, local: true) do |form| %>
     <% if admin_client.errors.any? %>
       <div id="error_explanation">
         <h2><%= pluralize(admin_client.errors.count, "error") %> prohibited this admin_client from being saved:</h2>

@@ -8,13 +8,10 @@ class UserController < ApplicationController
   def edit; end
 
   def update
-    respond_to do |format|
-      if @user.update(user_params)
-        format.html { redirect_to user_index_url, notice: 'User was successfully updated.' }
-      else
-        format.html { render :edit }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
+    if @user.update(user_params)
+      redirect_to user_index_url, notice: 'User was successfully updated.'
+    else
+      render :edit
     end
   end
 

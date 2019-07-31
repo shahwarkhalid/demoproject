@@ -1,0 +1,32 @@
+<div style="position:fixed;">
+  <%= link_to fa_icon('user-plus', text: "New Client"), new_admin_client_url, class: "btn btn-info" %>
+</div>
+<div style="margin-top:50px">
+  <h1 align="center">Clients</h1>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>First name</th>
+        <th>Last name</th>
+        <th>Phone no</th>
+        <th>Email</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @admin_clients.each do |admin_client| %>
+        <tr>
+          <td><%= admin_client.first_name %></td>
+          <td><%= admin_client.last_name %></td>
+          <td><%= admin_client.phone_no %></td>
+          <td><%= admin_client.email %></td>
+          <td><%= link_to 'Show', admin_client_url(admin_client), class: 'btn btn-success' %>
+              <%= link_to 'Edit', edit_admin_client_path(admin_client), class: 'btn btn-warning' %>
+              <%= link_to 'Destroy', admin_client_url(admin_client), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <%= paginate @admin_clients %>
+</div>

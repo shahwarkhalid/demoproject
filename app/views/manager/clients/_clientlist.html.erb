@@ -1,5 +1,5 @@
 <div style="position:fixed;">
-  <i class="fa fa-user-plus" aria-hidden="true"></i><%= link_to "New Client", new_manager_client_url, class: "btn btn-info" %>
+  <%= link_to fa_icon('user-plus', text: "New Client"), new_manager_client_url, class: "btn btn-info" %>
 </div>
 <div style="margin-top:50px">
   <h1 align="center">Manager Clients</h1>
@@ -21,11 +21,12 @@
           <td><%= manager_client.last_name %></td>
           <td><%= manager_client.phone_no %></td>
           <td><%= manager_client.email %></td>
-          <td><%= link_to 'Show', manager_client, class: 'btn btn-success' %>
+          <td><%= link_to 'Show', manager_client_url(manager_client), class: 'btn btn-success' %>
               <%= link_to 'Edit', edit_manager_client_path(manager_client), class: 'btn btn-warning' %>
-              <%= link_to 'Destroy', manager_client, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %></td>
+              <%= link_to 'Destroy', manager_client_url(manager_client), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %></td>
         </tr>
       <% end %>
     </tbody>
   </table>
+  <%= paginate @manager_clients %>
 </div>

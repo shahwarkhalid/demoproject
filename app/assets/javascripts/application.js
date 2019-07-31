@@ -15,7 +15,6 @@
 //= require bootstrap-sprockets
 
 //= require chosen-jquery
-//= require scaffold
 //= require rails-ujs
 //= require activestorage
 //= require turbolinks

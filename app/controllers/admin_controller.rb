@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
 class AdminController < ApplicationController
-  before_action :check_admin_validation
+  before_action :validate_admin!
 
   def index; end
 
   protected
 
-  def check_admin_validation
-    authorize User, :check_admin?, policy_class: UsersPolicy
+  def validate_admin!
+    redirect_to root_url if !current_user.admin?
   end
 end

@@ -1,7 +1,7 @@
 <div class="container">
   <div>
     <div style="position:fixed;">
-      <i class="fa fa-user-plus" aria-hidden="true"></i><%= link_to "New User", new_admin_user_url, class: "btn btn-info" %>
+      <%= link_to fa_icon('user-plus', text: 'New User') , new_admin_user_url, class: "btn btn-info" %>
     </div>
   </div>
   <div style="margin-top:50px">
@@ -25,7 +25,7 @@
             <td><%= user.email %></td>
             <td><%= user.age %></td>
             <td><%= user.address %></td>
-            <td><%= link_to '', edit_admin_user_url(user.id), class: 'btn btn-info fa fa-pencil-square-o' %>
+            <td><%= link_to fa_icon('pencil-square-o'), edit_admin_user_url(user.id), class: 'btn btn-info' %>
               <% if user.status? %>
                 <%= link_to 'Disable', admin_change_user_status_url(user.id), data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
               <% else %>

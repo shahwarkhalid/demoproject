@@ -3,32 +3,24 @@
 class Admin::ClientsController < AdminController
   before_action :set_admin_client, only: %i[show edit update destroy]
 
-  # GET /admin/clients
-  # GET /admin/clients.json
   def index
-    @admin_clients = Admin::Client.all
+    @admin_clients = Client.all.order(:created_at).page(params[:page])
   end
 
-  # GET /admin/clients/1
-  # GET /admin/clients/1.json
   def show; end
 
-  # GET /admin/clients/new
   def new
-    @admin_client = Admin::Client.new
+    @admin_client = Client.new
   end
 
-  # GET /admin/clients/1/edit
   def edit; end
 
-  # POST /admin/clients
-  # POST /admin/clients.json
   def create
-    @admin_client = Admin::Client.new(admin_client_params)
+    @admin_client = Client.new(admin_client_params)
 
     respond_to do |format|
       if @admin_client.save
-        format.html { redirect_to @admin_client, notice: 'Client was successfully created.' }
+        format.html { redirect_to admin_client_url(@admin_client), notice: 'Client was successfully created.' }
         format.json { render :show, status: :created, location: @admin_client }
       else
         format.html { render :new }
@@ -37,12 +29,10 @@ class Admin::ClientsController < AdminController
     end
   end
 
-  # PATCH/PUT /admin/clients/1
-  # PATCH/PUT /admin/clients/1.json
   def update
     respond_to do |format|
       if @admin_client.update(admin_client_params)
-        format.html { redirect_to @admin_client, notice: 'Client was successfully updated.' }
+        format.html { redirect_to admin_client_url(@admin_client), notice: 'Client was successfully updated.' }
         format.json { render :show, status: :ok, location: @admin_client }
       else
         format.html { render :edit }
@@ -51,8 +41,6 @@ class Admin::ClientsController < AdminController
     end
   end
 
-  # DELETE /admin/clients/1
-  # DELETE /admin/clients/1.json
   def destroy
     @admin_client.destroy
     respond_to do |format|
@@ -61,15 +49,23 @@ class Admin::ClientsController < AdminController
     end
   end
 
-  private
-
-  # Use callbacks to share common setup or constraints between actions.
-  def set_admin_client
-    @admin_client = Admin::Client.find(params[:id])
+  def search
+    @admin_clients = Client.search_clients(params[:name]).order(:created_at).page(params[:page])
+    respond_to do |format|
+      format.js
+    end
   end
 
-  # Never trust parameters from the scary internet, only allow the white list through.
+  private
+
+  def set_admin_client
+    @admin_client = Client.find_by_id(params[:id])
+    unless @admin_client
+      render :file => 'public/404.html', :status => :not_found, :layout => false
+    end
+  end
+
   def admin_client_params
-    params.require(:admin_client).permit(:first_name, :last_name, :phone_no, :email)
+    params.require(:client).permit(:first_name, :last_name, :phone_no, :email)
   end
 end

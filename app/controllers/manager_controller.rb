@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
 class ManagerController < ApplicationController
-  before_action :check_manager_validation
+  before_action :validate_manager!
 
   def index; end
 
   protected
 
-  def check_manager_validation
-    authorize User, :check_manager?, policy_class: ManagersPolicy
+  def validate_manager!
+    redirect_to root_url if !current_user.manager?
   end
 end
