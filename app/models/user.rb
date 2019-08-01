@@ -10,6 +10,9 @@ class User < ApplicationRecord
   validates_presence_of :address, on: :update
   validates_numericality_of :age, greater_than: 0, only_integer: true, on: :update
 
+  has_many :employees_projects, foreign_key: 'employee_id'
+  has_many :projects, :through => :employees_projects
+
   def admin?
     role == 'admin'
   end
