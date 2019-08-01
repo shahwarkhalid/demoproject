@@ -3,6 +3,8 @@
 Rails.application.routes.draw do
   resources :manager, only: [:index]
   resources :admin, only: [:index]
+  resources :projects
+  post 'project/search', to: 'projects#search'
   namespace :manager do
     resources :clients
     post 'client/search', to: 'clients#search'

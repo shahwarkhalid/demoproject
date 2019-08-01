@@ -5,4 +5,5 @@ class Project < ApplicationRecord
   has_many :payments
   belongs_to :manager, class_name: 'User'
   belongs_to :creator, class_name: 'User'
+  paginates_per 5
 end

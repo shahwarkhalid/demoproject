@@ -1,0 +1,42 @@
+<div class="container">
+
+  <p>
+    <strong>Title:</strong>
+    <%= @project.title %>
+  </p>
+
+  <p>
+    <strong>Description:</strong>
+    <%= @project.description %>
+  </p>
+
+  <p>
+    <strong>Manager:</strong>
+    <%= @project.manager.name %>
+  </p>
+
+  <p>
+    <strong>Client:</strong>
+    <%= @project.client.first_name %>
+  </p>
+
+  <p>
+    <strong>Creator:</strong>
+    <%= @project.creator.name %>
+  </p>
+
+  <p>
+    <strong>Total Hours:</strong>
+    <%= @project.total_hours %>
+  </p>
+
+  <p>
+    <strong>Hours Worked:</strong>
+    <%= @project.hours_worked %>
+  </p>
+  <p>
+    <strong>Budget:</strong>
+    <%= @project.budget %>
+  </p>
+  <%= link_to 'Back', projects_path, class: 'btn btn-warning' %>
+</div>

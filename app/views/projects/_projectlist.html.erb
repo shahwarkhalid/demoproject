@@ -1,0 +1,40 @@
+<div style="position:fixed;">
+  <%= link_to fa_icon('user-plus', text: "New Project"), new_project_url, class: "btn btn-info" %>
+</div>
+<div style="margin-top:50px">
+  <h1 align="center">Projects</h1>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Manager</th>
+        <th>Client</th>
+        <th>Creator</th>
+        <th>Total Hours</th>
+        <th>Hours Worked</th>
+        <th>Budget</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @projects.each do |project| %>
+        <tr>
+          <td><%= project.title %></td>
+          <td><%= project.description %></td>
+          <td><%= project.manager.name %></td>
+          <td><%= project.client.first_name %></td>
+          <td><%= project.creator.name %></td>
+          <td><%= project.total_hours %></td>
+          <td><%= project.hours_worked %></td>
+          <td><%= project.budget %></td>
+          <td><%= link_to fa_icon('eye', text:''), project_url(project), class: 'btn btn-success' %>
+              <%= link_to fa_icon('pencil-square-o', text:''), edit_project_path(project), class: 'btn btn-warning' %>
+              <%= link_to fa_icon('trash-o', text:''), project_url(project), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <%= paginate @projects %>
+</div>
