@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_01_051543) do
+ActiveRecord::Schema.define(version: 2019_08_01_073518) do
 
   create_table "clients", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "first_name"
@@ -34,6 +34,9 @@ ActiveRecord::Schema.define(version: 2019_08_01_051543) do
     t.bigint "created_by"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "title"
+    t.bigint "project_id"
+    t.index ["project_id"], name: "index_payments_on_project_id"
   end
 
   create_table "projects", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -47,6 +50,8 @@ ActiveRecord::Schema.define(version: 2019_08_01_051543) do
     t.datetime "updated_at", null: false
     t.bigint "created_by"
     t.bigint "manager_id"
+    t.bigint "client_id"
+    t.index ["client_id"], name: "index_projects_on_client_id"
   end
 
   create_table "roles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -72,4 +77,6 @@ ActiveRecord::Schema.define(version: 2019_08_01_051543) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "payments", "projects"
+  add_foreign_key "projects", "clients"
 end
