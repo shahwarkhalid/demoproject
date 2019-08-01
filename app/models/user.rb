@@ -12,6 +12,9 @@ class User < ApplicationRecord
 
   has_many :employees_projects, foreign_key: 'employee_id'
   has_many :projects, :through => :employees_projects
+  has_many :projects, foreign_key: 'manager_id'
+  has_many :projects, foreign_key: 'creator_id'
+  has_many :payments, foreign_key: 'creator_id'
 
   def admin?
     role == 'admin'
