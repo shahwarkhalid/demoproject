@@ -15,14 +15,11 @@ class ProjectsController < ApplicationController
 
   def edit; end
 
-  def create
-  end
+  def create; end
 
-  def update
-  end
+  def update; end
 
-  def destroy
-  end
+  def destroy; end
 
   def search
     @projects = Project.search_projects(params[:name]).order(:created_at).page(params[:page])

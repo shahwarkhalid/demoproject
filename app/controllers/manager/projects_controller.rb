@@ -1,11 +1,12 @@
+# frozen_string_literal: true
+
 class Manager::ProjectsController < ProjectsController
   def index
-   @projects = current_user.managed_projects.order(:created_at) + current_user.created_projects.order(:created_at)
-   @projects = Kaminari.paginate_array(@projects).page(params[:page])
+    @projects = current_user.managed_projects.order(:created_at) + current_user.created_projects.order(:created_at)
+    @projects = Kaminari.paginate_array(@projects).page(params[:page])
   end
 
-  def show
-  end
+  def show; end
 
   def new
     super

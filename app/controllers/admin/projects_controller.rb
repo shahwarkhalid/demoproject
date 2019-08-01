@@ -1,10 +1,11 @@
+# frozen_string_literal: true
+
 class Admin::ProjectsController < ProjectsController
   def index
     super
   end
 
-  def show
-  end
+  def show; end
 
   def new
     super
