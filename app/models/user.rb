@@ -11,7 +11,7 @@ class User < ApplicationRecord
   validates_numericality_of :age, greater_than: 0, only_integer: true, on: :update
 
   has_many :employees_projects, foreign_key: 'employee_id'
-  has_many :projects, :through => :employees_projects
+  has_many :projects, through: :employees_projects
   has_many :projects, foreign_key: 'manager_id'
   has_many :projects, foreign_key: 'creator_id'
   has_many :payments, foreign_key: 'creator_id'
@@ -29,9 +29,9 @@ class User < ApplicationRecord
   end
 
   def self.search_users(term, role, current_user)
-    users = self.all
-    users = users.where(role: role) if !role.empty?
-    users = users.where('name LIKE ? OR email LIKE ?', "%#{term}%", "%#{term}%") if !term.empty?
+    users = all
+    users = users.where(role: role) unless role.empty?
+    users = users.where('name LIKE ? OR email LIKE ?', "%#{term}%", "%#{term}%") unless term.empty?
     users = users.where.not(id: current_user.id)
     users
   end

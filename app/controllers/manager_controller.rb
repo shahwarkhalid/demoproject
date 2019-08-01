@@ -8,6 +8,6 @@ class ManagerController < ApplicationController
   protected
 
   def validate_manager!
-    redirect_to root_url if !current_user.manager?
+    redirect_to root_url unless current_user.manager?
   end
 end

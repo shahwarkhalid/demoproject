@@ -8,6 +8,6 @@ class AdminController < ApplicationController
   protected
 
   def validate_admin!
-    redirect_to root_url if !current_user.admin?
+    redirect_to root_url unless current_user.admin?
   end
 end

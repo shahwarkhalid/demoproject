@@ -39,6 +39,7 @@ class ApplicationController < ActionController::Base
     flash[:alert] = 'Record not found'
     redirect_to root_url
   end
+
   def page_not_found
     render :not_found
   end

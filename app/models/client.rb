@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Client < ApplicationRecord
   validates_presence_of :first_name, on: :create
   validates_presence_of :email, on: :create
@@ -7,8 +9,8 @@ class Client < ApplicationRecord
   has_many :projects
 
   def self.search_clients(term)
-    clients = self.all
-    clients = clients.where('first_name LIKE ? OR email LIKE ?', "%#{term}%", "%#{term}%") if !term.empty?
+    clients = all
+    clients = clients.where('first_name LIKE ? OR email LIKE ?', "%#{term}%", "%#{term}%") unless term.empty?
     clients
   end
 end

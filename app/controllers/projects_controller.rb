@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ProjectsController < ApplicationController
   before_action :set_project, only: %i[show edit update destroy]
 
@@ -60,9 +62,7 @@ class ProjectsController < ApplicationController
 
   def set_project
     @project = Project.find_by_id(params[:id])
-    unless @project
-      render :file => 'public/404.html', :status => :not_found, :layout => false
-    end
+    render file: 'public/404.html', status: :not_found, layout: false unless @project
   end
 
   def project_params

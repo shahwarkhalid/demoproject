@@ -19,6 +19,6 @@ Rails.application.routes.draw do
     post 'client/search', to: 'clients#search'
   end
   resources :user, only: %i[index edit update]
-  get '404', :to => 'errors#not_found'
+  get '404', to: 'errors#not_found'
   match '*path' => redirect('/'), via: :get
 end

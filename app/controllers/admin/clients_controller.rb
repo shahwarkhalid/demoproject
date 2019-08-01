@@ -60,9 +60,7 @@ class Admin::ClientsController < AdminController
 
   def set_admin_client
     @admin_client = Client.find_by_id(params[:id])
-    unless @admin_client
-      render :file => 'public/404.html', :status => :not_found, :layout => false
-    end
+    render file: 'public/404.html', status: :not_found, layout: false unless @admin_client
   end
 
   def admin_client_params

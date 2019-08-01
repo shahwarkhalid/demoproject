@@ -60,9 +60,7 @@ class Manager::ClientsController < ManagerController
 
   def set_client
     @manager_client = Client.find_by_id(params[:id])
-    unless @manager_client
-      render :file => 'public/404.html', :status => :not_found, :layout => false
-    end
+    render file: 'public/404.html', status: :not_found, layout: false unless @manager_client
   end
 
   def client_params

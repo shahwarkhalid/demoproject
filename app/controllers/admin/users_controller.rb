@@ -77,9 +77,7 @@ class Admin::UsersController < AdminController
 
   def set_user
     @user = User.find_by_id(params[:id])
-    unless @user
-      render :file => 'public/404.html', :status => :not_found, :layout => false
-    end
+    render file: 'public/404.html', status: :not_found, layout: false unless @user
   end
 
   def user_params
