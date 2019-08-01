@@ -1,5 +1,9 @@
 <div style="position:fixed;">
-  <%= link_to fa_icon('user-plus', text: "New Project"), new_project_url, class: "btn btn-info" %>
+  <% if url_type == 'admin' %>
+    <%= link_to fa_icon('user-plus', text: "New Project"), new_admin_project_url, class: "btn btn-info" %>
+  <% elsif url_type == 'manager' %>
+    <%= link_to fa_icon('user-plus', text: "New Project"), new_manager_project_url, class: "btn btn-info" %>
+  <% end %>
 </div>
 <div style="margin-top:50px">
   <h1 align="center">Projects</h1>
@@ -29,9 +33,15 @@
           <td><%= project.total_hours %></td>
           <td><%= project.hours_worked %></td>
           <td><%= project.budget %></td>
-          <td><%= link_to fa_icon('eye', text:''), project_url(project), class: 'btn btn-success' %>
-              <%= link_to fa_icon('pencil-square-o', text:''), edit_project_path(project), class: 'btn btn-warning' %>
-              <%= link_to fa_icon('trash-o', text:''), project_url(project), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %></td>
+          <% if url_type == 'admin' %>
+            <td><%= link_to fa_icon('eye', text:''), admin_project_url(project), class: 'btn btn-success' %>
+              <%= link_to fa_icon('pencil-square-o', text:''), edit_admin_project_url(project), class: 'btn btn-warning' %>
+              <%= link_to fa_icon('trash-o', text:''), admin_project_url(project), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %></td>
+          <% elsif url_type == 'manager' %>
+            <td><%= link_to fa_icon('eye', text:''), manager_project_url(project), class: 'btn btn-success' %>
+              <%= link_to fa_icon('pencil-square-o', text:''), edit_manager_project_url(project), class: 'btn btn-warning' %>
+              <%= link_to fa_icon('trash-o', text:''), manager_project_url(project), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %></td>
+              <% end %>
         </tr>
       <% end %>
     </tbody>

@@ -2,5 +2,5 @@
   <%= render 'search' %>
 </div>
 <div class="container-fluid" id="projectlist">
-  <%= render 'projectlist', local: @projects %>
+  <%= render 'projects/projectlist', projects: @projects, url_type: caller_url %>
 </div>

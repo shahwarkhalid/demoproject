@@ -2,41 +2,41 @@
 
   <p>
     <strong>Title:</strong>
-    <%= @project.title %>
+    <%= project.title %>
   </p>
 
   <p>
     <strong>Description:</strong>
-    <%= @project.description %>
+    <%= project.description %>
   </p>
 
   <p>
     <strong>Manager:</strong>
-    <%= @project.manager.name %>
+    <%= project.manager.name %>
   </p>
 
   <p>
     <strong>Client:</strong>
-    <%= @project.client.first_name %>
+    <%= project.client.first_name %>
   </p>
 
   <p>
     <strong>Creator:</strong>
-    <%= @project.creator.name %>
+    <%= project.creator.name %>
   </p>
 
   <p>
     <strong>Total Hours:</strong>
-    <%= @project.total_hours %>
+    <%= project.total_hours %>
   </p>
 
   <p>
     <strong>Hours Worked:</strong>
-    <%= @project.hours_worked %>
+    <%= project.hours_worked %>
   </p>
   <p>
     <strong>Budget:</strong>
-    <%= @project.budget %>
+    <%= project.budget %>
   </p>
-  <%= link_to 'Back', projects_path, class: 'btn btn-warning' %>
+  <%= link_to 'Back', form_url, class: 'btn btn-warning' %>
 </div>

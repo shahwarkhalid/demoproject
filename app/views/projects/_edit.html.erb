@@ -2,7 +2,7 @@
   <h1 align="center">Editing Project</h1>
 </div>
 <div class="container">
-  <%= form_with(model: @project, url: project_url, local: true) do |form| %>
+  <%= form_with(model: @project, url: update_url, local: true) do |form| %>
     <% if @project.errors.any? %>
       <div id="error_explanation">
         <h2><%= pluralize(@project.errors.count, "error") %> prohibited this manager_client from being saved:</h2>
@@ -49,5 +49,5 @@
       <%= form.submit "Save Project", class: 'btn btn-success' %>
     </div>
   <% end %>
-  <%= link_to 'Back', projects_path, class: 'btn btn-warning' %>
+  <%= link_to 'Back', form_url, class: 'btn btn-warning' %>
 </div>

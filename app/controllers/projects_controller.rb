@@ -16,39 +16,12 @@ class ProjectsController < ApplicationController
   def edit; end
 
   def create
-    @project = Project.new(project_params)
-    @project.creator_id = current_user.id
-    @project.status = 1
-    @project.hours_worked = 0
-    respond_to do |format|
-      if @project.save
-        format.html { redirect_to project_url(@project), notice: 'Project was successfully created.' }
-        format.json { render :show, status: :created, location: @Project }
-      else
-        format.html { render :new }
-        format.json { render json: @Project.errors, status: :unprocessable_entity }
-      end
-    end
   end
 
   def update
-    respond_to do |format|
-      if @project.update(project_params)
-        format.html { redirect_to project_url(@project), notice: 'Project was successfully updated.' }
-        format.json { render :show, status: :ok, location: @Project }
-      else
-        format.html { render :edit }
-        format.json { render json: @project.errors, status: :unprocessable_entity }
-      end
-    end
   end
 
   def destroy
-    @project.destroy
-    respond_to do |format|
-      format.html { redirect_to projects_url, notice: 'Project was successfully destroyed.' }
-      format.json { head :no_content }
-    end
   end
 
   def search
