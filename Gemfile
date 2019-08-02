@@ -40,6 +40,7 @@ gem 'rubocop-rails'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'bootstrap', '~> 4.3', '>= 4.3.1'
+gem 'bootstrap4-datetime-picker-rails'
 gem 'chosen-rails'
 gem 'devise', '~> 4.2'
 gem 'font-awesome-rails', '~> 4.7', '>= 4.7.0.2'
