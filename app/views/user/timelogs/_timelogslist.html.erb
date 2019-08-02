@@ -1,0 +1,37 @@
+<div style="position:fixed;">
+  <%= link_to fa_icon('user-plus', text: "New timelog"), new_user_project_timelog_url, class: "btn btn-info" %>
+  <%= link_to fa_icon('arrow-circle-left', text: "Back"), user_projects_url, class: "btn btn-info" %>
+</div>
+<div style="margin-top:50px">
+  <h1 align="center">timelogs</h1>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Description</th>
+        <th>From</th>
+        <th>To</th>
+        <th>Creator</th>
+        <th>Total Hours</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @timelogs.each do |timelog| %>
+        <tr>
+          <td><%= timelog.title %></td>
+          <td><%= timelog.description %></td>
+          <td><%= timelog.start_time %></td>
+          <td><%= timelog.end_time %></td>
+          <td><%= timelog.creator.name %></td>
+          <td><%= timelog.hours %></td>
+          <td><%= link_to fa_icon('eye', text:''), user_timelog_url(timelog), class: 'btn btn-success' %>
+            <%= link_to fa_icon('pencil-square-o', text:''), edit_user_timelog_url(timelog), class: 'btn btn-warning' %>
+            <%= link_to fa_icon('trash-o', text:''), user_timelog_url(timelog), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <%= paginate @timelogs %>
+</div>

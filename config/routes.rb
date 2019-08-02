@@ -4,14 +4,21 @@ Rails.application.routes.draw do
   resources :manager, only: [:index]
   resources :admin, only: [:index]
   post 'project/search', to: 'projects#search'
+
   namespace :manager do
     resources :projects do
       resources :payments, shallow: true
-      resources :timelogs, shallow: true
     end
     resources :clients
     post 'client/search', to: 'clients#search'
   end
+
+  namespace :user do
+    resources :projects, only: [:index] do
+      resources :timelogs, shallow: true
+    end
+  end
+
   root 'home#index'
   devise_for :users, controllers: { registrations: :registrations }
   namespace :admin do
@@ -25,6 +32,7 @@ Rails.application.routes.draw do
     post 'user/search', to: 'users#search'
     post 'client/search', to: 'clients#search'
   end
+
   resources :user, only: %i[index edit update]
   get '404', to: 'errors#not_found'
   match '*path' => redirect('/'), via: :get
