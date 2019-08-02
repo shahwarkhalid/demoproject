@@ -32,8 +32,8 @@ class Admin::ProjectsController < ProjectsController
   end
 
   def update
+    super
     respond_to do |format|
-      super
       if @project.update(project_params)
         format.html { redirect_to admin_project_url(@project), notice: 'Project was successfully updated.' }
         format.json { render :show, status: :ok, location: @Project }

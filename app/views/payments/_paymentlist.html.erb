@@ -1,0 +1,44 @@
+<div style="position:fixed;">
+  <% if url_type == 'admin' %>
+    <%= link_to fa_icon('user-plus', text: "New payment"), new_admin_project_payment_url(@project), class: "btn btn-info" %>
+  <% elsif url_type == 'manager' %>
+    <%= link_to fa_icon('user-plus', text: "New payment"), new_manager_project_payment_url(@project), class: "btn btn-info" %>
+  <% end %>
+</div>
+<div style="margin-top:50px">
+  <h1 align="center">payments</h1>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Type</th>
+        <th>Amount</th>
+        <th>Project</th>
+        <th>Created By</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @payments.each do |payment| %>
+        <tr>
+          <td><%= payment.title %></td>
+          <td><%= payment.payment_type %></td>
+          <td><%= payment.amount %></td>
+          <td><%= payment.project.title %></td>
+          <td><%= payment.creator.name %></td>
+          <% if url_type == 'admin' %>
+            <td><%= link_to fa_icon('eye', text:''), admin_payment_url(payment), class: 'btn btn-success' %>
+              <%= link_to fa_icon('pencil-square-o', text:''), edit_admin_payment_url(payment), class: 'btn btn-warning' %>
+              <%= link_to fa_icon('trash-o', text:''), admin_payment_url(payment), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %></td>
+          <% elsif url_type == 'manager' %>
+            <td><%= link_to fa_icon('eye', text:''), manager_payment_url(payment), class: 'btn btn-success' %>
+              <%= link_to fa_icon('pencil-square-o', text:''), edit_manager_payment_url(payment), class: 'btn btn-warning' %>
+              <%= link_to fa_icon('trash-o', text:''), manager_payment_url(payment), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %></td>
+              <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <%= paginate @payments %>
+</div>

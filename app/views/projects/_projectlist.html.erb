@@ -36,11 +36,13 @@
           <% if url_type == 'admin' %>
             <td><%= link_to fa_icon('eye', text:''), admin_project_url(project), class: 'btn btn-success' %>
               <%= link_to fa_icon('pencil-square-o', text:''), edit_admin_project_url(project), class: 'btn btn-warning' %>
-              <%= link_to fa_icon('trash-o', text:''), admin_project_url(project), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %></td>
+              <%= link_to fa_icon('trash-o', text:''), admin_project_url(project), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+              <%= link_to fa_icon('plus-square', text:''), admin_project_payments_url(project), class: 'btn btn-primary' %></td>
           <% elsif url_type == 'manager' %>
             <td><%= link_to fa_icon('eye', text:''), manager_project_url(project), class: 'btn btn-success' %>
               <%= link_to fa_icon('pencil-square-o', text:''), edit_manager_project_url(project), class: 'btn btn-warning' %>
-              <%= link_to fa_icon('trash-o', text:''), manager_project_url(project), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %></td>
+              <%= link_to fa_icon('trash-o', text:''), manager_project_url(project), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+              <%= link_to fa_icon('plus-square', text:''), manager_project_payments_url(project), class: 'btn btn-primary' %></td>
               <% end %>
         </tr>
       <% end %>

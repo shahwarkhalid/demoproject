@@ -1,0 +1,29 @@
+<div class="container">
+
+  <p>
+    <strong>Title:</strong>
+    <%= payment.title %>
+  </p>
+
+  <p>
+    <strong>Type:</strong>
+    <%= payment.payment_type %>
+  </p>
+
+  <p>
+    <strong>Amount:</strong>
+    <%= payment.amount %>
+  </p>
+
+  <p>
+    <strong>Project:</strong>
+    <%= payment.project.title %>
+  </p>
+
+  <p>
+    <strong>Creator:</strong>
+    <%= payment.creator.name %>
+  </p>
+
+  <%= link_to 'Back', form_url, class: 'btn btn-warning' %>
+</div>
