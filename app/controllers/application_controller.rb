@@ -5,6 +5,8 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_user!
   before_action :validate_caller_admin, if: :projects_controller?
   before_action :validate_caller_manager, if: :projects_controller?
+  before_action :validate_caller_admin, if: :payments_controller?
+  before_action :validate_caller_manager, if: :payments_controller?
   include Pundit
   protect_from_forgery
 
@@ -48,6 +50,10 @@ class ApplicationController < ActionController::Base
 
   def projects_controller?
     is_a?(::ProjectsController)
+  end
+
+  def payments_controller?
+    is_a?(::PaymentsController)
   end
 
   def validate_caller_admin
