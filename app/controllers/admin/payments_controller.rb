@@ -16,6 +16,7 @@ class Admin::PaymentsController < PaymentsController
   end
 
   def create
+    @project = Project.find(params[:project_id])
     @payment = Payment.new(payment_params)
     @payment.project_id = params[:project_id]
     @payment.creator = current_user
