@@ -1,8 +1,10 @@
 <div style="position:fixed;">
   <% if url_type == 'admin' %>
     <%= link_to fa_icon('user-plus', text: "New payment"), new_admin_project_payment_url(@project), class: "btn btn-info" %>
+    <%= link_to fa_icon('arrow-circle-left', text: "Back"), admin_projects_url, class: "btn btn-info" %>
   <% elsif url_type == 'manager' %>
     <%= link_to fa_icon('user-plus', text: "New payment"), new_manager_project_payment_url(@project), class: "btn btn-info" %>
+    <%= link_to fa_icon('arrow-circle-left', text: "Back"), manager_projects_url, class: "btn btn-info" %>
   <% end %>
 </div>
 <div style="margin-top:50px">

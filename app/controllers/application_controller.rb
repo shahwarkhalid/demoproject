@@ -3,6 +3,8 @@
 class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :authenticate_user!
+  before_action :validate_caller_admin, if: :projects_controller?
+  before_action :validate_caller_manager, if: :projects_controller?
   include Pundit
   protect_from_forgery
 
@@ -42,5 +44,25 @@ class ApplicationController < ActionController::Base
 
   def page_not_found
     render :not_found
+  end
+
+  def projects_controller?
+    is_a?(::ProjectsController)
+  end
+
+  def validate_caller_admin
+    redirect_to root_url if current_user.role == 'admin' && is_Manager_namespace?
+  end
+
+  def validate_caller_manager
+    redirect_to root_url if current_user.role == 'manager' && is_Admin_namespace?
+  end
+
+  def is_Manager_namespace?
+    self.class.parent == Manager
+  end
+
+  def is_Admin_namespace?
+    self.class.parent == Admin
   end
 end

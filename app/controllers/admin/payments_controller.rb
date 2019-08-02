@@ -3,7 +3,9 @@ class Admin::PaymentsController < PaymentsController
     super
   end
 
-  def show; end
+  def show
+    super
+  end
 
   def new
     super

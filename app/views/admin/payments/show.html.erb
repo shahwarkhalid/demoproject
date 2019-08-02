@@ -1,1 +1,1 @@
-<%= render 'payments/show', payment: @payment, form_url: admin_project_payments_path %>
+<%= render 'payments/show', payment: @payment, form_url: admin_project_payments_path(@payment.project) %>
