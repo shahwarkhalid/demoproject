@@ -1,0 +1,34 @@
+<div class="container">
+
+  <p>
+    <strong>Title:</strong>
+    <%= @timelog.title %>
+  </p>
+
+  <p>
+    <strong>Description:</strong>
+    <%= @timelog.description %>
+  </p>
+
+  <p>
+    <strong>Start Time:</strong>
+    <%= @timelog.start_time %>
+  </p>
+
+  <p>
+    <strong>End Time:</strong>
+    <%= @timelog.end_time %>
+  </p>
+
+  <p>
+    <strong>Creator:</strong>
+    <%= @timelog.creator.name %>
+  </p>
+
+  <p>
+    <strong>Total Hours:</strong>
+    <%= @timelog.hours %>
+  </p>
+
+  <%= link_to 'Back', admin_project_timelogs_url(@timelog.project), class: 'btn btn-warning' %>
+</div>

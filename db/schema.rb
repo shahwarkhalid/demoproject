@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_02_080442) do
+ActiveRecord::Schema.define(version: 2019_08_02_081526) do
 
   create_table "clients", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "first_name"
@@ -71,6 +71,12 @@ ActiveRecord::Schema.define(version: 2019_08_02_080442) do
     t.integer "hours"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "employee_id"
+    t.bigint "project_id"
+    t.bigint "creator_id"
+    t.index ["creator_id"], name: "index_timelogs_on_creator_id"
+    t.index ["employee_id"], name: "index_timelogs_on_employee_id"
+    t.index ["project_id"], name: "index_timelogs_on_project_id"
   end
 
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
