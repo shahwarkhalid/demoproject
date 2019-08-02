@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 class Manager::PaymentsController < PaymentsController
-    def index
+  def index
     super
-  end
+end
 
   def show
     super
