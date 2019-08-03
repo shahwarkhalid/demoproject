@@ -28,6 +28,17 @@ class ProjectsController < ApplicationController
     end
   end
 
+  def assign_employees
+    @project = Project.find(params[:project_id])
+  end
+
+  def create_employees_list
+  end
+
+  def emplist
+    project = Project.find(params[:project_id])
+    @employees = project.employees.order(:id).page(params[:page])
+  end
   private
 
   def set_project

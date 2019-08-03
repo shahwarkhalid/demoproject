@@ -38,6 +38,14 @@ class User < ApplicationRecord
     users
   end
 
+  def self.domains_emails(domains)
+    emails = []
+    domains.each do |domain|
+      emails = emails + User.where('email like ?', "%#{domain}%").where(role: 'user')
+    end
+    emails
+  end
+
   def active_for_authentication?
     super && status?
   end

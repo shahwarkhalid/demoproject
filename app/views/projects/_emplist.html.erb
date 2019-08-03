@@ -1,0 +1,27 @@
+<div class="container">
+  <div style="margin-top:50px">
+    <h1 align="center">Users</h1>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Age</th>
+          <th>Address</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @employees.each do |user| %>
+          <tr>
+            <td><%= user.name %></td>
+            <td><%= user.email %></td>
+            <td><%= user.age %></td>
+            <td><%= user.address %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <%= paginate @employees %>
+  </div>
+  <%= link_to 'Back', back_url, class: 'btn btn-warning' %>
+</div>

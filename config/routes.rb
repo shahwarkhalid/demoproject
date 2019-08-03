@@ -8,6 +8,9 @@ Rails.application.routes.draw do
   namespace :manager do
     resources :projects do
       resources :payments, shallow: true
+      get 'addemployees', to: 'projects#assign_employees'
+      post 'addemployees', to: 'projects#create_employees_list'
+      get 'emplist', to: 'projects#emplist'
     end
     resources :clients
     post 'client/search', to: 'clients#search'
@@ -26,6 +29,9 @@ Rails.application.routes.draw do
     resources :projects do
       resources :payments, shallow: true
       resources :timelogs, shallow: true
+      get 'addemployees', to: 'projects#assign_employees'
+      post 'addemployees', to: 'projects#create_employees_list'
+      get 'emplist', to: 'projects#emplist'
     end
     resources :users, only: %i[index new create edit update]
     get 'update_status/:id', to: 'users#enable_disable_user', as: :change_user_status

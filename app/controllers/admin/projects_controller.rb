@@ -60,6 +60,22 @@ class Admin::ProjectsController < ProjectsController
     end
   end
 
+  def assign_employees
+    super
+  end
+
+  def create_employees_list
+    project = Project.find(params[:project_id])
+    emails_emplist = get_emails_emp_list if emails?
+    add_employees_by_emails(emails_emplist, project) if emails?
+    domains_emplist = get_domains_emplist if domain?
+    add_employees_by_domains(domains_emplist, project) if domain?
+    redirect_to admin_projects_url, notice: 'Employees were successfully assigned'
+  end
+
+  def emplist
+    super
+  end
   private
 
   def set_project
@@ -69,5 +85,49 @@ class Admin::ProjectsController < ProjectsController
 
   def project_params
     params.require(:project).permit(:title, :description, :total_hours, :budget, :manager_id, :client_id)
+  end
+
+  def get_emails_emp_list
+    emplist = params[:emails]
+    emplist = emplist.gsub(/\n/, "")
+    emplist = emplist.gsub(/\r/, "")
+    emplist = emplist.split(',')
+    emplist
+  end
+
+  def add_employees_by_emails(emplist, project)
+    emplist.each do |empmail|
+      if User.exists?(email: empmail)
+        emp = User.find_by(email: empmail, role: 'user')
+        if !EmployeesProject.exists?(employee_id: emp.id, project_id: project.id)
+          project.employees << emp
+        end
+      end
+    end
+  end
+
+  def add_employees_by_domains(emplist, project)
+    emplist.each do |emp|
+      if !EmployeesProject.exists?(employee_id: emp.id, project_id: project.id)
+        project.employees << emp
+      end
+    end
+  end
+
+  def get_domains_emplist
+    domains_list = params[:domains]
+    domains_list = domains_list.gsub(/\n/,"")
+    domains_list = domains_list.gsub(/\r/,"")
+    domains_list = domains_list.split(',')
+    domains_list = User.domains_emails(domains_list)
+    employees = domains_list
+  end
+
+  def emails?
+    params[:add_by_email] == "1"
+  end
+
+  def domain?
+    params[:add_by_domain] == "1"
   end
 end
