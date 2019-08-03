@@ -41,7 +41,7 @@ class User < ApplicationRecord
   def self.domains_emails(domains)
     emails = []
     domains.each do |domain|
-      emails = emails + User.where('email like ?', "%#{domain}%").where(role: 'user')
+      emails += User.where('email like ?', "%#{domain}%").where(role: 'user')
     end
     emails
   end

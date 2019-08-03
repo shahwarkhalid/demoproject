@@ -76,6 +76,7 @@ class Admin::ProjectsController < ProjectsController
   def emplist
     super
   end
+
   private
 
   def set_project
@@ -89,45 +90,41 @@ class Admin::ProjectsController < ProjectsController
 
   def get_emails_emp_list
     emplist = params[:emails]
-    emplist = emplist.gsub(/\n/, "")
-    emplist = emplist.gsub(/\r/, "")
+    emplist = emplist.gsub(/\n/, '')
+    emplist = emplist.gsub(/\r/, '')
     emplist = emplist.split(',')
     emplist
   end
 
   def add_employees_by_emails(emplist, project)
     emplist.each do |empmail|
-      if User.exists?(email: empmail)
-        emp = User.find_by(email: empmail, role: 'user')
-        if !EmployeesProject.exists?(employee_id: emp.id, project_id: project.id)
-          project.employees << emp
-        end
-      end
+      next unless User.exists?(email: empmail)
+
+      emp = User.find_by(email: empmail, role: 'user')
+      project.employees << emp unless EmployeesProject.exists?(employee_id: emp.id, project_id: project.id)
     end
   end
 
   def add_employees_by_domains(emplist, project)
     emplist.each do |emp|
-      if !EmployeesProject.exists?(employee_id: emp.id, project_id: project.id)
-        project.employees << emp
-      end
+      project.employees << emp unless EmployeesProject.exists?(employee_id: emp.id, project_id: project.id)
     end
   end
 
   def get_domains_emplist
     domains_list = params[:domains]
-    domains_list = domains_list.gsub(/\n/,"")
-    domains_list = domains_list.gsub(/\r/,"")
+    domains_list = domains_list.gsub(/\n/, '')
+    domains_list = domains_list.gsub(/\r/, '')
     domains_list = domains_list.split(',')
     domains_list = User.domains_emails(domains_list)
     employees = domains_list
   end
 
   def emails?
-    params[:add_by_email] == "1"
+    params[:add_by_email] == '1'
   end
 
   def domain?
-    params[:add_by_domain] == "1"
+    params[:add_by_domain] == '1'
   end
 end
