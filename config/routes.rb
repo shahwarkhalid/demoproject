@@ -18,7 +18,14 @@ Rails.application.routes.draw do
 
   namespace :user do
     resources :projects, only: [:index] do
-      resources :timelogs, shallow: true
+      scope module: 'projects' do
+        resources :comments, only: [:index, :edit, :update, :create, :destroy]
+      end
+      resources :timelogs, shallow: true do
+        scope module: 'timelogs' do
+          resources :comments, only: [:index, :edit, :update, :create, :destroy]
+        end
+      end
     end
   end
 
@@ -27,8 +34,19 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :clients
     resources :projects do
-      resources :payments, shallow: true
-      resources :timelogs, shallow: true
+      resources :payments, shallow: true do
+        scope module: 'payments' do
+          resources :comments, only: [:index, :edit, :update, :create, :destroy]
+        end
+      end
+      resources :timelogs, shallow: true do
+        scope module: 'timelogs' do
+          resources :comments, only: [:index, :edit, :update, :create, :destroy]
+        end
+      end
+      scope module: 'projects' do
+        resources :comments, only: [:index, :edit, :update, :create, :destroy]
+      end
       get 'addemployees', to: 'projects#assign_employees'
       post 'addemployees', to: 'projects#create_employees_list'
       get 'emplist', to: 'projects#emplist'

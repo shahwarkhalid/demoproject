@@ -16,6 +16,7 @@ class User < ApplicationRecord
   has_many :created_projects, class_name: 'Project', foreign_key: 'creator_id'
   has_many :payments, foreign_key: 'creator_id'
   has_many :timelogs, foreign_key: 'employee_id'
+  has_many :created_comments, class_name: 'Comment', foreign_key: 'creator_id'
   has_many :created_timelogs, class_name: 'Timelog', foreign_key: 'creator_id'
 
   def admin?

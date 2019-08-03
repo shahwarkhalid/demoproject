@@ -35,21 +35,23 @@
           <td><%= project.budget %></td>
           <% if url_type == 'admin' %>
             <td><%= link_to fa_icon('eye', text:''), admin_project_url(project), class: 'btn btn-success' %>
-              <%= link_to fa_icon('pencil-square-o', text:''), edit_admin_project_url(project), class: 'btn btn-warning' %>
-              <%= link_to fa_icon('trash-o', text:''), admin_project_url(project), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
-              <%= link_to fa_icon('plus-square', text:''), admin_project_payments_url(project), class: 'btn btn-primary' %>
-              <%= link_to fa_icon('clock-o', text:''), admin_project_timelogs_url(project), class: 'btn btn-info' %>
-              <%= link_to fa_icon('user-plus', text:''), admin_project_addemployees_url(project), class: 'btn btn-primary' %>
-              <%= link_to fa_icon('users', text:''), admin_project_emplist_url(project), class: 'btn btn-success' %></td>
+                <%= link_to fa_icon('pencil-square-o', text:''), edit_admin_project_url(project), class: 'btn btn-warning' %>
+                <%= link_to fa_icon('trash-o', text:''), admin_project_url(project), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+                <%= link_to fa_icon('plus-square', text:''), admin_project_payments_url(project), class: 'btn btn-primary' %>
+                <%= link_to fa_icon('clock-o', text:''), admin_project_timelogs_url(project), class: 'btn btn-info' %>
+                <%= link_to fa_icon('user-plus', text:''), admin_project_addemployees_url(project), class: 'btn btn-primary' %>
+                <%= link_to fa_icon('users', text:''), admin_project_emplist_url(project), class: 'btn btn-success' %>
+                <%= link_to fa_icon('plus-circle', text:''), admin_project_comments_url(project), class: 'btn btn-warning' %></td>
           <% elsif url_type == 'manager' %>
             <td><%= link_to fa_icon('eye', text:''), manager_project_url(project), class: 'btn btn-success' %>
-              <%= link_to fa_icon('pencil-square-o', text:''), edit_manager_project_url(project), class: 'btn btn-warning' %>
-              <%= link_to fa_icon('trash-o', text:''), manager_project_url(project), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
-              <%= link_to fa_icon('plus-square', text:''), manager_project_payments_url(project), class: 'btn btn-primary' %>
-              <%= link_to fa_icon('user-plus', text:''), manager_project_addemployees_url(project), class: 'btn btn-primary' %>
-              <%= link_to fa_icon('users', text:''), manager_project_emplist_url(project), class: 'btn btn-success' %></td>
+                <%= link_to fa_icon('pencil-square-o', text:''), edit_manager_project_url(project), class: 'btn btn-warning' %>
+                <%= link_to fa_icon('trash-o', text:''), manager_project_url(project), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+                <%= link_to fa_icon('plus-square', text:''), manager_project_payments_url(project), class: 'btn btn-primary' %>
+                <%= link_to fa_icon('user-plus', text:''), manager_project_addemployees_url(project), class: 'btn btn-primary' %>
+                <%= link_to fa_icon('users', text:''), manager_project_emplist_url(project), class: 'btn btn-success' %></td>
           <% elsif url_type == 'user' %>
-              <td><%= link_to fa_icon('clock-o', text:''), user_project_timelogs_url(project), class: 'btn btn-success' %></td>
+              <td><%= link_to fa_icon('clock-o', text:''), user_project_timelogs_url(project), class: 'btn btn-success' %>
+                  <%= link_to fa_icon('plus-circle', text:''), user_project_comments_url(project), class: 'btn btn-warning' %></td>
           <% end %>
         </tr>
       <% end %>

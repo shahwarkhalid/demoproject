@@ -1,0 +1,27 @@
+<div style="position: fixed;">
+  <%= link_to 'Back', back_url, class: 'btn btn-warning' %>
+</div>
+<div>
+  <div style="margin-top:50px">
+    <h1 align="center">Comments</h1>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Text</th>
+          <th>Made By</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @comments.each do |comment| %>
+          <tr>
+            <td><%= comment.text %></td>
+            <td><%= comment.creator.name %></td>
+            <td><%= link_to fa_icon('pencil-square-o', text: ''), edit_admin_project_comment_url(comment.source_id, comment.id), class: 'btn btn-primary' %>
+                <%= link_to fa_icon('trash-o', text:''), admin_project_comment_url(comment.source_id, comment.id), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

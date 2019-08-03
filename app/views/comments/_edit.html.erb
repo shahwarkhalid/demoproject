@@ -1,0 +1,16 @@
+<div class="container">
+  <h1 align="center">Editing Comment</h1>
+</div>
+<div class="container">
+  <%= form_with(model: @comment, url: update_url, local: true) do |form| %>
+    <div class="form-group">
+      <%= form.label :text %>
+      <%= form.text_field :text, class: 'form-control' %>
+    </div>
+
+    <div class="form-group">
+      <%= form.submit "Save Comment", class: 'btn btn-success' %>
+    </div>
+  <% end %>
+  <%= link_to 'Back', form_url, class: 'btn btn-warning' %>
+</div>
