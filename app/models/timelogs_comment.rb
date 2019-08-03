@@ -1,0 +1,2 @@
+class TimelogsComment < Comment
+end

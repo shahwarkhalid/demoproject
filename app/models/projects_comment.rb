@@ -1,0 +1,2 @@
+class ProjectsComment < Comment
+end

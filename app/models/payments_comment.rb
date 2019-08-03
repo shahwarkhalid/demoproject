@@ -1,0 +1,2 @@
+class PaymentsComment < Comment
+end
