@@ -67,8 +67,7 @@ class Manager::ProjectsController < ProjectsController
 
   def create_employees_list
     project = Project.find(params[:project_id])
-    emails_emplist = get_emails_emp_list if emails?
-    add_employees_by_emails(emails_emplist, project) if emails?
+    add_employees_by_emails(project) if emails?
     domains_emplist = get_domains_emplist if domain?
     add_employees_by_domains(domains_emplist, project) if domain?
     redirect_to manager_projects_url, notice: 'Employees were successfully assigned'
@@ -89,19 +88,11 @@ class Manager::ProjectsController < ProjectsController
     params.require(:project).permit(:title, :description, :total_hours, :budget, :manager_id, :client_id)
   end
 
-  def get_emails_emp_list
-    emplist = params[:emails]
-    emplist = emplist.gsub(/\n/, '')
-    emplist = emplist.gsub(/\r/, '')
-    emplist = emplist.split(',')
-    emplist
-  end
-
-  def add_employees_by_emails(emplist, project)
-    emplist.each do |empmail|
-      next unless User.exists?(email: empmail)
-
-      emp = User.find_by(email: empmail, role: 'user')
+  def add_employees_by_emails(project)
+    params[:employees].shift if emails?
+    emails_emplist = params[:employees]
+    emps = User.find(emails_emplist)
+    emps.each do |emp|
       project.employees << emp unless EmployeesProject.exists?(employee_id: emp.id, project_id: project.id)
     end
   end

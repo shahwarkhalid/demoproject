@@ -1,2 +1,0 @@
-class ProjectsComment < Comment
-end

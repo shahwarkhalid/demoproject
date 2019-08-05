@@ -1,32 +1,43 @@
-<div class="container">
-  <h1 align="center">Editing Payment</h1>
-</div>
-<div class="container">
-  <%= form_with(model: @payment, url: update_url, local: true) do |form| %>
-    <% if @payment.errors.any? %>
-      <div id="error_explanation">
-        <%= render 'shared/error', error: @payment%>
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title">Editing Payment</h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="container">
+        <%= form_with(model: @payment, url: update_url, remote: true) do |form| %>
+          <% if @payment.errors.any? %>
+            <div id="error_explanation">
+              <%= render 'shared/error', error: @payment%>
+            </div>
+          <% end %>
+
+          <div class="form-group">
+            <%= form.label :title %>
+            <%= form.text_field :title, class: 'form-control' %>
+          </div>
+
+          <div class="form-group">
+            <%= form.label :payment_type %>
+            <%= form.text_field :payment_type, class: 'form-control' %>
+          </div>
+
+          <div class="form-group">
+            <%= form.label :amount %>
+            <%= form.number_field :amount, class: 'form-control' %>
+          </div>
+
+          <div class="form-group">
+            <%= form.submit "Save Payment", class: 'btn btn-success' %>
+          </div>
+        <% end %>
       </div>
-    <% end %>
-
-    <div class="form-group">
-      <%= form.label :title %>
-      <%= form.text_field :title, class: 'form-control' %>
     </div>
-
-    <div class="form-group">
-      <%= form.label :payment_type %>
-      <%= form.text_field :payment_type, class: 'form-control' %>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
     </div>
-
-    <div class="form-group">
-      <%= form.label :amount %>
-      <%= form.number_field :amount, class: 'form-control' %>
-    </div>
-
-    <div class="form-group">
-      <%= form.submit "Save Payment", class: 'btn btn-success' %>
-    </div>
-  <% end %>
-  <%= link_to 'Back', form_url, class: 'btn btn-warning' %>
+  </div>
 </div>

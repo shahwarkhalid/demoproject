@@ -25,4 +25,10 @@
 .user-search-select, .user-search-btn{
   margin-left:20px;
 }
+.shrink{
+-webkit-transform:scale(0.90);
+-moz-transform:scale(0.90);
+-ms-transform:scale(0.90);
+transform:scale(0.90);
+}
 

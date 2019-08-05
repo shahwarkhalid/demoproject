@@ -11,7 +11,14 @@ class CommentsController < ApplicationController
 
   def edit; end
 
-  def create; end
+  def create
+    comment = Comment.new(comment_params)
+    if comment.save
+      respond_to do |format|
+        format.js
+      end
+    end
+  end
 
   def update; end
 
@@ -26,5 +33,6 @@ class CommentsController < ApplicationController
   end
 
   def comment_params
+    params.require(:comment).permit(:text, :commentable_type, :commentable_id)
   end
 end

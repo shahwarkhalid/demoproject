@@ -13,10 +13,16 @@ class Admin::TimelogsController < ApplicationController
   def new
     @project = Project.find(params[:project_id])
     @timelog = Timelog.new
+    respond_to do |format|
+      format.js
+    end
   end
 
   def edit
     @project = @timelog.project
+    respond_to do |format|
+      format.js
+    end
   end
 
   def create
@@ -28,6 +34,7 @@ class Admin::TimelogsController < ApplicationController
       if @timelog.save
         format.html { redirect_to admin_project_timelogs_url(params[:project_id]), notice: 'Timelog was successfully created.' }
         format.json { render :show, status: :created, location: @timelog }
+        format.js
       else
         format.html { render :new }
         format.json { render json: @timelog.errors, status: :unprocessable_entity }
@@ -40,6 +47,7 @@ class Admin::TimelogsController < ApplicationController
       if @timelog.update(timelog_params)
         format.html { redirect_to admin_project_timelogs_url(@timelog.project_id), notice: 'Timelog was successfully updated.' }
         format.json { render :show, status: :ok, location: @timelog }
+        format.js
       else
         format.html { render :edit }
         format.json { render json: @timelog.errors, status: :unprocessable_entity }
@@ -48,8 +56,10 @@ class Admin::TimelogsController < ApplicationController
   end
 
   def destroy
+    @project = @timelog.project
     @timelog.destroy
     respond_to do |format|
+      format.js
       format.html { redirect_to admin_project_timelogs_url(@timelog.project_id), notice: 'Timelog was successfully destroyed.' }
       format.json { head :no_content }
     end

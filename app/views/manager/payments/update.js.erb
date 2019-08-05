@@ -1,0 +1,5 @@
+$('#my-modal').modal('hide');
+alert('Payment was updated')
+<% @payments = @payment.project.payments.order(:created_at).page(params[:page]) %>
+$('#payment-list').empty();
+$('#payment-list').append("<%= j render 'payments/paymentlist', url_type: 'manager', payments: @payments %>");

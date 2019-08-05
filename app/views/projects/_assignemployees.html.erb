@@ -1,8 +1,8 @@
 <div class="container">
   <%= form_with(url: form_url, local: true) do |form| %>
     <div class="form-group">
-      <%= form.label :emails %>
-      <%= form.text_area :emails, class: 'form-control' %>
+      <%= form.label :assign_employees %><div class="clearfix mb-3">
+      <%= form.select :employees, options_from_collection_for_select(User.where(role:'user'), :id, :name), {}, { id: 'choose-employee', multiple: true, :class => 'chosen-select'} %>
     </div>
     <div class="form-check-inline">
       <%= form.check_box :add_by_email, class: 'form-check-input' %>

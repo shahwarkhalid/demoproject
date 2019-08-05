@@ -13,9 +13,13 @@ class PaymentsController < ApplicationController
   def new
     @project = Project.find(params[:project_id])
     @payment = Payment.new(project_id: params[:project_id])
+    respond_to do |format|
+      format.js
+    end
   end
 
-  def edit; end
+  def edit
+  end
 
   def create; end
 

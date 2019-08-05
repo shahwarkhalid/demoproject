@@ -1,0 +1,53 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title">Edit Timelog</h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="container">
+        <%= form_with(model: @timelog, url: admin_timelog_url, remote: true) do |form| %>
+          <% if @timelog.errors.any? %>
+            <div id="error_explanation">
+              <%= render 'shared/error', error: @timelog %>
+            </div>
+          <% end %>
+
+          <div class="form-group">
+            <%= form.label :title %>
+            <%= form.text_field :title, class: 'form-control' %>
+          </div>
+
+          <div class="form-group">
+            <%= form.label :description %>
+            <%= form.text_area :description, class: 'form-control' %>
+          </div>
+          <div class="form-group">
+            <%= form.label :assign_employee %><div class="clearfix mb-3">
+            <%= form.select :employee_id, ("<option value=''>Select Employee</option>" + options_from_collection_for_select(User.all.where(role:'user'), :id, :name, :selected => form.object.employee_id)).html_safe, {}, { id: 'choose-employee', :class => 'chosen-select'} %>
+          </div>
+
+          <div class="form-group">
+            <%= form.label :start_time %><div class="clearfix mb-3">
+            <%= form.datetime_field :start_time, :ampm => true, :minute_step => 15, class: 'form-control' %>
+          </div>
+
+          <div class="form-group">
+            <%= form.label :end_time %><div class="clearfix mb-3">
+            <%= form.datetime_field :end_time, :ampm => true, :minute_step => 15, class: 'form-control' %>
+          </div>
+
+          <div class="form-group">
+            <%= form.submit "Save timelog", class: 'btn btn-success' %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+    </div>
+  </div>
+</div>
+

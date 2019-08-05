@@ -11,10 +11,16 @@ end
 
   def new
     super
+    respond_to do |format|
+      format.js
+    end
   end
 
   def edit
     super
+    respond_to do |format|
+      format.js
+    end
   end
 
   def create
@@ -26,6 +32,7 @@ end
       if @payment.save
         format.html { redirect_to manager_project_payments_url(params[:project_id]), notice: 'Payment was successfully created.' }
         format.json { render :show, status: :created, location: @admin_project_payments_url }
+        format.js
       else
         format.html { render :new }
         format.json { render json: @payment.errors, status: :unprocessable_entity }
@@ -39,6 +46,7 @@ end
       if @payment.update(payment_params)
         format.html { redirect_to manager_project_payments_url(@payment.project), notice: 'Payment was successfully updated.' }
         format.json { render :show, status: :ok, location: @payment }
+        format.js
       else
         format.html { render :edit }
         format.json { render json: @payment.errors, status: :unprocessable_entity }
@@ -47,11 +55,13 @@ end
   end
 
   def destroy
+    @project = @payment.project
     super
     @payment.destroy
     respond_to do |format|
       format.html { redirect_to manager_project_payments_url(@payment.project), notice: 'Payment was successfully destroyed.' }
       format.json { head :no_content }
+      format.js
     end
   end
 

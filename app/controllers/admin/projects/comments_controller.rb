@@ -2,15 +2,13 @@ class Admin::Projects::CommentsController < CommentsController
   before_action :set_comment, only: %i[show edit update destroy]
 
   def index
-    @project = Project.find(params[:project_id])
-    @comments = ProjectsComment.where(source_id: params[:project_id])
   end
 
   def edit; end
 
   def create
-    comment = ProjectsComment.new(text: params[:text])
-    comment.source_id = params[:project_id]
+    project = Project.find(params[:project_id])
+    comment = Comment.new(text: params[:text], commentable: project)
     comment.creator_id = current_user.id
     respond_to do |format|
       if comment.save
@@ -36,7 +34,7 @@ class Admin::Projects::CommentsController < CommentsController
   def destroy
     @comment.destroy
     respond_to do |format|
-      format.html { redirect_to admin_project_comments_url(@comment.source_id), notice: 'Comment was successfully deleted.' }
+      format.html { redirect_to admin_project_comments_url(@comment.commentable_id), notice: 'Comment was successfully deleted.' }
       format.json { head :no_content }
     end
   end
@@ -47,10 +45,10 @@ class Admin::Projects::CommentsController < CommentsController
   private
 
   def set_comment
-    @comment = ProjectsComment.find(params[:id])
+    @comment = Comment.find(params[:id])
   end
 
   def comment_params
-    params.require(:projects_comment).permit(:text)
+    params.require(:comment).permit(:text)
   end
 end

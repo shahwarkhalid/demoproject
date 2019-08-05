@@ -11,6 +11,7 @@ class Project < ApplicationRecord
   belongs_to :client
   has_many :payments
   has_many :timelogs
+  has_many :comments, as: :commentable
   belongs_to :manager, class_name: 'User'
   belongs_to :creator, class_name: 'User'
   paginates_per 5

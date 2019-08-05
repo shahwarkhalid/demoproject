@@ -1,42 +1,93 @@
-<div class="container">
-
-  <p>
-    <strong>Title:</strong>
-    <%= project.title %>
-  </p>
-
-  <p>
-    <strong>Description:</strong>
-    <%= project.description %>
-  </p>
-
-  <p>
-    <strong>Manager:</strong>
-    <%= project.manager.name %>
-  </p>
-
-  <p>
-    <strong>Client:</strong>
-    <%= project.client.first_name %>
-  </p>
-
-  <p>
-    <strong>Creator:</strong>
-    <%= project.creator.name %>
-  </p>
-
-  <p>
-    <strong>Total Hours:</strong>
-    <%= project.total_hours %>
-  </p>
-
-  <p>
-    <strong>Hours Worked:</strong>
-    <%= project.hours_worked %>
-  </p>
-  <p>
-    <strong>Budget:</strong>
-    <%= project.budget %>
-  </p>
-  <%= link_to 'Back', form_url, class: 'btn btn-warning' %>
+<div class="container-fluid" style="float: left;">
+  <div class="row">
+    <div class="col-md-8">
+      <div class = "shadow-lg p-3 mb-7 bg-white rounded shrink" id="a-unique-class">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Description</th>
+              <th>Manager</th>
+              <th>Client</th>
+              <th>Creator</th>
+              <th>Total Hours</th>
+              <th>Hours Worked</th>
+              <th>Budget</th>
+            </tr>
+          </thead>
+          <tbody>
+              <tr>
+                <td><%= @project.title %></td>
+                <td><%= @project.description %></td>
+                <td><%= @project.manager.name %></td>
+                <td><%= @project.client.first_name %></td>
+                <td><%= @project.creator.name %></td>
+                <td><%= @project.total_hours %></td>
+                <td><%= @project.hours_worked %></td>
+                <td><%= @project.budget %></td>
+              </tr>
+          </tbody>
+       </table>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class = "shadow-lg p-3 mb-5 bg-white rounded shrink">
+        <h1 align="center">Comments</h1>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Text</th>
+              <th>Made By</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @comments.each do |comment| %>
+              <tr>
+                <td><%= comment.text %></td>
+                <td><%= comment.creator.name %></td>
+                <td><%= link_to fa_icon('pencil-square-o', text: ''), edit_admin_project_comment_url(comment.commentable_id, comment), class: 'btn btn-primary' %>
+                <%= link_to fa_icon('trash-o', text:''), admin_project_comment_url(comment.commentable_id, comment), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+        <%= paginate @comments %>
+        <div class="container">
+          <%= render 'comments/form', form_url: form_url %>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
+<div class="clearfix mb-2"></div>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-4.5">
+      <div class = "shadow-lg p-3 mb-7 bg-white rounded shrink">
+        <% if current_user.role == 'admin'%>
+        <%= link_to fa_icon('plus-square',text: "New Payment"), new_admin_project_payment_url(@project), class: "btn btn-primary", remote: true %>
+        <div id = "payment-list">
+          <%= render 'payments/paymentlist', url_type: 'admin', payments: @payments%>
+       </div>
+        <% elsif current_user.role == 'manager'%>
+        <%= link_to fa_icon('plus-square',text: "New Payment"), new_manager_project_payment_url(@project), class: "btn btn-primary", remote: true %>
+        <div id = "payment-list">
+          <%= render 'payments/paymentlist', url_type: 'manager', payments: @payments%>
+       </div>
+        <% end %>
+      </div>
+    </div>
+    <div class="col-md-7.5">
+      <div class = "shadow-lg p-3 mb-7 bg-white rounded shrink">
+        <%= link_to fa_icon('user-plus', text: "New timelog"), new_admin_project_timelog_url(@project), class: "btn btn-primary", remote: true %>
+        <div id = "timelog-list">
+          <%= render 'admin/timelogs/timelogslist', timelogs: @timelogs %>
+       </div>
+        </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="my-modal" title="My modal"></div>

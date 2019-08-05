@@ -1,6 +1,6 @@
 <div class="container">
-  <%= render 'form', form_url: form_url %>
+  <%= render 'comments/form', form_url: form_url %>
 </div>
 <div class="container" id="commentslist">
-  <%= render 'commentlist', comments: @comments, back_url: back_url %>
+  <%= render 'comments/commentslist', comments: @comments, back_url: back_url %>
 </div>
