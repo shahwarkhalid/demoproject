@@ -18,14 +18,7 @@ Rails.application.routes.draw do
 
   namespace :user do
     resources :projects, only: [:index] do
-      scope module: 'projects' do
-        resources :comments, only: [:index, :edit, :update, :create, :destroy]
-      end
-      resources :timelogs, shallow: true do
-        scope module: 'timelogs' do
-          resources :comments, only: [:index, :edit, :update, :create, :destroy]
-        end
-      end
+      resources :timelogs, shallow: true
     end
   end
 
@@ -34,19 +27,8 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :clients
     resources :projects do
-      resources :payments, shallow: true do
-        scope module: 'payments' do
-          resources :comments, only: [:index, :edit, :update, :create, :destroy]
-        end
-      end
-      resources :timelogs, shallow: true do
-        scope module: 'timelogs' do
-          resources :comments, only: [:index, :edit, :update, :create, :destroy]
-        end
-      end
-      scope module: 'projects' do
-        resources :comments, only: [:index, :edit, :update, :create, :destroy]
-      end
+      resources :payments, shallow: true
+      resources :timelogs, shallow: true
       get 'addemployees', to: 'projects#assign_employees'
       post 'addemployees', to: 'projects#create_employees_list'
       get 'emplist', to: 'projects#emplist'
@@ -56,7 +38,7 @@ Rails.application.routes.draw do
     post 'user/search', to: 'users#search'
     post 'client/search', to: 'clients#search'
   end
-
+  resources :comments
   resources :user, only: %i[index edit update]
   get '404', to: 'errors#not_found'
   match '*path' => redirect('/'), via: :get

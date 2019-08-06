@@ -23,8 +23,7 @@
         <td><%= timelog.hours %></td>
         <td><%= link_to fa_icon('eye', text:''), admin_timelog_url(timelog), class: 'btn btn-success' %>
           <%= link_to fa_icon('pencil-square-o', text:''), edit_admin_timelog_url(timelog), remote: true, class: 'btn btn-warning' %>
-          <%= link_to fa_icon('trash-o', text:''), admin_timelog_url(timelog), method: :delete, remote: true, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
-          <%= link_to fa_icon('plus-circle', text:''), admin_timelog_comments_url(timelog), class: 'btn btn-warning' %></td>
+          <%= link_to fa_icon('trash-o', text:''), admin_timelog_url(timelog), method: :delete, remote: true, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %></td>
       </tr>
     <% end %>
   </tbody>

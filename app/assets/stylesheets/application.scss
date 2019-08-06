@@ -31,4 +31,11 @@
 -ms-transform:scale(0.90);
 transform:scale(0.90);
 }
-
+.my-custom-scrollbar {
+position: relative;
+height: 200px;
+overflow: auto;
+}
+.table-wrapper-scroll-y {
+display: block;
+}

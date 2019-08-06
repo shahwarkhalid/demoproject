@@ -12,8 +12,10 @@ class CommentsController < ApplicationController
   def edit; end
 
   def create
-    comment = Comment.new(comment_params)
-    if comment.save
+    @comment = Comment.new(comment_params)
+    @project = Project.find(@comment.commentable_id)
+    @comment.creator_id = current_user.id
+    if @comment.save
       respond_to do |format|
         format.js
       end
@@ -33,6 +35,6 @@ class CommentsController < ApplicationController
   end
 
   def comment_params
-    params.require(:comment).permit(:text, :commentable_type, :commentable_id)
+    params.permit(:text, :commentable_type, :commentable_id)
   end
 end

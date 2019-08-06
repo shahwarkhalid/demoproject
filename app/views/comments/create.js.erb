@@ -1,0 +1,4 @@
+alert('Comment Added Successfully');
+<% @comments = @project.comments.order(created_at: :desc) %>
+$('#comment-list').empty();
+$('#comment-list').append("<%= j render 'comments/commentlist', comments: @comments %>");

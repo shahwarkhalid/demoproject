@@ -1,35 +1,22 @@
-<div style="position: fixed;">
-  <%= link_to 'Back', back_url, class: 'btn btn-warning' %>
-</div>
-<div>
-  <div style="margin-top:50px">
-    <h1 align="center">Comments</h1>
-    <table class="table table-striped">
-      <thead>
+<div class="table-wrapper-scroll-y my-custom-scrollbar" id="comment-list">
+  <h1 align="center">Comments</h1>
+  <table class="table table-bordered table-striped mb-0">
+    <thead>
+      <tr>
+        <th>Text</th>
+        <th>Made By</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% comments.each do |comment| %>
         <tr>
-          <th>Text</th>
-          <th>Made By</th>
-          <th>Actions</th>
+          <td><%= comment.text %></td>
+          <td><%= comment.creator.name %></td>
+          <td><%= link_to fa_icon('pencil-square-o', text: ''), edit_comment_url(comment), class: 'btn btn-primary' %>
+              <%= link_to fa_icon('trash-o', text:''), comment_url(comment), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %></td>
         </tr>
-      </thead>
-      <tbody>
-        <% @comments.each do |comment| %>
-          <tr>
-            <td><%= comment.text %></td>
-            <td><%= comment.creator.name %></td>
-            <% if comment.commentable_type == 'Project' %>
-            <td><%= link_to fa_icon('pencil-square-o', text: ''), edit_admin_project_comment_url(comment.commentable_id, comment), class: 'btn btn-primary' %>
-                <%= link_to fa_icon('trash-o', text:''), admin_project_comment_url(comment.commentable_id, comment), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %></td>
-            <% elsif comment.commentable_type == 'Timelog' %>
-            <td><%#= link_to fa_icon('pencil-square-o', text: ''), '', class: 'btn btn-primary' %>
-                <%#= link_to fa_icon('trash-o', text:''), admin_timelog_comment_url(comment.commentable_id, comment), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %></td>
-            <% elsif comment.commentable_type == 'Payment' %>
-            <td><%= link_to fa_icon('pencil-square-o', text: ''), edit_admin_payment_comment_url(comment.commentable_id, comment), class: 'btn btn-primary' %>
-                <%= link_to fa_icon('trash-o', text:''), admin_payment_comment_url(comment.commentable_id, comment), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %></td>
-            <% end %>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-  </div>
+      <% end %>
+    </tbody>
+  </table>
 </div>
