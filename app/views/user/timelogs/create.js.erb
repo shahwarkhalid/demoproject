@@ -1,5 +1,10 @@
+<% if @timelog.errors.any? %>
+  $('#error_explanation').empty();
+  $('#error_explanation').append("<%= j render 'shared/error', error: @timelog%>");
+<% else %>
 $('#my-modal').modal('hide');
 alert('Timelog Added Successfully');
 <% @timelogs = @timelog.project.timelogs.where(creator_id: current_user.id).order(:created_at).page(params[:page]) %>
 $('#timelog-list').empty();
-$('#timelog-list').append("<%= j render 'user/timelogs/timelogslist', timelogs: @timelogs %>");
+$('#timelog-list').append("<%= j render 'user/timelogs/timelogs_list', timelogs: @timelogs %>");
+<% end %>

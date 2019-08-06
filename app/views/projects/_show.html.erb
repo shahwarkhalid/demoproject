@@ -49,12 +49,12 @@
         <% if current_user.role == 'admin'%>
         <%= link_to fa_icon('plus-square',text: "New Payment"), new_admin_project_payment_url(@project), class: "btn btn-primary", remote: true %>
         <div id = "payment-list">
-          <%= render 'payments/paymentlist', url_type: 'admin', payments: @payments%>
+          <%= render 'payments/payment_list', url_type: 'admin', payments: @payments%>
        </div>
         <% elsif current_user.role == 'manager'%>
         <%= link_to fa_icon('plus-square',text: "New Payment"), new_manager_project_payment_url(@project), class: "btn btn-primary", remote: true %>
         <div id = "payment-list">
-          <%= render 'payments/paymentlist', url_type: 'manager', payments: @payments%>
+          <%= render 'payments/payment_list', url_type: 'manager', payments: @payments%>
        </div>
         <% end %>
       </div>
@@ -65,12 +65,12 @@
           <% if current_user.role == 'admin' %>
             <%= link_to fa_icon('user-plus', text: "New timelog"), new_admin_project_timelog_url(@project), class: "btn btn-primary", remote: true %>
             <div id = "timelog-list">
-              <%= render 'admin/timelogs/timelogslist', timelogs: @timelogs %>
+              <%= render 'admin/timelogs/timelogs_list', timelogs: @timelogs %>
             </div>
           <% elsif current_user.role == 'user' %>
             <%= link_to fa_icon('user-plus', text: "New timelog"), new_user_project_timelog_url(@project), class: "btn btn-primary", remote: true %>
             <div id = "timelog-list">
-              <%= render 'user/timelogs/timelogslist', timelogs: @timelogs %>
+              <%= render 'user/timelogs/timelogs_list', timelogs: @timelogs %>
             </div>
           <% end%>
         </div>

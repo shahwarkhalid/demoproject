@@ -3,14 +3,17 @@
 class Manager::PaymentsController < PaymentsController
   def index
     super
-end
+    authorize User, :check_manager?, policy_class: ManagersPolicy
+  end
 
   def show
     super
+    authorize User, :check_manager?, policy_class: ManagersPolicy
   end
 
   def new
     super
+    authorize User, :check_manager?, policy_class: ManagersPolicy
     respond_to do |format|
       format.js
     end
@@ -18,12 +21,14 @@ end
 
   def edit
     super
+    authorize User, :check_manager?, policy_class: ManagersPolicy
     respond_to do |format|
       format.js
     end
   end
 
   def create
+    authorize User, :check_manager?, policy_class: ManagersPolicy
     @project = Project.find(params[:project_id])
     @payment = Payment.new(payment_params)
     @payment.project_id = params[:project_id]
@@ -36,12 +41,14 @@ end
       else
         format.html { render :new }
         format.json { render json: @payment.errors, status: :unprocessable_entity }
+        format.js
       end
     end
   end
 
   def update
     super
+    authorize User, :check_manager?, policy_class: ManagersPolicy
     respond_to do |format|
       if @payment.update(payment_params)
         format.html { redirect_to manager_project_payments_url(@payment.project), notice: 'Payment was successfully updated.' }
@@ -50,11 +57,13 @@ end
       else
         format.html { render :edit }
         format.json { render json: @payment.errors, status: :unprocessable_entity }
+        format.js
       end
     end
   end
 
   def destroy
+    authorize User, :check_manager?, policy_class: ManagersPolicy
     @project = @payment.project
     super
     @payment.destroy

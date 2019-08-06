@@ -3,10 +3,6 @@
 class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :authenticate_user!
-  before_action :validate_caller_admin, if: :projects_controller?
-  before_action :validate_caller_manager, if: :projects_controller?
-  before_action :validate_caller_admin, if: :payments_controller?
-  before_action :validate_caller_manager, if: :payments_controller?
   include Pundit
   protect_from_forgery
 

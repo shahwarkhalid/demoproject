@@ -2,21 +2,27 @@
 
 class Manager::ProjectsController < ProjectsController
   def index
+    authorize User, :check_manager?, policy_class: ManagersPolicy
     @projects = current_user.managed_projects.order(:created_at) + current_user.created_projects.order(:created_at)
     @projects = Kaminari.paginate_array(@projects).page(params[:page])
   end
 
-  def show; end
+  def show
+    authorize User, :check_manager?, policy_class: ManagersPolicy
+  end
 
   def new
     super
+    authorize User, :check_manager?, policy_class: ManagersPolicy
   end
 
   def edit
     super
+    authorize User, :check_manager?, policy_class: ManagersPolicy
   end
 
   def create
+    authorize User, :check_manager?, policy_class: ManagersPolicy
     @project = Project.new(project_params)
     @project.creator_id = current_user.id
     @project.status = 1
@@ -33,6 +39,7 @@ class Manager::ProjectsController < ProjectsController
   end
 
   def update
+    authorize User, :check_manager?, policy_class: ManagersPolicy
     respond_to do |format|
       super
       if @project.update(project_params)
@@ -47,6 +54,7 @@ class Manager::ProjectsController < ProjectsController
 
   def destroy
     super
+    authorize User, :check_manager?, policy_class: ManagersPolicy
     @project.destroy
     respond_to do |format|
       format.html { redirect_to manager_projects_url, notice: 'Project was successfully destroyed.' }

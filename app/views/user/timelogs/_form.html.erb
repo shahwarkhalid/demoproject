@@ -9,11 +9,8 @@
     <div class="modal-body">
       <div class="container">
         <%= form_with(model: @timelog, url: user_project_timelogs_url, remote: true) do |form| %>
-          <% if @timelog.errors.any? %>
-            <div id="error_explanation">
-              <%= render 'shared/error', error: @timelog%>
-            </div>
-          <% end %>
+          <div id="error_explanation">
+          </div>
 
           <div class="form-group">
             <%= form.label :title %>

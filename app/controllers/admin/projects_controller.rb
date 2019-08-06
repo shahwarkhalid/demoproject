@@ -3,19 +3,25 @@
 class Admin::ProjectsController < ProjectsController
   def index
     super
+    authorize User, :check_admin?, policy_class: UsersPolicy
   end
 
-  def show; end
+  def show
+    authorize User, :check_admin?, policy_class: UsersPolicy
+  end
 
   def new
     super
+    authorize User, :check_admin?, policy_class: UsersPolicy
   end
 
   def edit
     super
+    authorize User, :check_admin?, policy_class: UsersPolicy
   end
 
   def create
+    authorize User, :check_admin?, policy_class: UsersPolicy
     @project = Project.new(project_params)
     @project.creator_id = current_user.id
     @project.status = 1
@@ -33,6 +39,7 @@ class Admin::ProjectsController < ProjectsController
 
   def update
     super
+    authorize User, :check_admin?, policy_class: UsersPolicy
     respond_to do |format|
       if @project.update(project_params)
         format.html { redirect_to admin_project_url(@project), notice: 'Project was successfully updated.' }
@@ -46,6 +53,7 @@ class Admin::ProjectsController < ProjectsController
 
   def destroy
     super
+    authorize User, :check_admin?, policy_class: UsersPolicy
     @project.destroy
     respond_to do |format|
       format.html { redirect_to admin_projects_url, notice: 'Project was successfully destroyed.' }
@@ -61,10 +69,12 @@ class Admin::ProjectsController < ProjectsController
   end
 
   def assign_employees
+    authorize User, :check_admin?, policy_class: UsersPolicy
     super
   end
 
   def create_employees_list
+    authorize User, :check_admin?, policy_class: UsersPolicy
     project = Project.find(params[:project_id])
     add_employees_by_emails(project) if emails?
     domains_emplist = get_domains_emplist if domain?

@@ -3,14 +3,19 @@
 class Admin::TimelogsController < ApplicationController
   before_action :set_timelog, only: %i[show edit update destroy]
   before_action :set_comments, only: [:show]
+
   def index
+    authorize User, :check_admin?, policy_class: UsersPolicy
     @project = Project.find(params[:project_id])
     @timelogs = @project.timelogs.order(:created_at).page(params[:page])
   end
 
-  def show; end
+  def show
+    authorize User, :check_admin?, policy_class: UsersPolicy
+  end
 
   def new
+    authorize User, :check_admin?, policy_class: UsersPolicy
     @project = Project.find(params[:project_id])
     @timelog = Timelog.new
     respond_to do |format|
@@ -19,6 +24,7 @@ class Admin::TimelogsController < ApplicationController
   end
 
   def edit
+    authorize User, :check_admin?, policy_class: UsersPolicy
     @project = @timelog.project
     respond_to do |format|
       format.js
@@ -26,9 +32,10 @@ class Admin::TimelogsController < ApplicationController
   end
 
   def create
+    authorize User, :check_admin?, policy_class: UsersPolicy
     @timelog = Timelog.new(timelog_params)
     @timelog.creator_id = current_user.id
-    @timelog.hours = TimeDifference.between(@timelog.start_time, @timelog.end_time).in_hours.to_i
+    @timelog.hours = TimeDifference.between(@timelog.start_time, @timelog.end_time).in_hours.to_i if !@timelog.start_time.blank?
     @timelog.project_id = params[:project_id]
     respond_to do |format|
       if @timelog.save
@@ -38,24 +45,29 @@ class Admin::TimelogsController < ApplicationController
       else
         format.html { render :new }
         format.json { render json: @timelog.errors, status: :unprocessable_entity }
+        format.js
       end
     end
   end
 
   def update
+    authorize User, :check_admin?, policy_class: UsersPolicy
     respond_to do |format|
       if @timelog.update(timelog_params)
+        update_hours
         format.html { redirect_to admin_project_timelogs_url(@timelog.project_id), notice: 'Timelog was successfully updated.' }
         format.json { render :show, status: :ok, location: @timelog }
         format.js
       else
         format.html { render :edit }
         format.json { render json: @timelog.errors, status: :unprocessable_entity }
+        format.js
       end
     end
   end
 
   def destroy
+    authorize User, :check_admin?, policy_class: UsersPolicy
     @project = @timelog.project
     @timelog.destroy
     respond_to do |format|
@@ -86,5 +98,9 @@ class Admin::TimelogsController < ApplicationController
 
   def timelog_params
     params.require(:timelog).permit(:title, :description, :employee_id, :start_time, :end_time)
+  end
+
+  def update_hours
+    @timelog.update(hours: TimeDifference.between(@timelog.start_time, @timelog.end_time).in_hours.to_i)
   end
 end

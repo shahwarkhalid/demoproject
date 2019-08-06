@@ -1,5 +1,10 @@
-$('#my-modal').modal('hide');
-alert('Timelog Updated Successfully');
-<% @timelogs = @timelog.project.timelogs.order(:created_at).page(params[:page]) %>
-$('#timelog-list').empty();
-$('#timelog-list').append("<%= j render 'admin/timelogs/timelogslist', timelogs: @timelogs %>");
+<% if @timelog.errors.any? %>
+  $('#error_explanation').empty();
+  $('#error_explanation').append("<%= j render 'shared/error', error: @timelog%>");
+<% else %>
+  $('#my-modal').modal('hide');
+  alert('Timelog Updated Successfully');
+  <% @timelogs = @timelog.project.timelogs.order(:created_at).page(params[:page]) %>
+  $('#timelog-list').empty();
+  $('#timelog-list').append("<%= j render 'admin/timelogs/timelogs_list', timelogs: @timelogs %>");
+<% end %>
