@@ -31,6 +31,12 @@
 -ms-transform:scale(0.90);
 transform:scale(0.90);
 }
+.shrink-comment{
+-webkit-transform:scale(0.93);
+-moz-transform:scale(0.93);
+-ms-transform:scale(0.93);
+transform:scale(0.93);
+}
 .my-custom-scrollbar {
 position: relative;
 height: 200px;
@@ -41,4 +47,19 @@ display: block;
 }
 .chosen-container {
  width: 100% !important;
+}
+.comment-wrapper .panel-body {
+    max-height:650px;
+    overflow:auto;
+}
+
+.comment-wrapper .media-list .media img {
+    width:64px;
+    height:64px;
+    border:2px solid #e5e7e8;
+}
+
+.comment-wrapper .media-list .media {
+    border-bottom:1px dashed #efefef;
+    margin-bottom:25px;
 }
