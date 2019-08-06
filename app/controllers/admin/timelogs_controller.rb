@@ -2,7 +2,7 @@
 
 class Admin::TimelogsController < ApplicationController
   before_action :set_timelog, only: %i[show edit update destroy]
-
+  before_action :set_comments, only: [:show]
   def index
     @project = Project.find(params[:project_id])
     @timelogs = @project.timelogs.order(:created_at).page(params[:page])
@@ -77,6 +77,11 @@ class Admin::TimelogsController < ApplicationController
   def set_timelog
     @timelog = Timelog.find_by_id(params[:id])
     render file: 'public/404.html', status: :not_found, layout: false unless @timelog
+  end
+
+  def set_comments
+    timelog = Timelog.find(params[:id])
+    @comments = timelog.comments.order(updated_at: :desc)
   end
 
   def timelog_params

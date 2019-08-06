@@ -1,29 +1,45 @@
-<div class="container">
-
-  <p>
-    <strong>Title:</strong>
-    <%= payment.title %>
-  </p>
-
-  <p>
-    <strong>Type:</strong>
-    <%= payment.payment_type %>
-  </p>
-
-  <p>
-    <strong>Amount:</strong>
-    <%= payment.amount %>
-  </p>
-
-  <p>
-    <strong>Project:</strong>
-    <%= payment.project.title %>
-  </p>
-
-  <p>
-    <strong>Creator:</strong>
-    <%= payment.creator.name %>
-  </p>
-
-  <%= link_to 'Back', form_url, class: 'btn btn-warning' %>
+<div class="container-fluid" style="float: left;">
+  <div class="row">
+    <div class="col-md-8">
+      <div class = "shadow-lg p-3 mb-7 bg-white rounded shrink" id="a-unique-class">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Type</th>
+              <th>Amount</th>
+              <th>Project</th>
+              <th>Created By</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><%= payment.title %></td>
+              <td><%= payment.payment_type %></td>
+              <td><%= payment.amount %></td>
+              <td><%= payment.project.title %></td>
+              <td><%= payment.creator.name %></td>
+            </tr>
+          </tbody>
+        </table>
+        <div>
+          <% if url_type == 'admin' %>
+            <%= link_to 'Back', admin_project_url(@payment.project), class: 'btn btn-primary' %>
+          <% elsif url_type == 'manager' %>
+            <%= link_to 'Back', manager_project_url(@payment.project), class: 'btn btn-primary' %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class = "shadow-lg p-3 mb-5 bg-white rounded shrink">
+        <div class="container">
+          <%= render 'comments/commentlist', comments: @comments %><div class="clearfix mb-5"></div>
+          <%= render 'comments/form', commentable_id: @payment.id, commentable_type: 'Payment' %>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
+<div class="clearfix mb-2"></div>
+<div class="modal fade" id="my-modal" title="My modal"></div>

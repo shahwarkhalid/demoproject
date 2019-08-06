@@ -13,8 +13,8 @@
         <tr>
           <td><%= comment.text %></td>
           <td><%= comment.creator.name %></td>
-          <td><%= link_to fa_icon('pencil-square-o', text: ''), edit_comment_url(comment), class: 'btn btn-primary' %>
-              <%= link_to fa_icon('trash-o', text:''), comment_url(comment), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %></td>
+          <td><%= link_to fa_icon('pencil-square-o', text: ''), edit_comment_url(comment), remote: true, class: 'btn btn-primary' %>
+              <%= link_to fa_icon('trash-o', text:''), comment_url(comment), method: :delete, remote: true, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %></td>
         </tr>
       <% end %>
     </tbody>

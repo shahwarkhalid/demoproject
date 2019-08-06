@@ -61,7 +61,7 @@ class ProjectsController < ApplicationController
 
   def set_comments
     project = Project.find(params[:id])
-    @comments = project.comments.order(created_at: :desc)
+    @comments = project.comments.order(updated_at: :desc)
   end
   def project_params
     params.require(:project).permit(:title, :description, :total_hours, :budget, :manager_id, :client_id)

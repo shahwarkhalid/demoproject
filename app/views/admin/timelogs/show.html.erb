@@ -1,34 +1,43 @@
-<div class="container">
-
-  <p>
-    <strong>Title:</strong>
-    <%= @timelog.title %>
-  </p>
-
-  <p>
-    <strong>Description:</strong>
-    <%= @timelog.description %>
-  </p>
-
-  <p>
-    <strong>Start Time:</strong>
-    <%= @timelog.start_time %>
-  </p>
-
-  <p>
-    <strong>End Time:</strong>
-    <%= @timelog.end_time %>
-  </p>
-
-  <p>
-    <strong>Creator:</strong>
-    <%= @timelog.creator.name %>
-  </p>
-
-  <p>
-    <strong>Total Hours:</strong>
-    <%= @timelog.hours %>
-  </p>
-
-  <%= link_to 'Back', admin_project_timelogs_url(@timelog.project), class: 'btn btn-warning' %>
+<div class="container-fluid" style="float: left;">
+  <div class="row">
+    <div class="col-md-8">
+      <div class = "shadow-lg p-3 mb-7 bg-white rounded shrink" id="a-unique-class">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Description</th>
+              <th>From</th>
+              <th>To</th>
+              <th>Creator</th>
+              <th>Total Hours</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><%= @timelog.title %></td>
+              <td><%= @timelog.description %></td>
+              <td><%= @timelog.start_time %></td>
+              <td><%= @timelog.end_time %></td>
+              <td><%= @timelog.creator.name %></td>
+              <td><%= @timelog.hours %></td>
+            </tr>
+          </tbody>
+        </table>
+        <div>
+          <%= link_to 'Back', admin_project_url(@timelog.project), class: 'btn btn-primary' %>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class = "shadow-lg p-3 mb-5 bg-white rounded shrink">
+        <div class="container">
+          <%= render 'comments/commentlist', comments: @comments %><div class="clearfix mb-5"></div>
+          <%= render 'comments/form', commentable_id: @timelog.id, commentable_type: 'Timelog' %>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
+<div class="clearfix mb-2"></div>
+<div class="modal fade" id="my-modal" title="My modal"></div>

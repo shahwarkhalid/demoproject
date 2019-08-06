@@ -1,7 +1,7 @@
 <div class="container-fluid" style="float: left;">
   <div class="row">
     <div class="col-md-8">
-      <div class = "shadow-lg p-3 mb-7 bg-white rounded shrink" id="a-unique-class">
+      <div class = "shadow-lg p-3 mb-7 bg-white rounded shrink">
         <table class="table table-striped">
           <thead>
             <tr>
@@ -33,7 +33,7 @@
     <div class="col-md-4">
       <div class = "shadow-lg p-3 mb-5 bg-white rounded shrink">
         <div class="container">
-          <%= render 'comments/commentlist', comments: @comments %>
+          <%= render 'comments/commentlist', comments: @comments %><div class="clearfix mb-5"></div>
           <%= render 'comments/form', commentable_id: @project.id, commentable_type: 'Project' %>
         </div>
       </div>
@@ -59,14 +59,23 @@
         <% end %>
       </div>
     </div>
-    <div class="col-md-7.5">
-      <div class = "shadow-lg p-3 mb-7 bg-white rounded shrink">
-        <%= link_to fa_icon('user-plus', text: "New timelog"), new_admin_project_timelog_url(@project), class: "btn btn-primary", remote: true %>
-        <div id = "timelog-list">
-          <%= render 'admin/timelogs/timelogslist', timelogs: @timelogs %>
-       </div>
+    <% if current_user.role == 'admin' || current_user.role == 'user' %>
+      <div class="col-md-7.5">
+        <div class = "shadow-lg p-3 mb-7 bg-white rounded shrink">
+          <% if current_user.role == 'admin' %>
+            <%= link_to fa_icon('user-plus', text: "New timelog"), new_admin_project_timelog_url(@project), class: "btn btn-primary", remote: true %>
+            <div id = "timelog-list">
+              <%= render 'admin/timelogs/timelogslist', timelogs: @timelogs %>
+            </div>
+          <% elsif current_user.role == 'user' %>
+            <%= link_to fa_icon('user-plus', text: "New timelog"), new_user_project_timelog_url(@project), class: "btn btn-primary", remote: true %>
+            <div id = "timelog-list">
+              <%= render 'user/timelogs/timelogslist', timelogs: @timelogs %>
+            </div>
+          <% end%>
         </div>
-    </div>
+      </div>
+    <% end %>
   </div>
 </div>
 

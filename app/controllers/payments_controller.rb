@@ -2,7 +2,7 @@
 
 class PaymentsController < ApplicationController
   before_action :set_payment, only: %i[show edit update destroy]
-
+  before_action :set_comments, only: [:show]
   def index
     @project = Project.find(params[:project_id])
     @payments = @project.payments.order(:created_at).page(params[:page])
@@ -39,6 +39,11 @@ class PaymentsController < ApplicationController
   def set_payment
     @payment = Payment.find_by_id(params[:id])
     render file: 'public/404.html', status: :not_found, layout: false unless @payment
+  end
+
+  def set_comments
+    payment = Payment.find(params[:id])
+    @comments = payment.comments.order(updated_at: :desc)
   end
 
   def payment_params

@@ -17,12 +17,12 @@
     </div>
     <div class="form-group">
       <%= form.label :assign_manager %><div class="clearfix mb-3">
-      <%= form.select :manager_id, ("<option value=''>Select Manager</option>" + options_from_collection_for_select(User.all.where(role:'manager'), :id, :name, :selected => form.object.manager_id)).html_safe, {}, { id: 'choose-manager', :class => 'chosen-select'} %>
+      <%= form.select :manager_id, ("<option value=''>Select Manager</option>" + options_from_collection_for_select(User.all.where(role:'manager'), :id, :name, :selected => form.object.manager_id)).html_safe, {}, { id: 'choose-manager', :class => 'chosen-select form-control'} %>
     </div>
 
     <div class="form-group">
       <%= form.label :assign_client %><div class="clearfix mb-3">
-      <%= form.select :client_id, ("<option value=''>Select Client</option>" + options_from_collection_for_select(Client.all, :id, :first_name, :selected => form.object.client_id)).html_safe, {}, { id: 'choose-client', :class => 'chosen-select'} %>
+      <%= form.select :client_id, ("<option value=''>Select Client</option>" + options_from_collection_for_select(Client.all, :id, :first_name, :selected => form.object.client_id)).html_safe, {}, { id: 'choose-client', :class => 'chosen-select form-control'} %>
     </div>
 
     <div class="form-group">
