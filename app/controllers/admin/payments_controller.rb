@@ -27,8 +27,8 @@ class Admin::PaymentsController < PaymentsController
     @payment.creator = current_user
     respond_to do |format|
       if @payment.save
-        #format.html { redirect_to admin_project_payments_url(params[:project_id]), notice: 'Payment was successfully created.' }
-        #format.json { render :show, status: :created, location: @admin_project_payments_url }
+        # format.html { redirect_to admin_project_payments_url(params[:project_id]), notice: 'Payment was successfully created.' }
+        # format.json { render :show, status: :created, location: @admin_project_payments_url }
         format.js
       else
         format.html { render :new }

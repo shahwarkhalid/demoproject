@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Admin::Timelogs::CommentsController < ApplicationController
   before_action :set_comment, only: %i[show edit update destroy]
 
@@ -41,8 +43,7 @@ class Admin::Timelogs::CommentsController < ApplicationController
     end
   end
 
-  def search
-  end
+  def search; end
 
   private
 

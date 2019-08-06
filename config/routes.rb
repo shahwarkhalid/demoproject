@@ -17,7 +17,7 @@ Rails.application.routes.draw do
   end
 
   namespace :user do
-    resources :projects, only: [:index, :show] do
+    resources :projects, only: %i[index show] do
       resources :timelogs, shallow: true
     end
   end
