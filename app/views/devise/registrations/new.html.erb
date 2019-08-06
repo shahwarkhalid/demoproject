@@ -29,6 +29,10 @@
     <div hidden="true">
       <%= f.number_field :status, value: 1 %>
     </div>
+    <div class="field">
+      <%= f.label :image %><br>
+      <%= f.file_field :image %>
+    </div>
     <div class="form-group">
       <%= f.submit "Sign up", class: 'btn btn-success' %>
     </div>

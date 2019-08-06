@@ -42,10 +42,12 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'bootstrap', '~> 4.3', '>= 4.3.1'
 gem 'bootstrap4-datetime-picker-rails'
 gem 'chosen-rails'
+gem 'carrierwave', '~> 0.10.0'
 gem 'devise', '~> 4.2'
 gem 'font-awesome-rails', '~> 4.7', '>= 4.7.0.2'
 gem 'jquery-rails'
 gem 'kaminari'
+gem 'mini_magick', '~> 4.3'
 gem 'pundit'
 gem 'time_difference'
 group :development, :test do

@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
   rescue_from ActiveRecord::RecordNotFound, with: :page_not_found
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: %i[name status])
+    devise_parameter_sanitizer.permit(:sign_up, keys: %i[name status image])
     devise_parameter_sanitizer.permit(:account_update, keys: %i[name age address status])
   end
 
