@@ -23,7 +23,7 @@
           </div>
           <div class="form-group">
             <%= form.label :assign_employee %><div class="clearfix mb-3">
-            <%= form.select :employee_id, ("<option value=''>Select Employee</option>" + options_from_collection_for_select(User.all.where(role:'user'), :id, :name, :selected => form.object.employee_id)).html_safe, {}, { id: 'choose-employee', :class => 'chosen-select'} %>
+            <%= form.select :employee_id, ("<option value=''>Select Employee</option>" + options_from_collection_for_select(User.all.where(role:'user'), :id, :name, :selected => form.object.employee_id)).html_safe, {}, { id: 'choose-employee', :class => 'chosen-select form-control'} %>
           </div>
 
           <div class="form-group">
