@@ -1,0 +1,30 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title">Add Attachment</h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="container">
+        <%= form_with(url: admin_project_attachments_url, remote: true) do |form| %>
+          <div id="error_explanation">
+          </div>
+
+          <div class="form-group">
+            <%= form.label :attachment %>
+            <%= form.file_field :attachment %>
+          </div>
+
+          <div class="form-group">
+            <%= form.submit "Save", class: 'btn btn-success' %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+    </div>
+  </div>
+</div>

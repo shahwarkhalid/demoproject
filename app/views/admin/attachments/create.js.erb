@@ -1,0 +1,10 @@
+<% if @attachment.errors.any? %>
+  $('#error_explanation').empty();
+  $('#error_explanation').append("<%= j render 'shared/error', error: @attachment%>");
+<% else %>
+  $('#my-modal').modal('hide');
+  alert('Attachment Added Successfully');
+  <% @attachments = @attachment.project.attachments.order(:created_at) %>
+  $('#attachment-list').empty();
+  $('#attachment-list').append("<%= j render 'attachments/attachments_list', attachments: @attachments %>");
+<% end %>

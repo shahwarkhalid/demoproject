@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  get 'attachments/index'
+  get 'attachments/new'
+  get 'attachments/create'
+  get 'attachments/destroy'
   resources :manager, only: [:index]
   resources :admin, only: [:index]
   post 'project/search', to: 'projects#search'
@@ -29,6 +33,7 @@ Rails.application.routes.draw do
     resources :projects do
       resources :payments, shallow: true
       resources :timelogs, shallow: true
+      resources :attachments, shallow: true
       get 'addemployees', to: 'projects#assign_employees'
       post 'addemployees', to: 'projects#create_employees_list'
       get 'emplist', to: 'projects#emplist'

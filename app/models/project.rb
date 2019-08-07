@@ -14,5 +14,6 @@ class Project < ApplicationRecord
   has_many :comments, as: :commentable
   belongs_to :manager, class_name: 'User'
   belongs_to :creator, class_name: 'User'
+  has_many :attachments
   paginates_per 5
 end

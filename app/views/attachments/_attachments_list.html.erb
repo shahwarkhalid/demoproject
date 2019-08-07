@@ -1,0 +1,20 @@
+<table class = "table table-bordered table-striped">
+   <thead>.
+      <tr>
+         <th>Download Link</th>
+         <th>Action</th>
+      </tr>
+   </thead>
+
+   <tbody>
+      <% attachments.each do |attachment| %>
+
+         <tr>
+            <td><%= link_to "Download", attachment.attachment_url %></td>
+            <td><%= link_to "Delete",  admin_attachment_url(attachment), method: :delete, remote: true, class: "btn btn-danger", confirm: "Are you sure that you wish to delete ?" %></td>
+         </tr>
+
+      <% end %>
+   </tbody>
+
+</table>

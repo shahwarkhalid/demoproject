@@ -79,4 +79,16 @@
   </div>
 </div>
 
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-4">
+      <div class = "shadow-lg p-3 mb-7 bg-white rounded shrink">
+        <%= link_to fa_icon('plus-square',text: "New attachment"), new_admin_project_attachment_url(@project), class: "btn btn-primary", remote: true %>
+        <div id = "attachment-list">
+          <%= render 'attachments/attachments_list', attachments: @attachments %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 <div class="modal fade" id="my-modal" title="My modal"></div>

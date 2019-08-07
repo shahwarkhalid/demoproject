@@ -5,6 +5,7 @@ class ProjectsController < ApplicationController
   before_action :set_payments, only: [:show]
   before_action :set_timelogs, only: [:show]
   before_action :set_comments, only: [:show]
+  before_action :set_attachments, only: [:show]
   def index
     @projects = Project.all.order(:created_at).page(params[:page])
   end
@@ -61,6 +62,11 @@ class ProjectsController < ApplicationController
   def set_comments
     project = Project.find(params[:id])
     @comments = project.comments.order(updated_at: :desc)
+  end
+
+  def set_attachments
+    project = Project.find(params[:id])
+    @attachments = project.attachments.order(updated_at: :desc)
   end
 
   def project_params
