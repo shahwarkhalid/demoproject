@@ -3,8 +3,7 @@
 class CommentsController < ApplicationController
   before_action :set_comment, only: %i[show edit update destroy]
   before_action :set_commentable, only: %i[show edit update destroy]
-  def index
-  end
+  def index; end
 
   def show; end
 

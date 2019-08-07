@@ -34,7 +34,7 @@ class User::TimelogsController < ApplicationController
     authorize User, :check_user?, policy_class: UserPolicy
     @timelog = Timelog.new(timelog_params)
     @timelog.creator_id = current_user.id
-    @timelog.hours = TimeDifference.between(@timelog.start_time, @timelog.end_time).in_hours.to_i if !@timelog.start_time.blank?
+    @timelog.hours = TimeDifference.between(@timelog.start_time, @timelog.end_time).in_hours.to_i unless @timelog.start_time.blank?
     @timelog.project_id = params[:project_id]
     respond_to do |format|
       if @timelog.save
