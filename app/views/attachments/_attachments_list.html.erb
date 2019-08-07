@@ -2,7 +2,6 @@
    <thead>.
       <tr>
          <th>Download Link</th>
-         <th>Action</th>
       </tr>
    </thead>
 
@@ -11,7 +10,9 @@
 
          <tr>
             <td><%= link_to "Download", attachment.attachment_url %></td>
-            <td><%= link_to "Delete",  admin_attachment_url(attachment), method: :delete, remote: true, class: "btn btn-danger", confirm: "Are you sure that you wish to delete ?" %></td>
+            <% if attachment.creator_id == current_user.id %>
+               <td><%= link_to "Delete", attachment_url(attachment), method: :delete, remote: true, class: "btn btn-danger", confirm: "Are you sure that you wish to delete ?" %></td>
+            <% end %>
          </tr>
 
       <% end %>

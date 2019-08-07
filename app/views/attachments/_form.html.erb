@@ -8,7 +8,7 @@
     </div>
     <div class="modal-body">
       <div class="container">
-        <%= form_with(url: admin_project_attachments_url, remote: true) do |form| %>
+        <%= form_with(url: attachments_url(project_id: project_id), remote: true) do |form| %>
           <div id="error_explanation">
           </div>
 

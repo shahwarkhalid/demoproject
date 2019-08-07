@@ -4,28 +4,35 @@ class AttachmentsController < ApplicationController
   end
 
   def new
+    @project_id = params[:project_id]
     @attachment = Attachment.new
+    respond_to do |format|
+      format.js
+    end
   end
 
   def create
-    @attachment = Attachment.new(attachment_params)
-    @attachment.project_id = 1
-    if @attachment.save
-       redirect_to attachments_path, notice: "The Attachment has been uploaded."
-    else
-       render "new"
+    @attachment = Attachment.new(attachment: params[:attachment], project_id: params[:project_id], creator_id: current_user.id)
+    respond_to do |format|
+      if @attachment.save
+        format.js
+      else
+        format.js
+      end
     end
-
   end
 
   def destroy
     @attachment = Attachment.find(params[:id])
     @attachment.destroy
-    redirect_to Attachments_path, notice:  "The Attachment has been deleted."
+    respond_to do |format|
+      format.js
+    end
   end
 
   private
-    def attachment_params
-    params.require(:attachment).permit(:attachment)
+
+  def attachment_params
+    params.permit(:attachment)
   end
 end

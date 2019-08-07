@@ -83,7 +83,7 @@
   <div class="row">
     <div class="col-md-4">
       <div class = "shadow-lg p-3 mb-7 bg-white rounded shrink">
-        <%= link_to fa_icon('plus-square',text: "New attachment"), new_admin_project_attachment_url(@project), class: "btn btn-primary", remote: true %>
+        <%= link_to fa_icon('plus-square',text: "New attachment"), new_attachment_url(project_id: @project.id), class: "btn btn-primary", remote: true %>
         <div id = "attachment-list">
           <%= render 'attachments/attachments_list', attachments: @attachments %>
         </div>
