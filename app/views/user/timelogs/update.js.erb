@@ -7,4 +7,6 @@
   <% @timelogs = @timelog.project.timelogs.where(creator_id: current_user.id).order(:created_at).page(params[:page]) %>
   $('#timelog-list').empty();
   $('#timelog-list').append("<%= j render 'user/timelogs/timelogs_list', timelogs: @timelogs %>");
+  $('#project-hours').empty();
+  $('#project-hours').html(<%= @timelog.project.hours_worked %>);
 <% end %>

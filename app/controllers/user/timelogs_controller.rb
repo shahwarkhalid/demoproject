@@ -3,6 +3,8 @@
 class User::TimelogsController < ApplicationController
   before_action :set_timelog, only: %i[show edit update destroy]
   before_action :set_comments, only: [:show]
+  before_action :revert_hours, only: [:destroy]
+
   def index
     authorize User, :check_user?, policy_class: UserPolicy
     @project = Project.find(params[:project_id])
@@ -38,6 +40,7 @@ class User::TimelogsController < ApplicationController
     @timelog.project_id = params[:project_id]
     respond_to do |format|
       if @timelog.save
+        set_hours
         format.html { redirect_to user_project_timelogs_url(params[:project_id]), notice: 'Timelog was successfully created.' }
         format.json { render :show, status: :created, location: @timelog }
         format.js
@@ -53,7 +56,9 @@ class User::TimelogsController < ApplicationController
     authorize User, :check_user?, policy_class: UserPolicy
     respond_to do |format|
       if @timelog.update(timelog_params)
+        revert_hours
         update_hours
+        set_hours
         format.html { redirect_to user_project_timelogs_url(@timelog.project_id), notice: 'Timelog was successfully updated.' }
         format.json { render :show, status: :ok, location: @timelog }
         format.js
@@ -101,5 +106,17 @@ class User::TimelogsController < ApplicationController
 
   def update_hours
     @timelog.update(hours: TimeDifference.between(@timelog.start_time, @timelog.end_time).in_hours.to_i)
+  end
+
+  def set_hours
+    hours = @timelog.project.hours_worked
+    hours += @timelog.hours
+    @timelog.project.update(hours_worked: hours)
+  end
+
+  def revert_hours
+    hours = @timelog.project.hours_worked
+    hours -= @timelog.hours
+    @timelog.project.update(hours_worked: hours)
   end
 end

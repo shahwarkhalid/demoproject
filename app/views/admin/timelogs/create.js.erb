@@ -8,5 +8,5 @@
   $('#timelog-list').empty();
   $('#timelog-list').append("<%= j render 'admin/timelogs/timelogs_list', timelogs: @timelogs %>");
   $('#project-hours').empty();
-//  $('#project-hours').html(<%= @timelog.project.hours_worked %>);
+  $('#project-hours').html(<%= @timelog.project.hours_worked %>);
 <% end %>

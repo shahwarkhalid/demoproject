@@ -3,7 +3,6 @@
 class Admin::TimelogsController < ApplicationController
   before_action :set_timelog, only: %i[show edit update destroy]
   before_action :set_comments, only: [:show]
-  after_action :set_hours, only: [:create, :update]
   before_action :revert_hours, only: [:destroy]
 
   def index
@@ -41,6 +40,7 @@ class Admin::TimelogsController < ApplicationController
     @timelog.project_id = params[:project_id]
     respond_to do |format|
       if @timelog.save
+        set_hours
         format.html { redirect_to admin_project_timelogs_url(params[:project_id]), notice: 'Timelog was successfully created.' }
         format.json { render :show, status: :created, location: @timelog }
         format.js
@@ -58,6 +58,7 @@ class Admin::TimelogsController < ApplicationController
       if @timelog.update(timelog_params)
         revert_hours
         update_hours
+        set_hours
         format.html { redirect_to admin_project_timelogs_url(@timelog.project_id), notice: 'Timelog was successfully updated.' }
         format.json { render :show, status: :ok, location: @timelog }
         format.js
