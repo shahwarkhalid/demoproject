@@ -1,4 +1,3 @@
-alert('Comment Deleted Successfully');
 <% @comments = @commentable.comments.order(updated_at: :desc) %>
 $('#comment-list').empty();
 $('#comment-list').append("<%= j render 'comments/commentlist', comments: @comments %>");

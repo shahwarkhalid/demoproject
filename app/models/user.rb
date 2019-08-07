@@ -19,7 +19,7 @@ class User < ApplicationRecord
   has_many :created_comments, class_name: 'Comment', foreign_key: 'creator_id'
   has_many :created_timelogs, class_name: 'Timelog', foreign_key: 'creator_id'
   has_many :attachments, foreign_key: 'creator_id'
-  # mount_uploader :image, ImageUploader
+  mount_uploader :image, ImageUploader
   def admin?
     role == 'admin'
   end

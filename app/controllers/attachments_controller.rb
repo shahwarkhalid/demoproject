@@ -14,7 +14,7 @@ class AttachmentsController < ApplicationController
   end
 
   def create
-    @attachment = Attachment.new(attachment: params[:attachment], project_id: params[:project_id], creator_id: current_user.id)
+    @attachment = Attachment.new(attachment: params[:attachment], project_id: params[:project_id], creator_id: current_user.id, name: params[:name])
     respond_to do |format|
       if @attachment.save
         format.js
@@ -35,6 +35,6 @@ class AttachmentsController < ApplicationController
   private
 
   def attachment_params
-    params.permit(:attachment)
+    params.permit(:attachment, :name)
   end
 end
