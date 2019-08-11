@@ -1,47 +1,26 @@
 # frozen_string_literal: true
 
 class CommentsController < ApplicationController
-  before_action :set_comment, only: %i[show edit update destroy]
-  before_action :set_commentable, only: %i[show edit update destroy]
-  def index; end
-
-  def show; end
-
-  def new; end
+  before_action :set_comment, only: %i[edit update destroy]
+  before_action :set_commentable, only: %i[edit update destroy]
 
   def edit
-    respond_to do |format|
-      format.js
-    end
   end
 
   def create
     @comment = Comment.new(comment_params)
     set_commentable
-    @comment.creator_id = current_user.id
-    if @comment.save
-      respond_to do |format|
-        format.js
-      end
-    end
+    @comment.creator = current_user
+    @comment.save
   end
 
   def update
-    if @comment.update(update_params)
-      respond_to do |format|
-        format.js
-      end
-    end
+    @comment.update(update_params)
   end
 
   def destroy
     @comment.destroy
-    respond_to do |format|
-      format.js
-    end
   end
-
-  def search; end
 
   private
 
@@ -50,9 +29,7 @@ class CommentsController < ApplicationController
   end
 
   def set_commentable
-    @commentable = Project.find(@comment.commentable_id) if @comment.commentable_type == 'Project'
-    @commentable = Payment.find(@comment.commentable_id) if @comment.commentable_type == 'Payment'
-    @commentable = Timelog.find(@comment.commentable_id) if @comment.commentable_type == 'Timelog'
+    @commentable = @comment.commentable
   end
 
   def comment_params

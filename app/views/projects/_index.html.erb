@@ -1,6 +1,18 @@
-<div class="container">
-  <%= render 'search' %>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <div class = "shadow-lg p-3 mb-7 bg-white rounded">
+        <%= render 'search', search_url: search_url %>
+        <% if caller_url == 'admin' %>
+          <%= link_to fa_icon('user-plus', text: "New Project"), new_admin_project_url, remote: true, class: "btn btn-info" %>
+        <% elsif caller_url == 'manager' %>
+          <%= link_to fa_icon('user-plus', text: "New Project"), new_manager_project_url, remote: true, class: "btn btn-info" %>
+        <% end %>
+        <div id = "project-list">
+          <%= render 'project_list', url_type: 'admin', projects: @projects %>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-<div class="container-fluid" id="projectlist">
-  <%= render 'projects/project_list', projects: @projects, url_type: caller_url %>
-</div>
+<div class="modal fade" id="my-modal" title="My modal"></div>

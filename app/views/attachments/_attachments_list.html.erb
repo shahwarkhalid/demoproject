@@ -8,8 +8,8 @@
     <% attachments.each do |attachment| %>
       <tr>
         <td><a href="<%= attachment.attachment_url %>" download="" ><%= attachment.name %></a></td>
-        <% if attachment.creator_id == current_user.id %>
-        <td><%= link_to fa_icon('trash-o', text:""), attachment_url(attachment), method: :delete, remote: true, class: "btn btn-danger", confirm: "Are you sure that you wish to delete ?" %></td>
+        <% if attachment.creator == current_user %>
+        <td><%= link_to fa_icon('trash-o', text: ''), attachment_url(attachment), method: :delete, remote: true, class: "btn btn-danger", confirm: "Are you sure that you wish to delete ?" %></td>
         <% end %>
       </tr>
     <% end %>

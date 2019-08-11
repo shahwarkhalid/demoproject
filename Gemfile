@@ -40,7 +40,6 @@ gem 'rubocop-rails'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'bootstrap', '~> 4.3', '>= 4.3.1'
-gem 'bootstrap4-datetime-picker-rails'
 gem 'carrierwave', '~> 0.10.0'
 gem 'chosen-rails'
 gem 'devise', '~> 4.2'
@@ -50,6 +49,9 @@ gem 'kaminari'
 gem 'mini_magick', '~> 4.3'
 gem 'pundit'
 gem 'time_difference'
+gem 'momentjs-rails'
+gem 'bootstrap4-datetime-picker-rails'
+gem 'validates_timeliness', '~> 5.0.0.alpha3'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]

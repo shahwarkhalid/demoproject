@@ -1,0 +1,10 @@
+<% if @project.errors.any? %>
+  $('#error_explanation').empty();
+  $('#error_explanation').append("<%= j render 'shared/error', error: @project %>");
+<% else %>
+  $('#my-modal').modal('hide');
+  alert('Project Added Successfully');
+  <% @projects = Project.all.order(:created_at).page(params[:page]) %>
+  $('#project-list').empty();
+  $('#project-list').append("<%= j render 'project_list', url_type: 'admin', projects: @projects %>");
+<% end %>

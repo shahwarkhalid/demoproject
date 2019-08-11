@@ -1,32 +1,29 @@
 # frozen_string_literal: true
 
 class Manager::ProjectsController < ProjectsController
+  before_action :authorise_user
   def index
-    authorize User, :check_manager?, policy_class: ManagersPolicy
     @projects = current_user.managed_projects.order(:created_at) + current_user.created_projects.order(:created_at)
+    #@projects = @projects.where('title like ?', "%#{params[:name]}%")
     @projects = Kaminari.paginate_array(@projects).page(params[:page])
   end
 
   def show
-    authorize User, :check_manager?, policy_class: ManagersPolicy
   end
 
   def new
     super
-    authorize User, :check_manager?, policy_class: ManagersPolicy
   end
 
   def edit
     super
-    authorize User, :check_manager?, policy_class: ManagersPolicy
   end
 
   def create
-    authorize User, :check_manager?, policy_class: ManagersPolicy
     @project = Project.new(project_params)
     @project.creator_id = current_user.id
     @project.status = 1
-    @project.hours_worked = 0
+
     respond_to do |format|
       if @project.save
         format.html { redirect_to manager_project_url(@project), notice: 'Project was successfully created.' }
@@ -39,7 +36,6 @@ class Manager::ProjectsController < ProjectsController
   end
 
   def update
-    authorize User, :check_manager?, policy_class: ManagersPolicy
     respond_to do |format|
       super
       if @project.update(project_params)
@@ -54,7 +50,6 @@ class Manager::ProjectsController < ProjectsController
 
   def destroy
     super
-    authorize User, :check_manager?, policy_class: ManagersPolicy
     @project.destroy
     respond_to do |format|
       format.html { redirect_to manager_projects_url, notice: 'Project was successfully destroyed.' }
@@ -93,7 +88,7 @@ class Manager::ProjectsController < ProjectsController
   end
 
   def project_params
-    params.require(:project).permit(:title, :description, :total_hours, :budget, :manager_id, :client_id)
+    params.require(:project).permit(:title, :description, :total_hours, :manager_id, :client_id)
   end
 
   def add_employees_by_emails(project)
@@ -126,5 +121,9 @@ class Manager::ProjectsController < ProjectsController
 
   def domain?
     params[:add_by_domain] == '1'
+  end
+
+  def authorise_user
+    authorize User, :check_manager?, policy_class: ManagersPolicy
   end
 end

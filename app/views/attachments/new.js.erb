@@ -1,2 +1,2 @@
-$('#my-modal').html("<%= j render 'attachments/form', project_id: @project_id %>");
+$('#my-modal').html("<%= j render 'attachments/form', project_id: params[:project_id] %>");
 $('#my-modal').modal('show')

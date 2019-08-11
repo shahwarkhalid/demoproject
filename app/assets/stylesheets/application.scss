@@ -80,3 +80,37 @@ display: block;
 .profile-header {
     margin-top: 43px;
 }
+.box{
+    padding:60px 0px;
+}
+
+.box-part{
+    background:#FFF;
+    border-radius:0;
+    padding:60px 10px;
+    margin:30px 0px;
+}
+.text{
+    margin:20px 0px;
+}
+.chart-wrap{
+    height:70px;
+}
+.size-monitor{
+     position: absolute;
+     left: 0px;
+     top: 0px;
+     right: 0px;
+     bottom: 0px;
+     overflow: hidden;
+     pointer-events: none;
+     visibility: hidden;
+     z-index: -1;
+}
+.position-div{
+    position:absolute;
+    width:1000000px;
+    height:1000000px;
+    left:0;
+    top:0
+}

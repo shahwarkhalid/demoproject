@@ -14,7 +14,9 @@
 //= require popper
 //= require bootstrap-sprockets
 //= require moment
-//= require tempusdominus-bootstrap-4.js
+// If you require timezone data (see moment-timezone-rails for additional file options)
+//= require moment-timezone-with-data
+//= require tempusdominus-bootstrap-4
 //= require chosen-jquery
 //= require rails-ujs
 //= require activestorage

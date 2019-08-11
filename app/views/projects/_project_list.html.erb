@@ -1,56 +1,47 @@
-<div style="position:fixed;">
-  <% if url_type == 'admin' %>
-    <%= link_to fa_icon('user-plus', text: "New Project"), new_admin_project_url, class: "btn btn-info" %>
-  <% elsif url_type == 'manager' %>
-    <%= link_to fa_icon('user-plus', text: "New Project"), new_manager_project_url, class: "btn btn-info" %>
-  <% end %>
-</div>
-<div style="margin-top:50px">
-  <h1 align="center">Projects</h1>
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>Title</th>
-        <th>Description</th>
-        <th>Manager</th>
-        <th>Client</th>
-        <th>Creator</th>
-        <th>Total Hours</th>
-        <th>Hours Worked</th>
-        <th>Budget</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
+<h1 align="center">Projects</h1>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Description</th>
+      <th>Manager</th>
+      <th>Client</th>
+      <th>Creator</th>
+      <th>Total Hours</th>
+      <th>Hours Worked</th>
+      <th>Budget</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
 
-    <tbody>
-      <% @projects.each do |project| %>
-        <tr>
-          <td><%= project.title %></td>
-          <td><%= project.description %></td>
-          <td><%= project.manager.name %></td>
-          <td><%= project.client.first_name %></td>
-          <td><%= project.creator.name %></td>
-          <td><%= project.total_hours %></td>
-          <td><%= project.hours_worked %></td>
-          <td><%= project.budget %></td>
-          <% if url_type == 'admin' %>
-            <td><%= link_to fa_icon('eye', text:''), admin_project_url(project), class: 'btn btn-success' %>
-                <%= link_to fa_icon('pencil-square-o', text:''), edit_admin_project_url(project), class: 'btn btn-warning' %>
-                <%= link_to fa_icon('trash-o', text:''), admin_project_url(project), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
-                <%= link_to fa_icon('user-plus', text:''), admin_project_addemployees_url(project), class: 'btn btn-primary' %>
-                <%= link_to fa_icon('users', text:''), admin_project_emplist_url(project), class: 'btn btn-success' %>
-          <% elsif url_type == 'manager' %>
-            <td><%= link_to fa_icon('eye', text:''), manager_project_url(project), class: 'btn btn-success' %>
-                <%= link_to fa_icon('pencil-square-o', text:''), edit_manager_project_url(project), class: 'btn btn-warning' %>
-                <%= link_to fa_icon('trash-o', text:''), manager_project_url(project), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
-                <%= link_to fa_icon('user-plus', text:''), manager_project_addemployees_url(project), class: 'btn btn-primary' %>
-                <%= link_to fa_icon('users', text:''), manager_project_emplist_url(project), class: 'btn btn-success' %></td>
-          <% elsif url_type == 'user' %>
-              <td><%= link_to fa_icon('eye', text:''), user_project_url(project), class: 'btn btn-success' %></td>
-          <% end %>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-  <%= paginate @projects %>
-</div>
+  <tbody>
+    <% projects.each do |project| %>
+      <tr>
+        <td><%= project.title %></td>
+        <td><%= project.description %></td>
+        <td><%= project.manager.name %></td>
+        <td><%= project.client.first_name %></td>
+        <td><%= project.creator.name %></td>
+        <td><%= project.total_hours %></td>
+        <td><%= project.hours_worked %></td>
+        <td><%= project.budget %></td>
+        <% if url_type == 'admin' %>
+          <td><%= link_to fa_icon('eye', text:''), admin_project_url(project), class: 'btn btn-success' %>
+              <%= link_to fa_icon('pencil-square-o', text:''), edit_admin_project_url(project), remote: true, class: 'btn btn-warning' %>
+              <%= link_to fa_icon('trash-o', text:''), admin_project_url(project), method: :delete, remote: true, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+              <%= link_to fa_icon('user-plus', text:''), admin_project_addemployees_url(project), remote: true, class: 'btn btn-primary' %>
+              <%= link_to fa_icon('users', text:''), admin_project_emplist_url(project), remote: true, class: 'btn btn-success' %>
+        <% elsif url_type == 'manager' %>
+          <td><%= link_to fa_icon('eye', text:''), manager_project_url(project), class: 'btn btn-success' %>
+              <%= link_to fa_icon('pencil-square-o', text:''), edit_manager_project_url(project), remote: true, class: 'btn btn-warning' %>
+              <%= link_to fa_icon('trash-o', text:''), manager_project_url(project), method: :delete, remote: true, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+              <%= link_to fa_icon('user-plus', text:''), manager_project_addemployees_url(project), remote: true, class: 'btn btn-primary' %>
+              <%= link_to fa_icon('users', text:''), manager_project_emplist_url(project), remote: true, class: 'btn btn-success' %></td>
+        <% elsif url_type == 'user' %>
+            <td><%= link_to fa_icon('eye', text:''), user_project_url(project), class: 'btn btn-success' %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= paginate projects %>

@@ -3,11 +3,13 @@
 class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :authenticate_user!
+
   include Pundit
   protect_from_forgery
 
   rescue_from Pundit::NotAuthorizedError, with: :user_authorization
   rescue_from ActiveRecord::RecordNotFound, with: :page_not_found
+  rescue_from ActiveRecord::StatementInvalid, with: :rescue_from_fk_contraint
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up, keys: %i[name status image])
@@ -52,19 +54,8 @@ class ApplicationController < ActionController::Base
     is_a?(::PaymentsController)
   end
 
-  def validate_caller_admin
-    redirect_to root_url if current_user.role == 'admin' && is_Manager_namespace?
-  end
-
-  def validate_caller_manager
-    redirect_to root_url if current_user.role == 'manager' && is_Admin_namespace?
-  end
-
-  def is_Manager_namespace?
-    self.class.parent == Manager
-  end
-
-  def is_Admin_namespace?
-    self.class.parent == Admin
+  def rescue_from_fk_contraint
+    flash[:alert] = 'Cannot Delete This Project'
+    redirect_to root_url
   end
 end

@@ -1,3 +1,5 @@
-<% @payments = @project.payments.order(:created_at).page(params[:page]) %>;
+<% @payments = @project.payments.order(:created_at).page(params[:page]) %>
 $('#payment-list').empty();
 $('#payment-list').append("<%= j render 'payments/payment_list', url_type: 'admin', payments: @payments %>");
+$('#project-budget').empty();
+$('#project-budget').html(<%= @payment.project.budget %>);

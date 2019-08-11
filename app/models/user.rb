@@ -5,10 +5,6 @@ class User < ApplicationRecord
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-  validates_presence_of :name, on: :create
-  validates_presence_of :age, on: :update
-  validates_presence_of :address, on: :update
-  validates_numericality_of :age, greater_than: 0, only_integer: true, on: :update
 
   has_many :employees_projects, foreign_key: 'employee_id'
   has_many :projects, through: :employees_projects
@@ -19,7 +15,14 @@ class User < ApplicationRecord
   has_many :created_comments, class_name: 'Comment', foreign_key: 'creator_id'
   has_many :created_timelogs, class_name: 'Timelog', foreign_key: 'creator_id'
   has_many :attachments, foreign_key: 'creator_id'
+
+  validates_presence_of :name, on: :create
+  validates_presence_of :age, on: :update
+  validates_presence_of :address, on: :update
+  validates_numericality_of :age, greater_than: 0, only_integer: true, on: :update
+
   mount_uploader :image, ImageUploader
+
   def admin?
     role == 'admin'
   end
@@ -34,7 +37,7 @@ class User < ApplicationRecord
 
   def self.search_users(term, role, current_user)
     users = all
-    users = users.where(role: role) unless role.empty?
+    users = users.where(role: role) if role.blank?
     users = users.where('name LIKE ? OR email LIKE ?', "%#{term}%", "%#{term}%") unless term.empty?
     users = users.where.not(id: current_user.id)
     users

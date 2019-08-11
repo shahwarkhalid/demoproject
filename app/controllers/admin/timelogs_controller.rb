@@ -1,91 +1,52 @@
 # frozen_string_literal: true
 
 class Admin::TimelogsController < ApplicationController
+  before_action :authorize_user
+  before_action :set_project, only: [:index, :new, :create]
   before_action :set_timelog, only: %i[show edit update destroy]
   before_action :set_comments, only: [:show]
   before_action :revert_hours, only: [:destroy]
 
   def index
-    authorize User, :check_admin?, policy_class: UsersPolicy
-    @project = Project.find(params[:project_id])
     @timelogs = @project.timelogs.order(:created_at).page(params[:page])
   end
 
   def show
-    authorize User, :check_admin?, policy_class: UsersPolicy
   end
 
   def new
-    authorize User, :check_admin?, policy_class: UsersPolicy
-    @project = Project.find(params[:project_id])
     @timelog = Timelog.new
-    respond_to do |format|
-      format.js
-    end
   end
 
   def edit
-    authorize User, :check_admin?, policy_class: UsersPolicy
     @project = @timelog.project
-    respond_to do |format|
-      format.js
-    end
   end
 
   def create
-    authorize User, :check_admin?, policy_class: UsersPolicy
     @timelog = Timelog.new(timelog_params)
-    @timelog.creator_id = current_user.id
-    @timelog.hours = TimeDifference.between(@timelog.start_time, @timelog.end_time).in_hours.to_i unless @timelog.start_time.blank?
-    @timelog.project_id = params[:project_id]
-    respond_to do |format|
+    @timelog.creator = current_user
+    if @timelog.end_time < @timelog.start_time
+      @timelog.errors.add(:end_time, 'must be greater than start time')
+    else
+      @timelog.hours = TimeDifference.between(@timelog.start_time, @timelog.end_time).in_hours.to_i unless @timelog.start_time.blank?
+      @timelog.project = @project
       if @timelog.save
         set_hours
-        format.html { redirect_to admin_project_timelogs_url(params[:project_id]), notice: 'Timelog was successfully created.' }
-        format.json { render :show, status: :created, location: @timelog }
-        format.js
-      else
-        format.html { render :new }
-        format.json { render json: @timelog.errors, status: :unprocessable_entity }
-        format.js
       end
     end
   end
 
   def update
-    authorize User, :check_admin?, policy_class: UsersPolicy
-    respond_to do |format|
-      if @timelog.update(timelog_params)
-        revert_hours
-        update_hours
-        set_hours
-        format.html { redirect_to admin_project_timelogs_url(@timelog.project_id), notice: 'Timelog was successfully updated.' }
-        format.json { render :show, status: :ok, location: @timelog }
-        format.js
-      else
-        format.html { render :edit }
-        format.json { render json: @timelog.errors, status: :unprocessable_entity }
-        format.js
-      end
+    if @timelog.update(timelog_params)
+      revert_hours
+      update_hours
+      set_hours
     end
   end
 
   def destroy
-    authorize User, :check_admin?, policy_class: UsersPolicy
     @project = @timelog.project
     @timelog.destroy
-    respond_to do |format|
-      format.js
-      format.html { redirect_to admin_project_timelogs_url(@timelog.project_id), notice: 'Timelog was successfully destroyed.' }
-      format.json { head :no_content }
-    end
-  end
-
-  def search
-    @timelogs = Timelog.search_Timelogs(params[:name]).order(:created_at).page(params[:page])
-    respond_to do |format|
-      format.js
-    end
   end
 
   private
@@ -95,9 +56,11 @@ class Admin::TimelogsController < ApplicationController
     render file: 'public/404.html', status: :not_found, layout: false unless @timelog
   end
 
+  def set_project
+    @project = Project.find(params[:project_id])
+  end
   def set_comments
-    timelog = Timelog.find(params[:id])
-    @comments = timelog.comments.order(updated_at: :desc)
+    @comments = @timelog.comments.order(updated_at: :desc)
   end
 
   def timelog_params
@@ -118,5 +81,9 @@ class Admin::TimelogsController < ApplicationController
     hours = @timelog.project.hours_worked
     hours -= @timelog.hours
     @timelog.project.update(hours_worked: hours)
+  end
+
+  def authorize_user
+    authorize User, :check_admin?, policy_class: UsersPolicy
   end
 end

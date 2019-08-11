@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Manager::PaymentsController < PaymentsController
+  #before_action :authorize_user
+  before_action :revert_amount, only: [:destroy]
   def index
     super
     authorize User, :check_manager?, policy_class: ManagersPolicy
@@ -29,36 +31,19 @@ class Manager::PaymentsController < PaymentsController
 
   def create
     authorize User, :check_manager?, policy_class: ManagersPolicy
-    @project = Project.find(params[:project_id])
+    set_project
     @payment = Payment.new(payment_params)
-    @payment.project_id = params[:project_id]
+    @payment.project = @project
     @payment.creator = current_user
-    respond_to do |format|
-      if @payment.save
-        format.html { redirect_to manager_project_payments_url(params[:project_id]), notice: 'Payment was successfully created.' }
-        format.json { render :show, status: :created, location: @admin_project_payments_url }
-        format.js
-      else
-        format.html { render :new }
-        format.json { render json: @payment.errors, status: :unprocessable_entity }
-        format.js
-      end
+    if @payment.save
+      set_amount
     end
   end
 
   def update
-    super
-    authorize User, :check_manager?, policy_class: ManagersPolicy
-    respond_to do |format|
-      if @payment.update(payment_params)
-        format.html { redirect_to manager_project_payments_url(@payment.project), notice: 'Payment was successfully updated.' }
-        format.json { render :show, status: :ok, location: @payment }
-        format.js
-      else
-        format.html { render :edit }
-        format.json { render json: @payment.errors, status: :unprocessable_entity }
-        format.js
-      end
+    revert_amount
+    if @payment.update(payment_params)
+      set_amount
     end
   end
 
@@ -90,5 +75,17 @@ class Manager::PaymentsController < PaymentsController
 
   def payment_params
     params.require(:payment).permit(:title, :payment_type, :amount)
+  end
+
+  def set_amount
+    budget = @payment.project.budget
+    budget += @payment.amount
+    @payment.project.update(budget: budget)
+  end
+
+  def revert_amount
+    budget = @payment.project.budget
+    budget -= @payment.amount
+    @payment.project.update(budget: budget)
   end
 end

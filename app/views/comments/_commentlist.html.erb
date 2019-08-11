@@ -12,7 +12,7 @@
                   <div class="container">
                     <div class="pull-left">
                       <% if !comment.creator.image.blank? %>
-                        <img src="<%= comment.creator.image.url %>" class="rounded-circle" alt="Cinque Terre" width="150" height="150">
+                        <%= image_tag(comment.creator.image.url, size: '150x150', class: 'rounded-circle') %>
                       <% else %>
                         <img src="https://bootdey.com/img/Content/user_1.jpg" alt="" class="rounded-circle">
                       <% end%>
@@ -20,7 +20,7 @@
                     <div class="media-body">
                       <span class="text-muted pull-right">
                         <small class="text-muted"><%= comment.updated_at.strftime(" %I:%M%p")  %></small>
-                        <% if comment.creator_id == current_user.id %>
+                        <% if comment.creator == current_user %>
                           <%= link_to fa_icon('pencil-square', text: ''), edit_comment_url(comment), remote: true%>
                           <%= link_to fa_icon('trash', text: ''), comment_url(comment), method: :delete, remote: true, confirm: "Are you sure that you wish to delete ?" %>
                         <% end %>

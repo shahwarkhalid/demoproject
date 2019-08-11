@@ -1,43 +1,48 @@
-<div class="container">
-  <%= form_with(model: @project, url: form_url, local: true) do |form| %>
-    <% if @project.errors.any? %>
-      <div id="error_explanation">
-        <%= render 'shared/error', error: @project%>
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title">New Project</h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="container">
+        <%= form_with(model: @project, url: form_url, remote: true) do |form| %>
+          <div id="error_explanation">
+          </div>
+          <div class="form-group">
+            <%= form.label :title %>
+            <%= form.text_field :title, class: 'form-control' %>
+          </div>
+
+          <div class="form-group">
+            <%= form.label :description %>
+            <%= form.text_area :description, class: 'form-control' %>
+          </div>
+          <div class="form-group">
+            <%= form.label :assign_manager %><div class="clearfix mb-3">
+            <%= form.select :manager_id, ("<option value=''>Select Manager</option>" + options_from_collection_for_select(User.all.where(role:'manager'), :id, :name, :selected => form.object.manager_id)).html_safe, {}, { id: 'choose-manager', :class => 'chosen-select form-control'} %>
+          </div>
+
+          <div class="form-group">
+            <%= form.label :assign_client %><div class="clearfix mb-3">
+            <%= form.select :client_id, ("<option value=''>Select Client</option>" + options_from_collection_for_select(Client.all, :id, :first_name, :selected => form.object.client_id)).html_safe, {}, { id: 'choose-client', :class => 'chosen-select form-control'} %>
+          </div>
+
+          <div class="form-group">
+            <%= form.label :total_hours %>
+            <%= form.number_field :total_hours, class: 'form-control' %>
+          </div>
+
+          <div class="form-group">
+            <%= form.submit "Save Project", class: 'btn btn-success' %>
+          </div>
+        <% end %>
       </div>
-    <% end %>
-
-    <div class="form-group">
-      <%= form.label :title %>
-      <%= form.text_field :title, class: 'form-control' %>
     </div>
-
-    <div class="form-group">
-      <%= form.label :description %>
-      <%= form.text_area :description, class: 'form-control' %>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
     </div>
-    <div class="form-group">
-      <%= form.label :assign_manager %><div class="clearfix mb-3">
-      <%= form.select :manager_id, ("<option value=''>Select Manager</option>" + options_from_collection_for_select(User.all.where(role:'manager'), :id, :name, :selected => form.object.manager_id)).html_safe, {}, { id: 'choose-manager', :class => 'chosen-select form-control'} %>
-    </div>
-
-    <div class="form-group">
-      <%= form.label :assign_client %><div class="clearfix mb-3">
-      <%= form.select :client_id, ("<option value=''>Select Client</option>" + options_from_collection_for_select(Client.all, :id, :first_name, :selected => form.object.client_id)).html_safe, {}, { id: 'choose-client', :class => 'chosen-select form-control'} %>
-    </div>
-
-    <div class="form-group">
-      <%= form.label :total_hours %>
-      <%= form.number_field :total_hours, class: 'form-control' %>
-    </div>
-
-    <div class="form-group">
-      <%= form.label :budget %>
-      <%= form.number_field :budget, class: 'form-control' %>
-    </div>
-
-    <div class="form-group">
-      <%= form.submit "Save Project", class: 'btn btn-success' %>
-    </div>
-  <% end %>
-  <%= link_to 'Back', back_url, class: 'btn btn-warning' %>
+  </div>
 </div>

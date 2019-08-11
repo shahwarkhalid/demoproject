@@ -23,17 +23,27 @@
           </div>
           <div class="form-group">
             <%= form.label :assign_employee %><div class="clearfix mb-3">
-            <%= form.select :employee_id, ("<option value=''>Select Employee</option>" + options_from_collection_for_select(User.all.where(role:'user'), :id, :name, :selected => form.object.employee_id)).html_safe, {}, { id: 'choose-employee', :class => 'chosen-select'} %>
+            <%= form.select :employee_id, ("<option value=''>Select Employee</option>" + options_from_collection_for_select(User.all.where(role:'user'), :id, :name, :selected => form.object.employee_id)).html_safe, {}, { id: 'choose-employee', :class => 'chosen-select form-control'} %>
           </div>
 
           <div class="form-group">
-            <%= form.label :start_time %><div class="clearfix mb-3">
-            <%= form.datetime_field :start_time, :ampm => true, :minute_step => 15, class: 'form-control' %>
+            <%= form.label :start_time, class: 'control-label' %>
+            <div class="input-group date" id="datetimepicker3" data-target-input="nearest">
+              <%= form.text_field(:start_time, class: "form-control datetimepicker-input", data: {target:"#datetimepicker3"}) %>
+              <div class="input-group-append" data-target="#datetimepicker3" data-toggle="datetimepicker">
+                <div class="input-group-text"><span class="fas fa-calendar-alt"></span></div>
+              </div>
+            </div>
           </div>
 
           <div class="form-group">
-            <%= form.label :end_time %><div class="clearfix mb-3">
-            <%= form.datetime_field :end_time, :ampm => true, :minute_step => 15, class: 'form-control' %>
+            <%= form.label :end_time, class: 'control-label' %>
+            <div class="input-group date" id="datetimepicker4" data-target-input="nearest">
+              <%= form.text_field(:end_time, class: "form-control datetimepicker-input", data: {target:"#datetimepicker4"}) %>
+              <div class="input-group-append" data-target="#datetimepicker4" data-toggle="datetimepicker">
+                <div class="input-group-text"><span class="fas fa-calendar-alt"></span></div>
+              </div>
+            </div>
           </div>
 
           <div class="form-group">

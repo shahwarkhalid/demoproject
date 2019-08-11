@@ -6,6 +6,7 @@ class ProjectsController < ApplicationController
   before_action :set_timelogs, only: [:show]
   before_action :set_comments, only: [:show]
   before_action :set_attachments, only: [:show]
+
   def index
     @projects = Project.all.order(:created_at).page(params[:page])
   end
@@ -26,9 +27,6 @@ class ProjectsController < ApplicationController
 
   def search
     @projects = Project.search_projects(params[:name]).order(:created_at).page(params[:page])
-    respond_to do |format|
-      format.js
-    end
   end
 
   def assign_employees
@@ -37,7 +35,7 @@ class ProjectsController < ApplicationController
 
   def create_employees_list; end
 
-  def emplist
+  def employee_list
     project = Project.find(params[:project_id])
     @employees = project.employees.order(:id).page(params[:page])
   end
@@ -50,23 +48,19 @@ class ProjectsController < ApplicationController
   end
 
   def set_payments
-    project = Project.find(params[:id])
-    @payments = project.payments.order(:created_at).page(params[:page])
+    @payments = @project.payments.order(:created_at).page(params[:page])
   end
 
   def set_timelogs
-    project = Project.find(params[:id])
-    @timelogs = project.timelogs.order(:created_at).page(params[:page])
+    @timelogs = @project.timelogs.order(:created_at).page(params[:page])
   end
 
   def set_comments
-    project = Project.find(params[:id])
-    @comments = project.comments.order(updated_at: :desc)
+    @comments = @project.comments.order(updated_at: :desc)
   end
 
   def set_attachments
-    project = Project.find(params[:id])
-    @attachments = project.attachments.order(updated_at: :desc)
+    @attachments = @project.attachments.order(updated_at: :desc)
   end
 
   def project_params
