@@ -2,7 +2,6 @@
 
 class Admin::PaymentsController < PaymentsController
   before_action :authorize_user
-  before_action :revert_amount, only: [:destroy]
   def index
     super
   end
@@ -25,18 +24,19 @@ class Admin::PaymentsController < PaymentsController
     @payment.project = @project
     @payment.creator = current_user
     if @payment.save
-      set_amount
+      Payment.set_amount(@payment)
     end
   end
 
   def update
-    revert_amount
+    Payment.revert_amount(@payment)
     if @payment.update(payment_params)
-      set_amount
+      Payment.set_amount(@payment)
     end
   end
 
   def destroy
+    Payment.revert_amount(@payment)
     @project = @payment.project
     @payment.destroy
   end
@@ -47,24 +47,4 @@ class Admin::PaymentsController < PaymentsController
     authorize User, :check_admin?, policy_class: UsersPolicy
   end
 
-  def set_project
-    @project = Project.find_by_id(params[:project_id])
-    render file: 'public/404.html', status: :not_found, layout: false unless @project
-  end
-
-  def payment_params
-    params.require(:payment).permit(:title, :payment_type, :amount)
-  end
-
-  def set_amount
-    budget = @payment.project.budget
-    budget += @payment.amount
-    @payment.project.update(budget: budget)
-  end
-
-  def revert_amount
-    budget = @payment.project.budget
-    budget -= @payment.amount
-    @payment.project.update(budget: budget)
-  end
 end

@@ -41,6 +41,17 @@ Rails.application.routes.draw do
   resources :comments, only: [:create, :edit, :update, :destroy]
   resources :attachments
   resources :user, only: %i[index edit update]
+
+  namespace :api do
+    namespace :v1 do
+      resources :projects
+      devise_for :users, skip: :all
+      devise_scope :user do
+        post 'users/sign_in', to: 'sessions#create', as: nil
+        post 'users/sign_out', to: 'sessions#destroy', as: nil
+      end
+    end
+  end
   get '404', to: 'errors#not_found'
   match '*path' => redirect('/'), via: :get
 end

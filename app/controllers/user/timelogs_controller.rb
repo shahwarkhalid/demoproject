@@ -5,7 +5,7 @@ class User::TimelogsController < ApplicationController
   before_action :set_project, only: [:index, :new, :create]
   before_action :set_timelog, only: %i[show edit update destroy]
   before_action :set_comments, only: [:show]
-  before_action :revert_hours, only: [:destroy]
+  before_action :convert_string_to_datetime, only: [:create, :update]
 
   def index
     @timelogs = @project.timelogs.order(:created_at).page(params[:page])
@@ -19,10 +19,9 @@ class User::TimelogsController < ApplicationController
   end
 
   def edit
+    @timelog.start_time = ''
+    @timelog.end_time = ''
     @project = @timelog.project
-    respond_to do |format|
-      format.js
-    end
   end
 
   def create
@@ -34,20 +33,19 @@ class User::TimelogsController < ApplicationController
       @timelog.hours = TimeDifference.between(@timelog.start_time, @timelog.end_time).in_hours.to_i unless @timelog.start_time.blank?
       @timelog.project = @project
       if @timelog.save
-        set_hours
+        Timelog.set_hours(@timelog)
       end
     end
   end
 
   def update
     if @timelog.update(timelog_params)
-      revert_hours
-      update_hours
-      set_hours
+      Timelog.update_project_hours(@timelog)
     end
   end
 
   def destroy
+    Timelog.revert_hours(@timelog)
     @project = @timelog.project
     @timelog.destroy
   end
@@ -70,20 +68,9 @@ class User::TimelogsController < ApplicationController
     params.require(:timelog).permit(:title, :description, :employee_id, :start_time, :end_time)
   end
 
-  def update_hours
-    @timelog.update(hours: TimeDifference.between(@timelog.start_time, @timelog.end_time).in_hours.to_i)
-  end
-
-  def set_hours
-    hours = @timelog.project.hours_worked
-    hours += @timelog.hours
-    @timelog.project.update(hours_worked: hours)
-  end
-
-  def revert_hours
-    hours = @timelog.project.hours_worked
-    hours -= @timelog.hours
-    @timelog.project.update(hours_worked: hours)
+  def convert_string_to_datetime
+    params[:timelog][:start_time] = DateTime.strptime(params[:timelog][:start_time], '%m/%d/%Y %I:%M %p') if !params[:timelog][:start_time].blank?
+    params[:timelog][:end_time] = DateTime.strptime(params[:timelog][:end_time], '%m/%d/%Y %I:%M %p') if !params[:timelog][:end_time].blank?
   end
 
   def authorize_user

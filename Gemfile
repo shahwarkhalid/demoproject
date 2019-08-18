@@ -52,6 +52,9 @@ gem 'time_difference'
 gem 'momentjs-rails'
 gem 'bootstrap4-datetime-picker-rails'
 gem 'validates_timeliness', '~> 5.0.0.alpha3'
+gem 'active_model_serializers', '~> 0.10.0'
+gem 'devise-jwt'
+gem 'rack-cors'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]

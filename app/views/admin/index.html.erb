@@ -1,5 +1,4 @@
 <div class="container-fluid">
-  <h1 align="center">Top 5 Projects</h1>
   <div class="row">
     <% @top_projects.each do |project| %>
       <div class="col-md-3">
@@ -9,32 +8,7 @@
               <div style="float: right;"><%= link_to fa_icon('eye', text: ''), admin_project_url(project), class: 'btn btn-primary' %></div>
               <div>Title: <%= project.title %></div>
               <div>Description: <%= project.description %></div>
-              <div>Budget: <%= project.budget %></div>
-            </div>
-            <div class="chart-wrapper mt-3 mx-3 chart-wrap">
-              <div class="chartjs-size-monitor size-monitor">
-                <div class="chartjs-size-monitor-expand size-monitor"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    <% end %>
-  </div>
-</div>
-<div class="clearfix mb-3"></div>
-<div class="container-fluid">
-  <h1 align="center">Bottom 5 Projects</h1>
-  <div class="row">
-    <% @bottom_projects.each do |project| %>
-      <div class="col-md-3">
-        <div class = "shadow-lg p-3 mb-7 bg-white rounded shrink">
-          <div class="card text-white bg-primary">
-            <div class="card-body pb-0">
-              <div style="float: right;"><%= link_to fa_icon('eye', text: ''), admin_project_url(project), class: 'btn btn-primary' %></div>
-              <div>Title: <%= project.title %></div>
-              <div>Description: <%= project.description %></div>
-              <div>Budget: <%= project.budget %></div>
+              <div>Budget: <%= project.budget %></div>0
             </div>
             <div class="chart-wrapper mt-3 mx-3 chart-wrap">
               <div class="chartjs-size-monitor size-monitor">

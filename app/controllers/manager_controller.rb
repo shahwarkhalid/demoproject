@@ -3,7 +3,9 @@
 class ManagerController < ApplicationController
   before_action :validate_manager!
 
-  def index; end
+  def index
+    @top_projects = Project.manager_top_projects(current_user)
+  end
 
   protected
 

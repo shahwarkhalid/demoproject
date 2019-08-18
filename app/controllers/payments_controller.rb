@@ -31,7 +31,8 @@ class PaymentsController < ApplicationController
   end
 
   def set_project
-    @project = Project.find(params[:project_id])
+    @project = Project.find_by_id(params[:project_id])
+    render file: 'public/404.html', status: :not_found, layout: false unless @project
   end
 
   def set_comments
@@ -39,6 +40,6 @@ class PaymentsController < ApplicationController
   end
 
   def payment_params
-    params.require(:payment).permit(:title, :description, :total_hours, :budget, :manager_id, :client_id)
+    params.require(:payment).permit(:title, :payment_type, :amount)
   end
 end

@@ -4,7 +4,7 @@ class User < ApplicationRecord
   paginates_per 5
 
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+         :recoverable, :rememberable, :validatable, :jwt_authenticatable, jwt_revocation_strategy: JwtBlacklist
 
   has_many :employees_projects, foreign_key: 'employee_id'
   has_many :projects, through: :employees_projects
@@ -22,6 +22,9 @@ class User < ApplicationRecord
   validates_numericality_of :age, greater_than: 0, only_integer: true, on: :update
 
   mount_uploader :image, ImageUploader
+
+  attr_accessor :shared_secret
+  attr_accessor :token_expires
 
   def admin?
     role == 'admin'
@@ -51,6 +54,15 @@ class User < ApplicationRecord
     emails
   end
 
+  def self.authenticate( password)
+    #user = User.find_by_name(name)
+
+    if user.find_by_password(password)#match_password(password)
+      return true
+    else
+      return false
+    end
+  end
   def active_for_authentication?
     super && status?
   end

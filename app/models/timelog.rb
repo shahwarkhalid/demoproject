@@ -11,4 +11,26 @@ class Timelog < ApplicationRecord
   validates :end_time, presence: true, timeliness: {type: :datetime}
 
   paginates_per 5
+
+  def self.update_hours(timelog)
+    timelog.update(hours: TimeDifference.between(timelog.start_time, timelog.end_time).in_hours.to_i)
+  end
+
+  def self.set_hours(timelog)
+    hours = timelog.project.hours_worked
+    hours += timelog.hours
+    timelog.project.update(hours_worked: hours)
+  end
+
+  def self.revert_hours(timelog)
+    hours = timelog.project.hours_worked
+    hours -= timelog.hours
+    timelog.project.update(hours_worked: hours)
+  end
+
+  def self.update_project_hours(timelog)
+    revert_hours(timelog)
+    update_hours(timelog)
+    set_hours(timelog)
+  end
 end

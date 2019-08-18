@@ -1,0 +1,3 @@
+<% @projects = Project.all.order(:created_at).page(params[:page]) %>
+$('#project-list').empty();
+$('#project-list').append("<%= j render 'project_list', url_type: 'manager', projects: @projects %>");

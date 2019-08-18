@@ -3,7 +3,7 @@
 class Admin::ProjectsController < ProjectsController
   before_action :authorize_user
   def index
-    @projects = Project.search_projects(params).order(:created_at).page(params[:page])
+    @projects = Project.search_projects(params)
   end
 
   def show
@@ -29,13 +29,6 @@ class Admin::ProjectsController < ProjectsController
 
   def destroy
     @project.destroy
-  end
-
-  def search
-    @projects = Project.search_projects(params[:name]).order(:created_at).page(params[:page])
-    respond_to do |format|
-      format.js
-    end
   end
 
   def assign_employees

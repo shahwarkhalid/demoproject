@@ -9,7 +9,7 @@
           <%= link_to fa_icon('user-plus', text: "New Project"), new_manager_project_url, remote: true, class: "btn btn-info" %>
         <% end %>
         <div id = "project-list">
-          <%= render 'project_list', url_type: 'admin', projects: @projects %>
+          <%= render 'project_list', url_type: current_user.role == 'admin' ? 'admin' : current_user.role == 'manager' ? 'manager' : 'user', projects: @projects %>
         </div>
       </div>
     </div>
