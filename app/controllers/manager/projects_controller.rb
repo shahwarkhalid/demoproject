@@ -6,15 +6,13 @@ class Manager::ProjectsController < ProjectsController
     @projects = Project.search_manager_projects(params, current_user).order(:created_at).page(params[:page])
   end
 
-  def show
-  end
+  def show; end
 
   def new
     super
   end
 
-  def edit
-  end
+  def edit; end
 
   def create
     @project = Project.new(project_params)

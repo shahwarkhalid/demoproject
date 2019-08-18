@@ -4,8 +4,7 @@ class CommentsController < ApplicationController
   before_action :set_comment, only: %i[edit update destroy]
   before_action :set_commentable, only: %i[edit update destroy]
 
-  def edit
-  end
+  def edit; end
 
   def create
     @comment = Comment.new(comment_params)

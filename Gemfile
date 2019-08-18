@@ -38,23 +38,23 @@ gem 'rubocop-rails'
 # gem 'capistrano-rails', group: :development
 
 # Reduces boot times through caching; required in config/boot.rb
+gem 'active_model_serializers', '~> 0.10.0'
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'bootstrap', '~> 4.3', '>= 4.3.1'
+gem 'bootstrap4-datetime-picker-rails'
 gem 'carrierwave', '~> 0.10.0'
 gem 'chosen-rails'
 gem 'devise', '~> 4.2'
+gem 'devise-jwt'
 gem 'font-awesome-rails', '~> 4.7', '>= 4.7.0.2'
 gem 'jquery-rails'
 gem 'kaminari'
 gem 'mini_magick', '~> 4.3'
-gem 'pundit'
-gem 'time_difference'
 gem 'momentjs-rails'
-gem 'bootstrap4-datetime-picker-rails'
-gem 'validates_timeliness', '~> 5.0.0.alpha3'
-gem 'active_model_serializers', '~> 0.10.0'
-gem 'devise-jwt'
+gem 'pundit'
 gem 'rack-cors'
+gem 'time_difference'
+gem 'validates_timeliness', '~> 5.0.0.alpha3'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]

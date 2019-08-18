@@ -6,31 +6,25 @@ class Manager::PaymentsController < PaymentsController
     super
   end
 
-  def show
-  end
+  def show; end
 
   def new
     super
   end
 
-  def edit
-  end
+  def edit; end
 
   def create
     set_project
     @payment = Payment.new(payment_params)
     @payment.project = @project
     @payment.creator = current_user
-    if @payment.save
-      Payment.set_amount(@payment)
-    end
+    Payment.set_amount(@payment) if @payment.save
   end
 
   def update
     Payment.revert_amount(@payment)
-    if @payment.update(payment_params)
-      Payment.set_amount(@payment)
-    end
+    Payment.set_amount(@payment) if @payment.update(payment_params)
   end
 
   def destroy

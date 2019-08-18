@@ -7,8 +7,8 @@ class Timelog < ApplicationRecord
   belongs_to :creator, class_name: 'User'
 
   validates_presence_of :title
-  validates :start_time, presence: true, timeliness: {type: :datetime}
-  validates :end_time, presence: true, timeliness: {type: :datetime}
+  validates :start_time, presence: true, timeliness: { type: :datetime }
+  validates :end_time, presence: true, timeliness: { type: :datetime }
 
   paginates_per 5
 

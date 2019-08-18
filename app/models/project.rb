@@ -17,13 +17,13 @@ class Project < ApplicationRecord
 
   def self.search_projects(params)
     projects = all
-    projects = projects.where('title LIKE ?', "%#{params[:name]}%") if params.has_key?(:name) && !params[:name].empty?
+    projects = projects.where('title LIKE ?', "%#{params[:name]}%") if params.key?(:name) && !params[:name].empty?
     projects.order(:created_at).page(params[:page])
   end
 
   def self.search_manager_projects(params, current_user)
     projects = Project.where(manager_id: current_user.id).or(Project.where(creator_id: current_user.id))
-    projects = projects.where('title LIKE ?', "%#{params[:name]}%") if params.has_key?(:name) && !params[:name].empty?
+    projects = projects.where('title LIKE ?', "%#{params[:name]}%") if params.key?(:name) && !params[:name].empty?
     projects
   end
 

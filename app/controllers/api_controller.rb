@@ -1,10 +1,11 @@
+# frozen_string_literal: true
+
 class ApiController < ActionController::API
   # skip_before_action :verify_authenticity_token
   # skip_before_action :authenticate_user!
   # before_action :authenticate_api_key!
   # before_action :authenticate_user_from_token!
   # protect_from_forgery with: :null_session
-
 
   # protected
 
@@ -16,9 +17,7 @@ class ApiController < ActionController::API
   #   !@resource.nil?
   # end
 
-
   # private
-
 
   # def authenticate_user_from_token!
   #   @resource ||= user_with_key(apikey_from_request).where(email: claims[0]['user']).first

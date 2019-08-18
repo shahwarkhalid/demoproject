@@ -54,15 +54,16 @@ class User < ApplicationRecord
     emails
   end
 
-  def self.authenticate( password)
-    #user = User.find_by_name(name)
+  def self.authenticate(password)
+    # user = User.find_by_name(name)
 
-    if user.find_by_password(password)#match_password(password)
-      return true
+    if user.find_by_password(password) # match_password(password)
+      true
     else
-      return false
+      false
     end
   end
+
   def active_for_authentication?
     super && status?
   end

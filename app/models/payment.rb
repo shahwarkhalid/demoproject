@@ -21,5 +21,4 @@ class Payment < ApplicationRecord
     budget -= payment.amount
     payment.project.update(budget: budget)
   end
-
 end

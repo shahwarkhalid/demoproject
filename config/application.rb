@@ -21,11 +21,11 @@ module Demoproject
         resource(
           '*',
           headers: :any,
-          expose: ["Authorization"],
-          methods: [:get, :patch, :put, :delete, :post, :options, :show]
+          expose: ['Authorization'],
+          methods: %i[get patch put delete post options show]
         )
       end
-   end
+    end
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers

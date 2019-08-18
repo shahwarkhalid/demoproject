@@ -38,7 +38,7 @@ Rails.application.routes.draw do
     post 'user/search', to: 'users#search'
     post 'client/search', to: 'clients#search'
   end
-  resources :comments, only: [:create, :edit, :update, :destroy]
+  resources :comments, only: %i[create edit update destroy]
   resources :attachments
   resources :user, only: %i[index edit update]
 
