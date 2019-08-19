@@ -1,6 +1,11 @@
 # frozen_string_literal: true
 
 class ApiController < ActionController::API
+  before_action :authenticate_user
+
+  include Pundit
+  rescue_from Pundit::NotAuthorizedError, with: :user_authorization
+
   # skip_before_action :verify_authenticity_token
   # skip_before_action :authenticate_user!
   # before_action :authenticate_api_key!
@@ -88,4 +93,23 @@ class ApiController < ActionController::API
   #   return if apikey_from_request.nil?
   #   User.where(private_key: key).where('private_key_expires > ?', Time.zone.now)
   # end
+  def authorize_request
+    header = request.headers['Authorization']
+    header = header.split(' ').last if header
+    begin
+      @decoded = JsonWebToken.decode(header)
+      @current_user = User.find(@decoded[:user_id])
+    rescue ActiveRecord::RecordNotFound => e
+      render json: { errors: e.message }, status: :unauthorized
+    rescue JWT::DecodeError => e
+      render json: { errors: e.message }, status: :unauthorized
+    end
+  end
+  def user_authorization
+    render json: 'You are not authorized to access this.'
+  end
+
+  def authenticate_user
+    render json: 'you need to sign in to continue' unless user_signed_in?
+  end
 end

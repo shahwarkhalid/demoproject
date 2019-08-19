@@ -8,7 +8,7 @@ class Admin::TimelogsController < ApplicationController
   before_action :convert_string_to_datetime, only: %i[create update]
 
   def index
-    @timelogs = @project.timelogs.order(:created_at).page(params[:page])
+    @timelogs = Timelog.get_timelogs(@project, current_user).page(params[:page])
   end
 
   def show; end

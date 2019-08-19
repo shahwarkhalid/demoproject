@@ -4,15 +4,10 @@ class Admin::UsersController < AdminController
   before_action :set_user, only: %i[edit update enable_disable_user]
 
   def index
-    @users = User.where.not(id: current_user.id).order(:id).page(params[:page])
+    @users = User.search_users(params, current_user).page(params[:page])
     @roles = Role.all
 
     authorize User, :check_admin?, policy_class: UsersPolicy
-
-    respond_to do |format|
-      format.html { render :index }
-      format.js
-    end
   end
 
   def new
@@ -64,15 +59,6 @@ class Admin::UsersController < AdminController
       end
     end
   end
-
-  def search
-    authorize User, :check_admin?, policy_class: UsersPolicy
-    @users = User.search_users(params[:name], params[:role], current_user).order(:created_at).page(params[:page])
-    respond_to do |format|
-      format.js
-    end
-  end
-
   private
 
   def set_user

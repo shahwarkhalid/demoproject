@@ -4,7 +4,7 @@ class User < ApplicationRecord
   paginates_per 5
 
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable, :jwt_authenticatable, jwt_revocation_strategy: JwtBlacklist
+         :recoverable, :rememberable, :validatable
 
   has_many :employees_projects, foreign_key: 'employee_id'
   has_many :projects, through: :employees_projects
@@ -38,12 +38,12 @@ class User < ApplicationRecord
     role == 'manager'
   end
 
-  def self.search_users(term, role, current_user)
+  def self.search_users(params, current_user)
     users = all
-    users = users.where(role: role) if role.blank?
-    users = users.where('name LIKE ? OR email LIKE ?', "%#{term}%", "%#{term}%") unless term.empty?
+    users = users.where(role: params[:role]) if params.key?(:role) && !params[:role].empty?
+    users = users.where('name LIKE ? OR email LIKE ?', "%#{params[:name]}%", "%#{params[:name]}%") if params.key?(:name) && !params[:name].empty?
     users = users.where.not(id: current_user.id)
-    users
+    users.order(:created_at)
   end
 
   def self.domains_emails(domains)

@@ -12,6 +12,12 @@ class Timelog < ApplicationRecord
 
   paginates_per 5
 
+  def self.get_timelogs(project, user)
+    timelogs = project.timelogs
+    timelogs = timelogs.where(employee_id: user.id) if user.user?
+    timelogs.order(:created_at)
+  end
+
   def self.update_hours(timelog)
     timelog.update(hours: TimeDifference.between(timelog.start_time, timelog.end_time).in_hours.to_i)
   end

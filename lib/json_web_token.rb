@@ -1,39 +1,13 @@
-# frozen_string_literal: true
-
-require 'jwt'
-
 class JsonWebToken
-  # Encodes and signs JWT Payload with expiration
-  def self.encode(payload)
-    payload.reverse_merge!(meta)
-    JWT.encode(payload, Rails.application.secrets.secret_key_base)
+  SECRET_KEY = Rails.application.secrets.secret_key_base. to_s
+
+  def self.encode(payload, exp = 24.hours.from_now)
+    payload[:exp] = exp.to_i
+    JWT.encode(payload, SECRET_KEY)
   end
 
-  # Decodes the JWT with the signed secret
   def self.decode(token)
-    JWT.decode(token, Rails.application.secrets.secret_key_base)
-  end
-
-  # Validates the payload hash for expiration and meta claims
-  def self.valid_payload(payload)
-    if expired(payload) || payload['iss'] != meta[:iss] || payload['aud'] != meta[:aud]
-      false
-    else
-      true
-    end
-  end
-
-  # Default options to be encoded in the token
-  def self.meta
-    {
-      exp: 7.days.from_now.to_i,
-      iss: 'issuer_name',
-      aud: 'client'
-    }
-  end
-
-  # Validates if the token is expired by exp parameter
-  def self.expired(payload)
-    Time.at(payload['exp']) < Time.now
+    decoded = JWT.decode(token, SECRET_KEY)[0]
+    HashWithIndifferentAccess.new decoded
   end
 end

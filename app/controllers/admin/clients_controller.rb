@@ -4,7 +4,7 @@ class Admin::ClientsController < AdminController
   before_action :set_admin_client, only: %i[show edit update destroy]
 
   def index
-    @admin_clients = Client.all.order(:created_at).page(params[:page])
+    @admin_clients = Client.search_clients(params).page(params[:page])
   end
 
   def show; end
@@ -48,14 +48,6 @@ class Admin::ClientsController < AdminController
       format.json { head :no_content }
     end
   end
-
-  def search
-    @admin_clients = Client.search_clients(params[:name]).order(:created_at).page(params[:page])
-    respond_to do |format|
-      format.js
-    end
-  end
-
   private
 
   def set_admin_client

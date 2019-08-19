@@ -35,16 +35,23 @@ Rails.application.routes.draw do
     end
     resources :users, only: %i[index new create edit update]
     get 'update_status/:id', to: 'users#enable_disable_user', as: :change_user_status
-    post 'user/search', to: 'users#search'
-    post 'client/search', to: 'clients#search'
   end
   resources :comments, only: %i[create edit update destroy]
   resources :attachments
   resources :user, only: %i[index edit update]
 
+  post '/auth/login', to: 'authentication#login'
+
   namespace :api do
     namespace :v1 do
-      resources :projects
+      resources :users, only: [:index, :show]
+      resources :clients, only: [:index, :show]
+      resources :projects do
+        resources :payments, shallow: true
+        resources :timelogs, shallow: true
+        get 'assign_employees', to: 'projects#get_employees_list'
+        post 'assign_employees', to: 'projects#create_employees_list'
+      end
       devise_for :users, skip: :all
       devise_scope :user do
         post 'users/sign_in', to: 'sessions#create', as: nil

@@ -3,7 +3,7 @@
 class Manager::ProjectsController < ProjectsController
   before_action :authorise_user
   def index
-    @projects = Project.search_manager_projects(params, current_user).order(:created_at).page(params[:page])
+    @projects = Project.search_manager_projects(params, current_user).page(params[:page])
   end
 
   def show; end

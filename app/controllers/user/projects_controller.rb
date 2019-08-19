@@ -3,7 +3,7 @@
 class User::ProjectsController < ProjectsController
   def index
     authorize User, :check_user?, policy_class: UserPolicy
-    @projects = current_user.projects.order(:created_at).page(params[:page])
+    @projects = Project.search_employee_projects(params, current_user).page(params[:page])
   end
 
   def show

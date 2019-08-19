@@ -3,7 +3,7 @@
 class Admin::ProjectsController < ProjectsController
   before_action :authorize_user
   def index
-    @projects = Project.search_projects(params)
+    @projects = Project.search_admin_projects(params).page(params[:page])
   end
 
   def show; end
@@ -58,7 +58,7 @@ class Admin::ProjectsController < ProjectsController
     emails_emplist = params[:employees]
     emps = User.find(emails_emplist)
     emps.each do |emp|
-      project.employees << emp unless EmployeesProject.exists?(employee_id: emp.id, project_id: project.id)
+      EmployeesProject.find_or_create_by?(employee_id: emp.id, project_id: project.id)
     end
   end
 
