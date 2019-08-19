@@ -48,6 +48,7 @@ class Admin::ClientsController < AdminController
       format.json { head :no_content }
     end
   end
+
   private
 
   def set_admin_client

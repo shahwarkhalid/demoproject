@@ -105,6 +105,7 @@ class ApiController < ActionController::API
       render json: { errors: e.message }, status: :unauthorized
     end
   end
+
   def user_authorization
     render json: 'You are not authorized to access this.'
   end

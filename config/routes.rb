@@ -44,8 +44,8 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :users, only: [:index, :show]
-      resources :clients, only: [:index, :show]
+      resources :users, only: %i[index show]
+      resources :clients, only: %i[index show]
       resources :projects do
         resources :payments, shallow: true
         resources :timelogs, shallow: true

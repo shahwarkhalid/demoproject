@@ -2,8 +2,8 @@
 
 class Api::V1::ProjectsController < ApiController
   before_action :set_project, only: %i[show update destroy]
-  before_action :set_project_for_employees, only: [:create_employees_list, :get_employees_list]
-  before_action :authorise_user, only: [:create, :update]
+  before_action :set_project_for_employees, only: %i[create_employees_list get_employees_list]
+  before_action :authorise_user, only: %i[create update]
   before_action :authorize_request
 
   def index

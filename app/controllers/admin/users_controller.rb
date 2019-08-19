@@ -59,6 +59,7 @@ class Admin::UsersController < AdminController
       end
     end
   end
+
   private
 
   def set_user

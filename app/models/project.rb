@@ -55,6 +55,7 @@ class Project < ApplicationRecord
       EmployeesProject.find_or_create_by(employee_id: emp.id, project_id: project.id)
     end
   end
+
   def self.manager_top_projects(current_user)
     projects = Project.where(manager_id: current_user.id).or(Project.where(creator_id: current_user.id)).order(budget: :desc).limit(5)
   end

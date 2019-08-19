@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Api::V1::UsersController < ApiController
   before_action :set_user, only: %i[show]
   before_action :authorise_user
@@ -9,6 +11,7 @@ class Api::V1::UsersController < ApiController
   def show
     render json: @user
   end
+
   private
 
   def set_user
