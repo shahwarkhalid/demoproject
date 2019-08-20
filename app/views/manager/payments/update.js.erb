@@ -3,8 +3,8 @@
   $('#error_explanation').append("<%= j render 'shared/error', error: @payment%>");
 <% else %>
   $('#my-modal').modal('hide');
-  alert('Payment was updated')
-  <% @payments = @payment.project.payments.order(:created_at).page(params[:page]) %>
+  alert('Payment was updated');
+  <% @payments = Payment.get_payments(@project).page(params[:page]) %>
   $('#payment-list').empty();
   $('#payment-list').append("<%= j render 'payments/payment_list', url_type: 'manager', payments: @payments %>");
   $('#project-budget').empty();

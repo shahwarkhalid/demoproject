@@ -4,7 +4,7 @@
 <% else %>
   $('#my-modal').modal('hide');
   alert('Project Added Successfully');
-  <% @projects = Project.all.order(:created_at).page(params[:page]) %>
+  <% @projects = Project.search_manager_projects(params, current_user).page(params[:page]) %>
   $('#project-list').empty();
   $('#project-list').append("<%= j render 'project_list', url_type: 'manager', projects: @projects %>");
 <% end %>

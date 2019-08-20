@@ -4,6 +4,8 @@ class Api::V1::PaymentsController < ApiController
   before_action :authorise_user
   before_action :set_payment, only: %i[show update destroy]
   before_action :set_project, only: %i[index new]
+  before_action :authorize_request
+  before_action :authorise_user_for_project, only: [:index], if: :user?
 
   def index
     render json: Payment.get_payments(@project)
@@ -52,5 +54,13 @@ class Api::V1::PaymentsController < ApiController
 
   def authorise_user
     render json: 'you are not authorised to access' if current_user.user?
+  end
+
+  def authorise_user_for_project
+    render json: 'you are not authorised to access' unless Project.valid_project?(@project, current_user)
+  end
+
+  def user?
+    current_user.manager?
   end
 end

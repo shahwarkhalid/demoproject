@@ -4,7 +4,7 @@
 <% else %>
   $('#my-modal').modal('hide');
   alert('Payment Added Successfully');
-  <% @payments = @project.payments.order(:created_at).page(params[:page]) %>
+  <% @payments = Payment.get_payments(@project).page(params[:page]) %>
   $('#payment-list').empty();
   $('#payment-list').append("<%= j render 'payments/payment_list', url_type: 'admin', payments: @payments %>");
   $('#project-budget').empty();

@@ -17,24 +17,12 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(_resource)
-    if current_user.role == 'admin'
-      admin_index_url
-    elsif current_user.role == 'manager'
-      manager_index_url
-    elsif current_user.role == 'user'
-      user_index_url
-    end
+    redirect_user
   end
 
   def user_authorization
     flash[:alert] = 'You are not authorized to access this.'
-    if current_user.role == 'admin'
-      redirect_to(request.referrer || admin_index_path)
-    elsif current_user.role == 'manager'
-      redirect_to(request.referrer || manager_index_path)
-    elsif current_user.role == 'user'
-      redirect_to(request.referrer || user_index_path)
-    end
+    redirect_to(redirect_user)
   end
 
   def show_errors
@@ -46,16 +34,18 @@ class ApplicationController < ActionController::Base
     render :not_found
   end
 
-  def projects_controller?
-    is_a?(::ProjectsController)
-  end
-
-  def payments_controller?
-    is_a?(::PaymentsController)
-  end
-
   def rescue_from_fk_contraint
     flash[:alert] = 'Cannot Delete This Project'
     redirect_to root_url
+  end
+
+  def redirect_user
+    if current_user.role == 'admin'
+      admin_index_path
+    elsif current_user.role == 'manager'
+      manager_index_path
+    elsif current_user.role == 'user'
+      user_index_path
+    end
   end
 end

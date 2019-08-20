@@ -59,4 +59,12 @@ class Project < ApplicationRecord
   def self.manager_top_projects(current_user)
     projects = Project.where(manager_id: current_user.id).or(Project.where(creator_id: current_user.id)).order(budget: :desc).limit(5)
   end
+
+  def self.valid_project?(project, current_user)
+    if current_user.user?
+      EmployeesProject.exists?(employee_id: current_user.id, project_id: project.id)
+    elsif current_user.manager?
+      project.manager == current_user
+    end
+  end
 end

@@ -5,6 +5,8 @@ class Api::V1::TimelogsController < ApiController
   before_action :set_project, only: %i[index create]
   before_action :set_timelog, only: %i[show update destroy]
   before_action :convert_string_to_datetime, only: %i[create update]
+  before_action :authorise_user_for_project, only: [:index], if: :user?
+  before_action :authorize_request
 
   def index
     render json: Timelog.get_timelogs(@project, current_user)
@@ -62,4 +64,13 @@ class Api::V1::TimelogsController < ApiController
     params[:start_time] = DateTime.strptime(params[:start_time], '%m/%d/%Y %I:%M %p') unless params[:start_time].blank?
     params[:end_time] = DateTime.strptime(params[:end_time], '%m/%d/%Y %I:%M %p') unless params[:end_time].blank?
   end
+
+  def authorise_user_for_project
+    render json: 'you are not authorised to access' unless Project.valid_project?(@project, current_user)
+  end
+
+  def user?
+    current_user.user?
+  end
+
 end

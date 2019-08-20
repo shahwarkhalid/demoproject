@@ -4,7 +4,8 @@ class ManagerController < ApplicationController
   before_action :validate_manager!
 
   def index
-    @top_projects = Project.manager_top_projects(current_user)
+    @top_projects = Project.top_projects
+    @bottom_projects = Project.bottom_projects
   end
 
   protected

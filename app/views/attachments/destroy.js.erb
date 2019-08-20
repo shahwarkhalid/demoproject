@@ -1,4 +1,4 @@
 alert('Attachment Deleted Successfully');
-<% @attachments = @attachment.project.attachments.order(:created_at) %>
+<% @attachments = Attachment.get_attachments(@attachment.project) %>
 $('#attachment-list').empty();
 $('#attachment-list').append("<%= j render 'attachments/attachments_list', attachments: @attachments %>");

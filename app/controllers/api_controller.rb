@@ -1,7 +1,7 @@
 # frozen_string_literal: true
-
+require "#{Rails.root}/lib/json_web_token.rb"
 class ApiController < ActionController::API
-  before_action :authenticate_user
+  before_action :authenticate_user, unless: :authentication_controller?
 
   include Pundit
   rescue_from Pundit::NotAuthorizedError, with: :user_authorization
@@ -25,5 +25,9 @@ class ApiController < ActionController::API
 
   def authenticate_user
     render json: 'you need to sign in to continue' unless user_signed_in?
+  end
+
+  def authentication_controller?
+    is_a?(::AuthenticationController)
   end
 end

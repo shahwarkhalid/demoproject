@@ -7,8 +7,7 @@ class ProjectsController < ApplicationController
   before_action :set_comments, only: [:show]
   before_action :set_attachments, only: [:show]
 
-  def index
-  end
+  def index; end
 
   def show; end
 

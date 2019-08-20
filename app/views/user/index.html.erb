@@ -1,0 +1,74 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-6">
+      <div class = "shadow-lg p-3 mb-7 bg-white rounded shrink">
+        <h5>Top Projects</h5>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Description</th>
+              <th>Total Hours</th>
+              <th>Hours Worked</th>
+              <th>Budget</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @top_projects.each do |project| %>
+              <tr>
+                <td><%= project.title %></td>
+                <td><%= project.description %></td>
+                <td><%= project.total_hours %></td>
+                <td><%= project.hours_worked %></td>
+                <td><%= project.budget %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class = "shadow-lg p-3 mb-7 bg-white rounded shrink">
+        <h5>Bottom Projects</h5>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Description</th>
+              <th>Total Hours</th>
+              <th>Hours Worked</th>
+              <th>Budget</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @bottom_projects.each do |project| %>
+              <tr>
+                <td><%= project.title %></td>
+                <td><%= project.description %></td>
+                <td><%= project.total_hours %></td>
+                <td><%= project.hours_worked %></td>
+                <td><%= project.budget %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-6">
+      <div class = "shadow-lg p-3 mb-7 bg-white rounded shrink">
+        <h5>Timelogs Chart</h5>
+          <%= column_chart Timelog.select('extract(month from start_time)').group('extract(month from start_time)').sum(:hours) %>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class = "shadow-lg p-3 mb-7 bg-white rounded shrink">
+        <h5>Earnings Chart</h5>
+          <%= column_chart Payment.select('extract(day from created_at)').group('extract(day from created_at)').sum(:amount) %>
+      </div>
+    </div>
+  </div>
+</div>

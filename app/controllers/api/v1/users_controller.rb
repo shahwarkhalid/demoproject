@@ -3,6 +3,7 @@
 class Api::V1::UsersController < ApiController
   before_action :set_user, only: %i[show]
   before_action :authorise_user
+  before_action :authorize_request
 
   def index
     render json: User.search_users(params, current_user)

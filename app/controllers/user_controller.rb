@@ -3,7 +3,10 @@
 class UserController < ApplicationController
   before_action :set_user, only: %i[edit update]
 
-  def index; end
+  def index
+    @top_projects = Project.top_projects
+    @bottom_projects = Project.bottom_projects
+  end
 
   def edit; end
 

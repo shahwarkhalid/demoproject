@@ -36,7 +36,7 @@ class PaymentsController < ApplicationController
   end
 
   def set_comments
-    @comments = @payment.comments.order(updated_at: :desc)
+    @comments = Comment.get_comments(@payment)
   end
 
   def payment_params

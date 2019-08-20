@@ -3,6 +3,7 @@
 class Api::V1::ClientsController < ApiController
   before_action :set_client, only: %i[show]
   before_action :authorise_user
+  before_action :authorize_request
 
   def index
     render json: Client.search_clients(params)

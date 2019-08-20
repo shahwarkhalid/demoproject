@@ -52,11 +52,6 @@ Rails.application.routes.draw do
         get 'assign_employees', to: 'projects#get_employees_list'
         post 'assign_employees', to: 'projects#create_employees_list'
       end
-      devise_for :users, skip: :all
-      devise_scope :user do
-        post 'users/sign_in', to: 'sessions#create', as: nil
-        post 'users/sign_out', to: 'sessions#destroy', as: nil
-      end
     end
   end
   get '404', to: 'errors#not_found'

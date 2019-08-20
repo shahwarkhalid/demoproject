@@ -7,6 +7,7 @@ class AuthenticationController < ApiController
   def login
     @user = User.find_by_email(params[:email])
     if @user&.valid_password?(params[:password])
+      sign_in(@user)
       token = JsonWebToken.encode(user_id: @user.id)
       time = Time.now + 24.hours.to_i
       render json: { token: token, exp: time.strftime('%m-%d-%Y %H:%M'),

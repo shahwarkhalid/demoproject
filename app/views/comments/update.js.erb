@@ -1,4 +1,4 @@
 $('#my-modal').modal('hide');
-<% @comments = @commentable.comments.order(updated_at: :desc) %>
+<% @comments = Comment.get_comments(@commentable) %>
 $('#comment-list').empty();
 $('#comment-list').append("<%= j render 'comments/commentlist', comments: @comments %>");
