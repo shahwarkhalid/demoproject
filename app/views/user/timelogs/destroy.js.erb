@@ -1,6 +1,6 @@
 <% @timelogs = @project.timelogs.where(creator_id: current_user.id).order(:created_at).page(params[:page]) %>;
 alert('Timelog Deleted Successfully');
 $('#timelog-list').empty();
-$('#timelog-list').append("<%= j render 'admin/timelogs/timelogs_list', timelogs: @timelogs %>");
+$('#timelog-list').append("<%= j render 'user/timelogs/timelogs_list', timelogs: @timelogs %>");
 $('#project-hours').empty();
 $('#project-hours').html(<%= @timelog.project.hours_worked %>);

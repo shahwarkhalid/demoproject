@@ -6,7 +6,7 @@ class PaymentsController < ApplicationController
   before_action :set_comments, only: [:show]
 
   def index
-    @payments = @project.payments.order(:created_at).page(params[:page])
+    @payments = Payment.get_payments(@project).page(params[:page])
   end
 
   def show; end

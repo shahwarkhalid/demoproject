@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Timelog < ApplicationRecord
-  has_many :comments, as: :commentable
+  has_many :comments, as: :commentable, dependent: :destroy
   belongs_to :employee, class_name: 'User'
   belongs_to :project
   belongs_to :creator, class_name: 'User'
@@ -13,8 +13,8 @@ class Timelog < ApplicationRecord
   paginates_per 5
 
   def self.get_timelogs(project, user)
-    timelogs = project.timelogs
-    timelogs = timelogs.where(employee_id: user.id) if user.user?
+    timelogs = project.timelogs.includes(:creator)
+    timelogs = timelogs.where(creator_id: user.id) if user.user?
     timelogs.order(:created_at)
   end
 

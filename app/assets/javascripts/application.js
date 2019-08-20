@@ -24,3 +24,14 @@
 //= require activestorage
 //= require turbolinks
 //= require_tree .
+this.bind_chosen_select = function() {
+  return $('.chosen-select').chosen({
+    allow_single_deselect: true,
+    no_results_text: 'No results matched',
+    width: '200px'
+  });
+};
+
+$(document).on('turbolinks:load', function() {
+  return bind_chosen_select();
+});

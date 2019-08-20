@@ -8,7 +8,6 @@ class ProjectsController < ApplicationController
   before_action :set_attachments, only: [:show]
 
   def index
-    @projects = Project.all.order(:created_at).page(params[:page])
   end
 
   def show; end
@@ -24,10 +23,6 @@ class ProjectsController < ApplicationController
   def update; end
 
   def destroy; end
-
-  def search
-    @projects = Project.search_projects(params[:name]).order(:created_at).page(params[:page])
-  end
 
   def assign_employees
     @project = Project.find(params[:project_id])
@@ -48,19 +43,19 @@ class ProjectsController < ApplicationController
   end
 
   def set_payments
-    @payments = @project.payments.order(:created_at).page(params[:page])
+    @payments = Payment.get_payments(@project).page(params[:page])
   end
 
   def set_timelogs
-    @timelogs = @project.timelogs.order(:created_at).page(params[:page])
+    @timelogs = Timelog.get_timelogs(@project, current_user).page(params[:page])
   end
 
   def set_comments
-    @comments = @project.comments.order(updated_at: :desc)
+    @comments = Comment.get_comments(@project)
   end
 
   def set_attachments
-    @attachments = @project.attachments.order(updated_at: :desc)
+    @attachments = Attachment.get_attachments(@project)
   end
 
   def project_params

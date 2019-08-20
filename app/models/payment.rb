@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Payment < ApplicationRecord
-  has_many :comments, as: :commentable
+  has_many :comments, as: :commentable, dependent: :destroy
   belongs_to :project
   belongs_to :creator, class_name: 'User'
   paginates_per 5
@@ -11,7 +11,7 @@ class Payment < ApplicationRecord
   validates :amount, presence: true, format: { with: /\A\d+(?:\.\d{0,2})?\z/ }, numericality: { greater_than: 0, less_than: 10_001 }
 
   def self.get_payments(project)
-    payments = project.payments.order(:created_at)
+    payments = project.payments.includes(:creator).order(:created_at)
   end
 
   def self.set_amount(payment)

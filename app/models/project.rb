@@ -2,11 +2,11 @@
 
 class Project < ApplicationRecord
   has_many :employees_projects
-  has_many :employees, through: :employees_projects, class_name: 'User'
+  has_many :employees, through: :employees_projects, class_name: 'User', dependent: :destroy
   belongs_to :client
-  has_many :payments
-  has_many :timelogs
-  has_many :comments, as: :commentable
+  has_many :payments, dependent: :destroy
+  has_many :timelogs, dependent: :destroy
+  has_many :comments, as: :commentable, dependent: :destroy
   belongs_to :manager, class_name: 'User'
   belongs_to :creator, class_name: 'User'
   has_many :attachments
@@ -16,19 +16,19 @@ class Project < ApplicationRecord
   paginates_per 5
 
   def self.search_admin_projects(params)
-    projects = all
+    projects = all.includes(:creator, :manager, :client)
     projects = projects.where('title LIKE ?', "%#{params[:name]}%") if params.key?(:name) && !params[:name].empty?
     projects.order(:created_at)
   end
 
   def self.search_manager_projects(params, current_user)
-    projects = Project.where(manager_id: current_user.id).or(Project.where(creator_id: current_user.id))
+    projects = Project.where(manager_id: current_user.id).or(Project.where(creator_id: current_user.id)).includes(:creator, :manager, :client)
     projects = projects.where('title LIKE ?', "%#{params[:name]}%") if params.key?(:name) && !params[:name].empty?
     projects.order(:created_at)
   end
 
   def self.search_employee_projects(params, current_user)
-    projects = current_user.projects
+    projects = current_user.projects.includes(:creator, :manager, :client)
     projects = projects.where('title LIKE ?', "%#{params[:name]}%") if params.key?(:name) && !params[:name].empty?
     projects.order(:created_at)
   end

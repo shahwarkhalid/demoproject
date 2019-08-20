@@ -6,7 +6,6 @@
         <th>Title</th>
         <th>Type</th>
         <th>Amount</th>
-        <th>Project</th>
         <th>Created By</th>
         <th>Actions</th>
       </tr>
@@ -18,7 +17,6 @@
           <td><%= payment.title %></td>
           <td><%= payment.payment_type %></td>
           <td><%= payment.amount %></td>
-          <td><%= payment.project.title %></td>
           <td><%= payment.creator.name %></td>
           <% if url_type == 'admin' %>
             <td><%= link_to fa_icon('eye', text:''), admin_payment_url(payment), class: 'btn btn-success' %>

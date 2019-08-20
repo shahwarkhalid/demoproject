@@ -58,7 +58,7 @@ class Admin::ProjectsController < ProjectsController
     emails_emplist = params[:employees]
     emps = User.find(emails_emplist)
     emps.each do |emp|
-      EmployeesProject.find_or_create_by?(employee_id: emp.id, project_id: project.id)
+      EmployeesProject.find_or_create_by(employee_id: emp.id, project_id: project.id)
     end
   end
 

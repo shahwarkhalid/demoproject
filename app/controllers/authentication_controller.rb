@@ -3,7 +3,7 @@
 require "#{Rails.root}/lib/json_web_token.rb"
 class AuthenticationController < ApiController
   before_action :authorize_request, except: :login
-  # POST /auth/login
+
   def login
     @user = User.find_by_email(params[:email])
     if @user&.valid_password?(params[:password])

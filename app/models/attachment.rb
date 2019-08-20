@@ -7,4 +7,8 @@ class Attachment < ApplicationRecord
 
   validates_presence_of :attachment
   validates_presence_of :name
+
+  def self.get_attachments(project)
+    project.attachments.includes(:creator).order(updated_at: :desc)
+  end
 end

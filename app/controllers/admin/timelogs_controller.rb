@@ -57,7 +57,7 @@ class Admin::TimelogsController < ApplicationController
   end
 
   def set_comments
-    @comments = @timelog.comments.order(updated_at: :desc)
+    @comments = Comment.get_comments(@timelog)
   end
 
   def timelog_params
