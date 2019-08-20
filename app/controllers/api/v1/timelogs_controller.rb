@@ -72,5 +72,4 @@ class Api::V1::TimelogsController < ApiController
   def user?
     current_user.user?
   end
-
 end

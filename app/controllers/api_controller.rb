@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require "#{Rails.root}/lib/json_web_token.rb"
 class ApiController < ActionController::API
   before_action :authenticate_user, unless: :authentication_controller?
