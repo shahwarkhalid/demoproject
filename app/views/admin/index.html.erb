@@ -1,23 +1,74 @@
 <div class="container-fluid">
   <div class="row">
-    <% @top_projects.each do |project| %>
-      <div class="col-md-3">
-        <div class = "shadow-lg p-3 mb-3 bg-white rounded shrink">
-          <div class="card text-white bg-primary">
-            <div class="card-body pb-0">
-              <div style="float: right;"><%= link_to fa_icon('eye', text: ''), admin_project_url(project), class: 'btn btn-primary' %></div>
-              <div>Title: <%= project.title %></div>
-              <div>Description: <%= project.description %></div>
-              <div>Budget: <%= project.budget %></div>0
-            </div>
-            <div class="chart-wrapper mt-3 mx-3 chart-wrap">
-              <div class="chartjs-size-monitor size-monitor">
-                <div class="chartjs-size-monitor-expand size-monitor"></div>
-              </div>
-            </div>
-          </div>
-        </div>
+    <div class="col-md-6">
+      <div class = "shadow-lg p-3 mb-7 bg-white rounded shrink">
+        <h5>Top Projects</h5>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Description</th>
+              <th>Total Hours</th>
+              <th>Hours Worked</th>
+              <th>Budget</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @top_projects.each do |project| %>
+              <tr>
+                <td><%= project.title %></td>
+                <td><%= project.description %></td>
+                <td><%= project.total_hours %></td>
+                <td><%= project.hours_worked %></td>
+                <td><%= project.budget %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
       </div>
-    <% end %>
+    </div>
+    <div class="col-md-6">
+      <div class = "shadow-lg p-3 mb-7 bg-white rounded shrink">
+        <h5>Bottom Projects</h5>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Description</th>
+              <th>Total Hours</th>
+              <th>Hours Worked</th>
+              <th>Budget</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @bottom_projects.each do |project| %>
+              <tr>
+                <td><%= project.title %></td>
+                <td><%= project.description %></td>
+                <td><%= project.total_hours %></td>
+                <td><%= project.hours_worked %></td>
+                <td><%= project.budget %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-6">
+      <div class = "shadow-lg p-3 mb-7 bg-white rounded shrink">
+        <h5>Timelogs Chart</h5>
+          <%= column_chart Timelog.select('extract(month from start_time)').group('extract(month from start_time)').sum(:hours) %>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class = "shadow-lg p-3 mb-7 bg-white rounded shrink">
+        <h5>Earnings Chart</h5>
+          <%= column_chart Payment.select('extract(day from created_at)').group('extract(day from created_at)').sum(:amount) %>
+      </div>
+    </div>
   </div>
 </div>

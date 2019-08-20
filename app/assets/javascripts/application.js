@@ -19,6 +19,8 @@
 //= require tempusdominus-bootstrap-4
 //= require chosen-jquery
 //= require rails-ujs
+//= require chartkick
+//= require Chart.bundle
 //= require activestorage
 //= require turbolinks
 //= require_tree .
