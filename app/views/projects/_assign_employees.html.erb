@@ -13,19 +13,6 @@
             <%= form.label :assign_employees %><div class="clearfix mb-3">
             <%= form.select :employees, options_from_collection_for_select(User.where(role:'user'), :id, :name), {}, { id: 'choose-employee', multiple: 'multiple', class: 'chosen-select form-control'} %>
           </div>
-          <div class="form-check-inline">
-            <%= form.check_box :add_by_email, class: 'form-check-input' %>
-            <%= form.label :add_by_email, class: 'form-check-label' %>
-          </div>
-          <div class="clearfix mb-4"></div>
-          <div class="form-group">
-            <%= form.label :domains %>
-            <%= form.text_area :domains, class: 'form-control' %>
-          </div>
-          <div class="form-check-inline">
-            <%= form.check_box :add_by_domain, class: 'form-check-input' %>
-            <%= form.label :add_by_domain, class: 'form-check-label' %>
-          </div>
           <div class="clearfix mb-3"></div>
           <div class="form-group">
             <%= form.submit "Save", class: 'btn btn-success' %>
@@ -38,3 +25,10 @@
     </div>
   </div>
 </div>
+<script type="text/javascript">
+  $('.chosen-select').chosen({
+  allow_single_deselect: true,
+  no_results_text: 'No results matched',
+  width: '200px'
+});
+</script>>

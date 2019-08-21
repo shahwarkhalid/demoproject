@@ -2,6 +2,7 @@
 
 class Admin::ProjectsController < ProjectsController
   before_action :authorize_user
+
   def index
     @projects = Project.search_admin_projects(params).page(params[:page])
   end
@@ -30,12 +31,10 @@ class Admin::ProjectsController < ProjectsController
   end
 
   def assign_employees
-    super
   end
 
   def create_employees_list
-    project = Project.find(params[:project_id])
-    add_employees_by_emails(project)
+    super
   end
 
   def employee_list
@@ -51,15 +50,6 @@ class Admin::ProjectsController < ProjectsController
 
   def project_params
     params.require(:project).permit(:title, :description, :total_hours, :manager_id, :client_id)
-  end
-
-  def add_employees_by_emails(project)
-    params[:employees].shift if emails?
-    emails_emplist = params[:employees]
-    emps = User.find(emails_emplist)
-    emps.each do |emp|
-      EmployeesProject.find_or_create_by(employee_id: emp.id, project_id: project.id)
-    end
   end
 
   def authorize_user

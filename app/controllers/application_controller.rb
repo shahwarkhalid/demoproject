@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
   rescue_from ActiveRecord::StatementInvalid, with: :rescue_from_fk_contraint
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: %i[name status image])
+    devise_parameter_sanitizer.permit(:sign_up, keys: %i[name status image role])
     devise_parameter_sanitizer.permit(:account_update, keys: %i[name age address status image])
   end
 

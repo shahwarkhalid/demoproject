@@ -48,16 +48,30 @@ class Project < ApplicationRecord
     projects = all.order(budget: :asc).limit(5)
   end
 
-  def self.add_employees_by_emails(project, params)
-    emails_emplist = JSON.parse(params[:employees])
+  def self.build_employees_projects(emails_emplist, project)
     emps = User.find(emails_emplist)
     emps.each do |emp|
       EmployeesProject.find_or_create_by(employee_id: emp.id, project_id: project.id)
     end
   end
 
+  def self.add_employees_by_emails_api(project, params)
+    emails_emplist = JSON.parse(params[:employees])
+    Project.build_employees_projects(emails_emplist, project)
+  end
+
+  def self.add_employees_by_emails(project, params)
+    params[:employees].shift
+    emails_emplist = params[:employees]
+    Project.build_employees_projects(emails_emplist, project)
+  end
+
   def self.manager_top_projects(current_user)
     projects = Project.where(manager_id: current_user.id).or(Project.where(creator_id: current_user.id)).order(budget: :desc).limit(5)
+  end
+
+  def self.get_employees(project, params)
+    project.employees.order(:id).page(params[:page])
   end
 
   def self.valid_project?(project, current_user)

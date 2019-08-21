@@ -29,6 +29,11 @@
     <div hidden="true">
       <%= f.number_field :status, value: 1 %>
     </div>
+
+    <div hidden="true">
+      <%= f.text_field :role, value: 'user' %>
+    </div>
+
     <div class="form-group">
       <%= f.label :image %><br>
       <%= f.file_field :image %>

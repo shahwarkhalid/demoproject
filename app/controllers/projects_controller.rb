@@ -6,6 +6,7 @@ class ProjectsController < ApplicationController
   before_action :set_timelogs, only: [:show]
   before_action :set_comments, only: [:show]
   before_action :set_attachments, only: [:show]
+  before_action :set_parent_project, only: [:employee_list, :assign_employees, :create_employees_list]
 
   def index; end
 
@@ -24,20 +25,25 @@ class ProjectsController < ApplicationController
   def destroy; end
 
   def assign_employees
-    @project = Project.find(params[:project_id])
   end
 
-  def create_employees_list; end
+  def create_employees_list
+    Project.add_employees_by_emails(@project, params)
+  end
 
   def employee_list
-    project = Project.find(params[:project_id])
-    @employees = project.employees.order(:id).page(params[:page])
+    @employees = Project.get_employees(@project, params)
   end
 
   private
 
   def set_project
     @project = Project.find_by_id(params[:id])
+    render file: 'public/404.html', status: :not_found, layout: false unless @project
+  end
+
+  def set_parent_project
+    @project = Project.find_by_id(params[:project_id])
     render file: 'public/404.html', status: :not_found, layout: false unless @project
   end
 

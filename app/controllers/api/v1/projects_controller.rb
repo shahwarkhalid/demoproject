@@ -39,7 +39,7 @@ class Api::V1::ProjectsController < ApiController
   end
 
   def create_employees_list
-    Project.add_employees_by_emails(@project, params)
+    Project.add_employees_by_emails_api(@project, params)
     render json: 'Employees assigned successfully'
   end
 
