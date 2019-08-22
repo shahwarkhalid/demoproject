@@ -29,8 +29,7 @@ class Manager::ProjectsController < ProjectsController
     @project.destroy
   end
 
-  def assign_employees
-  end
+  def assign_employees; end
 
   def create_employees_list
     super

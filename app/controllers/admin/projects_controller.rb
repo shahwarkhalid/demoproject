@@ -22,7 +22,6 @@ class Admin::ProjectsController < ProjectsController
     @project.save
   end
 
-
   def update
     @project.update(project_params)
   end
@@ -31,8 +30,7 @@ class Admin::ProjectsController < ProjectsController
     @project.destroy
   end
 
-  def assign_employees
-  end
+  def assign_employees; end
 
   def create_employees_list
     super

@@ -16,7 +16,7 @@ class Project < ApplicationRecord
   paginates_per 5
 
   def self.search_admin_projects
-    projects = self.includes(:creator, :manager, :client)
+    projects = includes(:creator, :manager, :client)
   end
 
   def self.search_manager_projects(current_user)
@@ -44,9 +44,10 @@ class Project < ApplicationRecord
   end
 
   def self.build_employees_projects(employee_list, project)
-    #emps = User.find(emails_emplist)
+    # emps = User.find(emails_emplist)
     employee_list.each do |emp|
       next if emp.present?
+
       EmployeesProject.find_or_create_by(employee_id: emp, project_id: project.id)
     end
   end

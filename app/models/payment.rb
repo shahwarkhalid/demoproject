@@ -27,6 +27,6 @@ class Payment < ApplicationRecord
   end
 
   def self.monthly_stats
-    Payment.where('month(created_at) = ?', "#{Date.today.month}").group('day(created_at)').sum(:amount)
+    Payment.where('month(created_at) = ?', Date.today.month.to_s).group('day(created_at)').sum(:amount)
   end
 end

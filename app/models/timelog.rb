@@ -23,30 +23,28 @@ class Timelog < ApplicationRecord
   end
 
   def set_hours
-    hours = self.project.hours_worked
+    hours = project.hours_worked
     hours += self.hours
-    self.project.update(hours_worked: hours)
+    project.update(hours_worked: hours)
   end
 
   def revert_hours
-    hours = self.project.hours_worked
+    hours = project.hours_worked
     hours -= self.hours
-    self.project.update(hours_worked: hours)
+    project.update(hours_worked: hours)
   end
 
   def update_hours
-    hours = self.project.hours_worked
-    hours -= self.hours_was
-    self.project.update(hours_worked: hours)
+    hours = project.hours_worked
+    hours -= hours_was
+    project.update(hours_worked: hours)
   end
 
   def self.monthly_stats
-    self.where('year(start_time) = ?', "#{Date.today.year}").group("date_format(start_time, '%M')").sum(:hours)
+    where('year(start_time) = ?', Date.today.year.to_s).group("date_format(start_time, '%M')").sum(:hours)
   end
 
   def start_time_cannot_be_greater_than_end_time
-    if start_time > end_time
-      errors.add(:end_time, "cannot be less than start time")
-    end
+    errors.add(:end_time, 'cannot be less than start time') if start_time > end_time
   end
 end

@@ -3,7 +3,7 @@
 class Api::V1::UsersController < ApiController
   before_action :set_user, only: %i[show update]
   before_action :authorise_user
-  skip_before_action :authorise_user, only: [:edit_profile, :show_profile]
+  skip_before_action :authorise_user, only: %i[edit_profile show_profile]
 
   def index
     render json: User.search_users(params, current_user).page(params[:page])

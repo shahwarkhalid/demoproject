@@ -6,7 +6,7 @@ class User::TimelogsController < ApplicationController
   before_action :set_timelog, only: %i[show edit update destroy]
   before_action :set_comments, only: [:show]
   before_action :convert_string_to_datetime, only: %i[create update]
-  before_action :calculate_hours, only: [:create, :update]
+  before_action :calculate_hours, only: %i[create update]
 
   def index
     @timelogs = @project.timelogs.order(:created_at).page(params[:page])
@@ -68,6 +68,6 @@ class User::TimelogsController < ApplicationController
   end
 
   def calculate_hours
-    params[:timelog][:hours] = TimeDifference.between(params[:timelog][:start_time],params[:timelog][:end_time]).in_hours.to_i if params[:timelog][:start_time].present? && params[:timelog][:end_time].present?
+    params[:timelog][:hours] = TimeDifference.between(params[:timelog][:start_time], params[:timelog][:end_time]).in_hours.to_i if params[:timelog][:start_time].present? && params[:timelog][:end_time].present?
   end
 end

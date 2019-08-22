@@ -6,7 +6,7 @@ class ProjectsController < ApplicationController
   before_action :set_timelogs, only: [:show]
   before_action :set_comments, only: [:show]
   before_action :set_attachments, only: [:show]
-  before_action :set_parent_project, only: [:employee_list, :assign_employees, :create_employees_list]
+  before_action :set_parent_project, only: %i[employee_list assign_employees create_employees_list]
 
   def index; end
 
@@ -24,8 +24,7 @@ class ProjectsController < ApplicationController
 
   def destroy; end
 
-  def assign_employees
-  end
+  def assign_employees; end
 
   def create_employees_list
     Project.add_employees_by_emails(@project, params)
