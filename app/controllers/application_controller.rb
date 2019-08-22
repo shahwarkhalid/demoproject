@@ -31,12 +31,7 @@ class ApplicationController < ActionController::Base
   end
 
   def page_not_found
-    render :not_found
-  end
-
-  def rescue_from_fk_contraint
-    flash[:alert] = 'Cannot Delete This Project'
-    redirect_to root_url
+    render file: 'public/404.html', status: :not_found, layout: false
   end
 
   def redirect_user
@@ -47,5 +42,12 @@ class ApplicationController < ActionController::Base
     elsif current_user.role == 'user'
       user_index_path
     end
+  end
+
+  def graph_stats
+    @top_projects = Project.top_projects
+    @bottom_projects = Project.bottom_projects
+    @monthly_timelog_stats = Timelog.monthly_stats
+    @monthly_payment_stats = Payment.monthly_stats
   end
 end

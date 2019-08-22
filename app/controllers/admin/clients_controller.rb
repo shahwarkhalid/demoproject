@@ -52,11 +52,15 @@ class Admin::ClientsController < AdminController
   private
 
   def set_admin_client
-    @admin_client = Client.find_by_id(params[:id])
-    render file: 'public/404.html', status: :not_found, layout: false unless @admin_client
+    @admin_client = Client.find(params[:id])
   end
 
   def admin_client_params
     params.require(:client).permit(:first_name, :last_name, :phone_no, :email)
+  end
+
+  def rescue_from_fk_contraint
+    flash[:alert] = 'Cannot Delete This Client'
+    redirect_to request.referrer
   end
 end

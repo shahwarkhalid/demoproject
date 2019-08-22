@@ -36,6 +36,7 @@ Rails.application.routes.draw do
     resources :users, only: %i[index new create edit update]
     get 'update_status/:id', to: 'users#enable_disable_user', as: :change_user_status
   end
+
   resources :comments, only: %i[create edit update destroy]
   resources :attachments
   resources :user, only: %i[index edit update]
@@ -44,7 +45,7 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :users, only: %i[index show]
+      resources :users, only: %i[index show update]
       resources :clients, only: %i[index show]
       resources :projects do
         resources :payments, shallow: true
@@ -52,6 +53,8 @@ Rails.application.routes.draw do
         get 'assign_employees', to: 'projects#get_employees_list'
         post 'assign_employees', to: 'projects#create_employees_list'
       end
+      get 'profile', to: 'users#show_profile'
+      post 'profile', to: 'users#edit_profile'
     end
   end
   get '404', to: 'errors#not_found'

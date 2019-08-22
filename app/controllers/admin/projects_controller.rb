@@ -4,7 +4,7 @@ class Admin::ProjectsController < ProjectsController
   before_action :authorize_user
 
   def index
-    @projects = Project.search_admin_projects(params).page(params[:page])
+    @projects = Project.search_projects(params, current_user).page(params[:page])
   end
 
   def show; end
@@ -21,6 +21,7 @@ class Admin::ProjectsController < ProjectsController
     @project.status = 1
     @project.save
   end
+
 
   def update
     @project.update(project_params)
@@ -42,11 +43,6 @@ class Admin::ProjectsController < ProjectsController
   end
 
   private
-
-  def set_project
-    @project = Project.find_by_id(params[:id])
-    render file: 'public/404.html', status: :not_found, layout: false unless @project
-  end
 
   def project_params
     params.require(:project).permit(:title, :description, :total_hours, :manager_id, :client_id)

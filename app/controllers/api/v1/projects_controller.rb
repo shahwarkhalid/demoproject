@@ -5,10 +5,9 @@ class Api::V1::ProjectsController < ApiController
   before_action :set_project_for_employees, only: %i[create_employees_list get_employees_list]
   before_action :authorise_user, only: %i[create update destroy get_employees_list create_employees_list]
   before_action :authorise_user_for_project, only: %i[show update destroy], if: :user?
-  before_action :authorize_request
 
   def index
-    render json: Project.search_projects(params, current_user)
+    render json: Project.search_projects(params, current_user).page(params[:page])
   end
 
   def create
@@ -46,13 +45,11 @@ class Api::V1::ProjectsController < ApiController
   private
 
   def set_project
-    @project = Project.find_by_id(params[:id])
-    render json: 'record not found', status: :not_found unless @project
+    @project = Project.find(params[:id])
   end
 
   def set_project_for_employees
-    @project = Project.find_by_id(params[:project_id])
-    render json: 'record not found', status: :not_found unless @project
+    @project = Project.find(params[:project_id])
   end
 
   def authorise_user

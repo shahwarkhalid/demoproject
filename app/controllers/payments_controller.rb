@@ -26,13 +26,11 @@ class PaymentsController < ApplicationController
   private
 
   def set_payment
-    @payment = Payment.find_by_id(params[:id])
-    render file: 'public/404.html', status: :not_found, layout: false unless @payment
+    @payment = Payment.find(params[:id])
   end
 
   def set_project
-    @project = Project.find_by_id(params[:project_id])
-    render file: 'public/404.html', status: :not_found, layout: false unless @project
+    @project = Project.find(params[:project_id])
   end
 
   def set_comments

@@ -4,7 +4,7 @@ class User::ProjectsController < ProjectsController
   before_action :authorise_user
 
   def index
-    @projects = Project.search_employee_projects(params, current_user).page(params[:page])
+    @projects = Project.search_projects(params, current_user).page(params[:page])
   end
 
   def show

@@ -63,8 +63,7 @@ class Admin::UsersController < AdminController
   private
 
   def set_user
-    @user = User.find_by_id(params[:id])
-    render file: 'public/404.html', status: :not_found, layout: false unless @user
+    @user = User.find(params[:id])
   end
 
   def user_params

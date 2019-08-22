@@ -61,13 +61,13 @@
     <div class="col-md-6">
       <div class = "shadow-lg p-3 mb-7 bg-white rounded shrink">
         <h5>Timelogs Chart</h5>
-          <%= column_chart Timelog.select('extract(month from start_time)').group('extract(month from start_time)').sum(:hours) %>
+          <%= column_chart @monthly_timelog_stats %>
       </div>
     </div>
     <div class="col-md-6">
       <div class = "shadow-lg p-3 mb-7 bg-white rounded shrink">
-        <h5>Earnings Chart</h5>
-          <%= column_chart Payment.select('extract(day from created_at)').group('extract(day from created_at)').sum(:amount) %>
+        <h5>Earnings Chart for <%= earning_month %></h5>
+          <%= column_chart @monthly_payment_stats %>
       </div>
     </div>
   </div>

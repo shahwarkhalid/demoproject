@@ -3,7 +3,7 @@
 class Manager::ProjectsController < ProjectsController
   before_action :authorise_user
   def index
-    @projects = Project.search_manager_projects(params, current_user).page(params[:page])
+    @projects = Project.search_projects(params, current_user).page(params[:page])
   end
 
   def show; end
@@ -30,12 +30,10 @@ class Manager::ProjectsController < ProjectsController
   end
 
   def assign_employees
-    super
   end
 
   def create_employees_list
-    project = Project.find(params[:project_id])
-    add_employees_by_emails(project)
+    super
   end
 
   def employee_list
@@ -45,21 +43,11 @@ class Manager::ProjectsController < ProjectsController
   private
 
   def set_project
-    @project = Project.find_by_id(params[:id])
-    render file: 'public/404.html', status: :not_found, layout: false unless @project
+    @project = Project.find(params[:id])
   end
 
   def project_params
     params.require(:project).permit(:title, :description, :total_hours, :manager_id, :client_id)
-  end
-
-  def add_employees_by_emails(project)
-    params[:employees].shift if emails?
-    emails_emplist = params[:employees]
-    emps = User.find(emails_emplist)
-    emps.each do |emp|
-      EmployeesProject.find_or_create_by(employee_id: emp.id, project_id: project.id)
-    end
   end
 
   def authorise_user

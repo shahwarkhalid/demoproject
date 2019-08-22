@@ -3,7 +3,6 @@
 class Api::V1::ClientsController < ApiController
   before_action :set_client, only: %i[show]
   before_action :authorise_user
-  before_action :authorize_request
 
   def index
     render json: Client.search_clients(params)
@@ -16,8 +15,7 @@ class Api::V1::ClientsController < ApiController
   private
 
   def set_client
-    @client = Client.find_by_id(params[:id])
-    render json: 'record not found', status: :not_found unless @client
+    @client = Client.find(params[:id])
   end
 
   def authorise_user

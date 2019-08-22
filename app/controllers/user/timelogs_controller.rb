@@ -6,6 +6,7 @@ class User::TimelogsController < ApplicationController
   before_action :set_timelog, only: %i[show edit update destroy]
   before_action :set_comments, only: [:show]
   before_action :convert_string_to_datetime, only: %i[create update]
+  before_action :calculate_hours, only: [:create, :update]
 
   def index
     @timelogs = @project.timelogs.order(:created_at).page(params[:page])
@@ -26,21 +27,15 @@ class User::TimelogsController < ApplicationController
   def create
     @timelog = Timelog.new(timelog_params)
     @timelog.creator = current_user
-    if @timelog.end_time < @timelog.start_time
-      @timelog.errors.add(:end_time, 'must be greater than start time')
-    else
-      @timelog.hours = TimeDifference.between(@timelog.start_time, @timelog.end_time).in_hours.to_i unless @timelog.start_time.blank?
-      @timelog.project = @project
-      Timelog.set_hours(@timelog) if @timelog.save
-    end
+    @timelog.project = @project
+    @timelog.save
   end
 
   def update
-    Timelog.update_project_hours(@timelog) if @timelog.update(timelog_params)
+    @timelog.update(timelog_params)
   end
 
   def destroy
-    Timelog.revert_hours(@timelog)
     @project = @timelog.project
     @timelog.destroy
   end
@@ -48,8 +43,7 @@ class User::TimelogsController < ApplicationController
   private
 
   def set_timelog
-    @timelog = Timelog.find_by_id(params[:id])
-    render file: 'public/404.html', status: :not_found, layout: false unless @timelog
+    @timelog = Timelog.find(params[:id])
   end
 
   def set_project
@@ -71,5 +65,9 @@ class User::TimelogsController < ApplicationController
 
   def authorize_user
     authorize User, :check_user?, policy_class: UserPolicy
+  end
+
+  def calculate_hours
+    params[:timelog][:hours] = TimeDifference.between(params[:timelog][:start_time],params[:timelog][:end_time]).in_hours.to_i if params[:timelog][:start_time].present? && params[:timelog][:end_time].present?
   end
 end

@@ -2,6 +2,7 @@
 
 class Admin::PaymentsController < PaymentsController
   before_action :authorize_user
+
   def index
     super
   end

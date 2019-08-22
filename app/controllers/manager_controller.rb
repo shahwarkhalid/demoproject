@@ -4,8 +4,7 @@ class ManagerController < ApplicationController
   before_action :validate_manager!
 
   def index
-    @top_projects = Project.top_projects
-    @bottom_projects = Project.bottom_projects
+    graph_stats
   end
 
   protected

@@ -38,13 +38,11 @@ class ProjectsController < ApplicationController
   private
 
   def set_project
-    @project = Project.find_by_id(params[:id])
-    render file: 'public/404.html', status: :not_found, layout: false unless @project
+    @project = Project.find(params[:id])
   end
 
   def set_parent_project
-    @project = Project.find_by_id(params[:project_id])
-    render file: 'public/404.html', status: :not_found, layout: false unless @project
+    @project = Project.find(params[:project_id])
   end
 
   def set_payments
@@ -65,5 +63,10 @@ class ProjectsController < ApplicationController
 
   def project_params
     params.require(:project).permit(:title, :description, :total_hours, :budget, :manager_id, :client_id)
+  end
+
+  def rescue_from_fk_contraint
+    flash[:alert] = 'Cannot Delete This Project'
+    redirect_to request.referrer
   end
 end

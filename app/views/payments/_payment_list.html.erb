@@ -19,11 +19,11 @@
           <td><%= payment.amount %></td>
           <td><%= payment.creator.name %></td>
           <% if url_type == 'admin' %>
-            <td><%= link_to fa_icon('eye', text:''), admin_payment_url(payment), class: 'btn btn-success' %>
+            <td><%= link_to fa_icon('eye', text: ''), admin_payment_url(payment), class: 'btn btn-success' %>
               <%= link_to fa_icon('pencil-square-o', text:''), edit_admin_payment_url(payment), class: 'btn btn-warning', remote: true %>
               <%= link_to fa_icon('trash-o', text:''), admin_payment_url(payment), method: :delete, remote: true, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %></td>
           <% elsif url_type == 'manager' %>
-            <td><%= link_to fa_icon('eye', text:''), manager_payment_url(payment), class: 'btn btn-success' %>
+            <td><%= link_to fa_icon('eye', text: ''), manager_payment_url(payment), class: 'btn btn-success' %>
               <%= link_to fa_icon('pencil-square-o', text:''), edit_manager_payment_url(payment), remote: true, class: 'btn btn-warning' %>
               <%= link_to fa_icon('trash-o', text:''), manager_payment_url(payment), method: :delete, remote: true, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %></td>
               <% end %>

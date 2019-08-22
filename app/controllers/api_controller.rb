@@ -3,9 +3,11 @@
 require "#{Rails.root}/lib/json_web_token.rb"
 class ApiController < ActionController::API
   before_action :authenticate_user, unless: :authentication_controller?
+  before_action :authorize_request
 
   include Pundit
   rescue_from Pundit::NotAuthorizedError, with: :user_authorization
+  rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
   def authorize_request
     header = request.headers['Authorization']
@@ -30,5 +32,9 @@ class ApiController < ActionController::API
 
   def authentication_controller?
     is_a?(::AuthenticationController)
+  end
+
+  def record_not_found
+    render json: 'record not found', status: :not_found
   end
 end

@@ -9,8 +9,12 @@ class Timelog < ApplicationRecord
   validates_presence_of :title
   validates :start_time, presence: true, timeliness: { type: :datetime }
   validates :end_time, presence: true, timeliness: { type: :datetime }
-
+  validate :start_time_cannot_be_greater_than_end_time
   paginates_per 5
+
+  before_update :update_hours
+  after_save :set_hours
+  before_destroy :revert_hours
 
   def self.get_timelogs(project, user)
     timelogs = project.timelogs.includes(:creator)
@@ -18,25 +22,31 @@ class Timelog < ApplicationRecord
     timelogs.order(:created_at)
   end
 
-  def self.update_hours(timelog)
-    timelog.update(hours: TimeDifference.between(timelog.start_time, timelog.end_time).in_hours.to_i)
+  def set_hours
+    hours = self.project.hours_worked
+    hours += self.hours
+    self.project.update(hours_worked: hours)
   end
 
-  def self.set_hours(timelog)
-    hours = timelog.project.hours_worked
-    hours += timelog.hours
-    timelog.project.update(hours_worked: hours)
+  def revert_hours
+    hours = self.project.hours_worked
+    hours -= self.hours
+    self.project.update(hours_worked: hours)
   end
 
-  def self.revert_hours(timelog)
-    hours = timelog.project.hours_worked
-    hours -= timelog.hours
-    timelog.project.update(hours_worked: hours)
+  def update_hours
+    hours = self.project.hours_worked
+    hours -= self.hours_was
+    self.project.update(hours_worked: hours)
   end
 
-  def self.update_project_hours(timelog)
-    revert_hours(timelog)
-    update_hours(timelog)
-    set_hours(timelog)
+  def self.monthly_stats
+    self.where('year(start_time) = ?', "#{Date.today.year}").group("date_format(start_time, '%M')").sum(:hours)
+  end
+
+  def start_time_cannot_be_greater_than_end_time
+    if start_time > end_time
+      errors.add(:end_time, "cannot be less than start time")
+    end
   end
 end

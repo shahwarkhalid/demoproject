@@ -4,7 +4,6 @@ class Api::V1::PaymentsController < ApiController
   before_action :authorise_user
   before_action :set_payment, only: %i[show update destroy]
   before_action :set_project, only: %i[index new]
-  before_action :authorize_request
   before_action :authorise_user_for_project, only: [:index], if: :user?
 
   def index
@@ -39,13 +38,11 @@ class Api::V1::PaymentsController < ApiController
   private
 
   def set_payment
-    @payment = Payment.find_by_id(params[:id])
-    render json: 'record not found', status: :not_found unless @payment
+    @payment = Payment.find(params[:id])
   end
 
   def set_project
-    @project = Project.find_by_id(params[:project_id])
-    render json: 'record not found', status: :not_found unless @project
+    @project = Project.find(params[:project_id])
   end
 
   def payment_params

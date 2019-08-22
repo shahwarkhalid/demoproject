@@ -25,4 +25,8 @@ class Payment < ApplicationRecord
     budget -= payment.amount
     payment.project.update(budget: budget)
   end
+
+  def self.monthly_stats
+    Payment.where('month(created_at) = ?', "#{Date.today.month}").group('day(created_at)').sum(:amount)
+  end
 end
