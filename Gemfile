@@ -26,6 +26,7 @@ gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
 gem 'mail', '~> 2.6', '>= 2.6.4'
 gem 'rubocop-rails'
+gem 'pg'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use ActiveModel has_secure_password
