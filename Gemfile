@@ -44,7 +44,7 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'bootstrap', '~> 4.3', '>= 4.3.1'
 gem 'bootstrap4-datetime-picker-rails'
-gem 'carrierwave', '~> 0.10.0'
+gem 'carrierwave', '~> 1.3.2'
 gem 'chartkick'
 gem 'chosen-rails'
 gem 'devise', '~> 4.2'
